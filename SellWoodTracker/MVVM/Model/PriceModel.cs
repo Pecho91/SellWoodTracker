@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SellWoodTracker.MVVM.Model
 {
-    public class PrizeModel
+    public class PriceModel
     {
 
     }

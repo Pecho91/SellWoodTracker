@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SellWoodTracker", "SellWoodTracker\SellWoodTracker.csproj", "{FF10052B-E2F4-47CC-9C1B-5F5486C812D1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SellWoodTrackerLibrary", "SellWoodTrackerLibrary\SellWoodTrackerLibrary.csproj", "{722327BE-5662-48A9-9918-6EF3E8D65290}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SellWoodTracker", "SellWoodTracker\SellWoodTracker.csproj", "{FF10052B-E2F4-47CC-9C1B-5F5486C812D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{FF10052B-E2F4-47CC-9C1B-5F5486C812D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF10052B-E2F4-47CC-9C1B-5F5486C812D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF10052B-E2F4-47CC-9C1B-5F5486C812D1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{722327BE-5662-48A9-9918-6EF3E8D65290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{722327BE-5662-48A9-9918-6EF3E8D65290}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{722327BE-5662-48A9-9918-6EF3E8D65290}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{722327BE-5662-48A9-9918-6EF3E8D65290}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
