@@ -15,47 +15,59 @@
 
 
     <Grid>
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width ="100"/>
-            <ColumnDefinition />
+            <ColumnDefinition Width ="80"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="80"/>
         </Grid.ColumnDefinitions>
 
-        <DockPanel>
+        <DockPanel Grid.Column="1">
+            <TextBox Height="25"
+              DockPanel.Dock="Top" 
+              Text="First Name:"/>
 
             <TextBox Height="25"
-         DockPanel.Dock="Top" 
-         Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
-
-
-            <TextBox Height="25"
-                 DockPanel.Dock="Bottom" 
-                 Text=""/>
+              DockPanel.Dock="Top" 
+              Text=""/>
 
             <Button Height="30"
-                DockPanel.Dock="Bottom"
-                Content="Disconnect"
-                Command="{Binding DisconnectFromServerCommand}"/>
+                    Width="30"
+                     DockPanel.Dock="Top"
+                    
+                    Content="Connect"
+                     Command="{Binding ConnectToServerCommand}"/>
 
-            
+            <Button Height="30"
+             DockPanel.Dock="Bottom"
+             Content="Disconnect"
+             Command="{Binding DisconnectFromServerCommand}"/>
+
         </DockPanel>
-        
-        
+            
 
-        <StackPanel Grid.Column="1" Margin="108,0,0,0">
-            <ListView Height="380"
-                  ItemsSource="{Binding Messages}" Width="623"/>
+        <DockPanel Grid.Column="0">
+            <TextBox Height="25"
+                     DockPanel.Dock="Top" 
+                        Text="First Name:" Width="179"/>
 
-            <StackPanel Orientation="Horizontal">
-                <TextBox Height="55"
-                     Width="545"
-                     VerticalContentAlignment="Center"
-                     Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Width="70"
-                    Content="Send"
-                    Command="{Binding SendMessageCommand}"/>
-            </StackPanel>
+            <TextBox Height="25"
+      DockPanel.Dock="Top" 
+      Text=""/>
 
-        </StackPanel>
+            <Button Height="30"
+            Width="30"
+             DockPanel.Dock="Top"
+            
+            Content="Connect"
+             Command="{Binding ConnectToServerCommand}"/>
+
+            <Button Height="30"
+     DockPanel.Dock="Bottom"
+     Content="Disconnect"
+     Command="{Binding DisconnectFromServerCommand}"/>
+
+        </DockPanel>
 
 
 
