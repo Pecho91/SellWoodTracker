@@ -5,11 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SellWoodTracker.MVVM.View"
         mc:Ignorable="d"
-        Title="AddPersonWindow" Height="405" Width="475">
+        Title="AddPersonWindow" Height="430" Width="475">
     <Window.Resources>
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
             <Setter Property="FontSize" Value="18"/>
-            <Setter Property="IsReadOnly" Value="True"/>
         </Style>
 
         <Style x:Key="ButtonStyle" TargetType="Button">

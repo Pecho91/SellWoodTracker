@@ -6,16 +6,25 @@
         xmlns:local="clr-namespace:SellWoodTracker"
         
         mc:Ignorable="d"
-        Title="MainWindow" Height="480" Width="1400">
+        Title="MainWindow" Height="600" Width="800" ResizeMode="CanResizeWithGrip" MinHeight="600" MinWidth="1000">
 
     <Window.Resources>
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
             <Setter Property="FontSize" Value="18"/>
-            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
         </Style>
 
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+        </Style>
+
+        <Style x:Key="ListBoxStyle" TargetType="ListBox">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
         </Style>
     </Window.Resources>
 
@@ -26,18 +35,20 @@
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="330"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
+
+            <RowDefinition MinHeight="30"/>
+            <RowDefinition MinHeight="30"/>
+            <RowDefinition MinHeight="450"/>
+            <RowDefinition MinHeight="30"/>
+
+
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width ="150"/>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="800"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition MaxWidth="30" Width="30*"/>
+            <ColumnDefinition MinWidth="600" Width="600*"/>
+            <ColumnDefinition MinWidth="100" Width="181*"/>
+            
         </Grid.ColumnDefinitions>
 
         <TextBox Grid.Row="0" 
@@ -46,130 +57,25 @@
                  Style="{StaticResource TextBoxStyle}" 
                  TextAlignment="Center"
                  IsReadOnly="True"
-                 Text="Sell Wood Tracker"/>
+                 Text="Sell Wood Tracker" Margin="0,7,0,8"/>
 
-        <DockPanel Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
+        <DockPanel Grid.Column="1" Grid.Row="1">
 
-
-            <TextBox Height="30"
-                     Style="{StaticResource TextBoxStyle}"
-                     DockPanel.Dock="Top" 
-                     TextAlignment="Center"
-                     IsReadOnly="True"
-                     Text="First Name:"/>
-
-            <TextBox Height="30"
-                     Style="{StaticResource TextBoxStyle}"
-                     DockPanel.Dock="Top" 
-                     TextAlignment="Center"
-                     IsReadOnly="True"
-                     Text="Last Name:"/>
-
-            <TextBox Height="30"
-                     Style="{StaticResource TextBoxStyle}"
-                     DockPanel.Dock="Top" 
-                     TextAlignment="Center"
-                     IsReadOnly="True"
-                     Text="Email:"/>
-
-            <TextBox Height="30"
-                     Style="{StaticResource TextBoxStyle}"
-                     DockPanel.Dock="Top" 
-                     TextAlignment="Center"
-                     IsReadOnly="True"
-                     Text="Phone number:"/>
-
-            <TextBox Height="30"
-                     Style="{StaticResource TextBoxStyle}"
-                     DockPanel.Dock="Top" 
-                     TextAlignment="Center"
-                     IsReadOnly="True"
-                     Text="Date:"/>
-
-            <TextBox Height="30"
-                     Style="{StaticResource TextBoxStyle}"
-                     DockPanel.Dock="Top"
-                     TextAlignment="Center"
-                     IsReadOnly="True"
-                     Text="Cubic meter:"/>
-
-            <TextBox Height="30"
-                     Style="{StaticResource TextBoxStyle}"
-                     DockPanel.Dock="Top" 
-                     Text=""/>
 
             <Button Height="35"  
                     Style="{StaticResource ButtonStyle}"
-                    DockPanel.Dock="Top"               
-                    Content="Connect"
+                    DockPanel.Dock="Left" 
+                    HorizontalAlignment="Center"
+                    Content="Add Person"
                     Command="{Binding ConnectToServerCommand}"/>
-
-            <Button Height="35"
-                    Style="{StaticResource ButtonStyle}"
-                    DockPanel.Dock="Bottom"
-                    Content="Disconnect"
-                    Command="{Binding DisconnectFromServerCommand}"/>
 
         </DockPanel>
 
 
-        <DockPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
 
-            <TextBox Height="30"
-                     Style="{StaticResource TextBoxStyle}"
-                     DockPanel.Dock="Top" 
-                     TextAlignment="Center"
-                     Text=""/>
 
-            <TextBox Height="30"
-                     Style="{StaticResource TextBoxStyle}"
-                     DockPanel.Dock="Top" 
-                     TextAlignment="Center"
-                     Text=""/>
+        <DockPanel Grid.Column="1" Grid.Row="1" Margin="0,44,0,0" Grid.RowSpan="2">
 
-            <TextBox Height="30"
-                     Style="{StaticResource TextBoxStyle}"
-                     DockPanel.Dock="Top" 
-                     TextAlignment="Center"
-                     Text=""/>
-
-            <TextBox Height="30"
-                     Style="{StaticResource TextBoxStyle}"
-                     DockPanel.Dock="Top" 
-                     TextAlignment="Center"
-                     Text=""/>
-
-            <TextBox Height="30"
-                     Style="{StaticResource TextBoxStyle}"
-                     DockPanel.Dock="Top" 
-                     TextAlignment="Center"
-                     Text=""/>
-
-            <TextBox Height="30"
-                     Style="{StaticResource TextBoxStyle}"
-                     DockPanel.Dock="Top"
-                     TextAlignment="Center"
-                     Text=""/>
-
-            <TextBox Height="30"
-                     Style="{StaticResource TextBoxStyle}"
-                     DockPanel.Dock="Top" 
-                     Text=""/>
-
-            <Button Height="35"                   
-                    DockPanel.Dock="Top"
-                    Style="{StaticResource ButtonStyle}"       
-                    Content="Connect"
-                    Command="{Binding ConnectToServerCommand}"/>
-
-            <Button Height="35"
-                    DockPanel.Dock="Bottom"
-                    Content="Disconnect"
-                    Command="{Binding DisconnectFromServerCommand}"/>
-
-        </DockPanel>
-
-        <DockPanel Grid.Column="2" Grid.Row="1">
 
             <TextBox 
                      Style="{StaticResource TextBoxStyle}"
@@ -180,7 +86,8 @@
 
             <ListBox 
                      DockPanel.Dock="Top"
-                     Height="140"
+                     Style="{StaticResource ListBoxStyle}"
+                     Height="197"
                      d:ItemsSource="{d:SampleData ItemCount=10}"/>
 
             <TextBox Height="30"
@@ -191,14 +98,16 @@
                      Text="Completed:"/>
 
             <ListBox 
-                     DockPanel.Dock="Top"                      
+                     DockPanel.Dock="Top"  
+                     Style="{StaticResource ListBoxStyle}"
                      d:ItemsSource="{d:SampleData ItemCount= 10}"/>
 
 
         </DockPanel>
 
         <DockPanel x:Name="totalEarnPanel"
-                    Grid.Column="2" Grid.Row="3">
+                    Grid.Column="1" Grid.Row="2" Margin="0,450,0,0" Grid.RowSpan="2">
+
             <TextBox Height="30"
                      Style="{StaticResource TextBoxStyle}" 
                      DockPanel.Dock="Left"
