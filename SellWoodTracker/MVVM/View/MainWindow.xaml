@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SellWoodTracker"
         
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800" ResizeMode="CanResizeWithGrip" MinHeight="600" MinWidth="1000">
+        Title="MainWindow" Height="700" Width="1000" ResizeMode="CanResizeWithGrip" MinHeight="700" MinWidth="1200">
 
     <Window.Resources>
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
@@ -37,8 +37,9 @@
         <Grid.RowDefinitions>
 
             <RowDefinition MinHeight="30" Height="30*"/>
-            <RowDefinition MinHeight="30" Height="30*"/>
+            <RowDefinition MinHeight="36" Height="36*"/>
             <RowDefinition MinHeight="450" Height="450*"/>
+            <RowDefinition MinHeight="30" Height="30*"/>
             <RowDefinition MinHeight="30" Height="30*"/>
             <RowDefinition MinHeight="30" Height="30*"/>
 
@@ -47,8 +48,8 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition MaxWidth="30" Width="30*"/>
-            <ColumnDefinition MinWidth="600" Width="600*"/>
-            <ColumnDefinition MinWidth="100" Width="140*"/>
+            <ColumnDefinition MinWidth="800" Width="800*"/>
+            <ColumnDefinition MinWidth="180" Width="180*"/>
             <ColumnDefinition MaxWidth="30" Width="30*"/>
             
         </Grid.ColumnDefinitions>
@@ -59,7 +60,7 @@
                  Style="{StaticResource TextBoxStyle}" 
                  TextAlignment="Center"
                  IsReadOnly="True"
-                 Text="Sell Wood Tracker" Margin="0,7,0,8"/>
+                 Text="Sell Wood Tracker"/>
 
         <DockPanel Grid.Column="1" Grid.Row="1">
 
@@ -77,7 +78,7 @@
 
 
 
-        <DockPanel Grid.Column="1" Grid.Row="1" Margin="0,44,0,0" Grid.RowSpan="2">
+        <DockPanel Grid.Column="1" Grid.Row="2">
 
 
             <TextBox 
@@ -90,7 +91,7 @@
             <ListBox 
                      DockPanel.Dock="Top"
                      Style="{StaticResource ListBoxStyle}"
-                     Height="197"
+                     Height="220"
                      d:ItemsSource="{d:SampleData ItemCount=10}"/>
 
             <TextBox Height="30"
@@ -145,13 +146,13 @@
 
             <Button Height="35"  
                     Style="{StaticResource ButtonStyle}"
-                    Margin="0,0,0,120"                
+                    Margin="0,0,0,145"                
                     Content="Remove Requested"
                     Command="{Binding ConnectToServerCommand}"/>
             
             <Button Height="35"  
                      Style="{StaticResource ButtonStyle}"
-                     Margin="0,0,0,90" 
+                     Margin="0,0,0,105" 
                      Content="Remove Completed"
                     Command="{Binding ConnectToServerCommand}"/>
             
