@@ -4,14 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SellWoodTracker.MVVM.ViewModel
+namespace SellWoodTracker
 {
-    public class MainViewModel
+    public static class GlobalConfig
     {
-        public MainViewModel()
-        {
-
-        }
-
+        public static IDataConnection? Connection { get; set; }
     }
 }

@@ -32,7 +32,7 @@
         <viewmodel:MainViewModel/>
     </Window.DataContext>-->
 
-    <Grid>
+    <Grid Background="AliceBlue">
 
         <Grid.RowDefinitions>
 
@@ -42,7 +42,6 @@
             <RowDefinition MinHeight="30" Height="30*"/>
             <RowDefinition MinHeight="30" Height="30*"/>
             <RowDefinition MinHeight="30" Height="30*"/>
-
 
         </Grid.RowDefinitions>
 
@@ -64,7 +63,6 @@
 
         <DockPanel Grid.Column="1" Grid.Row="1">
 
-
             <Button Height="35"  
                     Width="200"
                     Style="{StaticResource ButtonStyle}"
@@ -74,9 +72,6 @@
                     Command="{Binding ConnectToServerCommand}"/>
 
         </DockPanel>
-
-
-
 
         <DockPanel Grid.Column="1" Grid.Row="2">
 
@@ -109,8 +104,7 @@
 
         </DockPanel>
 
-        <DockPanel x:Name="totalEarnPanel"
-                    Grid.Column="1" Grid.Row="4" >
+        <DockPanel  Grid.Column="1" Grid.Row="4" >
 
             <TextBox Height="30"
                      Style="{StaticResource TextBoxStyle}" 
@@ -125,14 +119,17 @@
                      DockPanel.Dock="Left"
                      TextAlignment="Right"
                      IsReadOnly="True"
-                     Text="500 "/>
+                     Text=" "/>
 
-            <TextBox Height="30"                                          
+            <TextBox Height="30"  
+                     Width="30"
                      DockPanel.Dock="Left"
+                     HorizontalAlignment="Left"
                      Style="{StaticResource TextBoxStyle}"
                      TextAlignment="Left"
+                     
                      IsReadOnly="True"
-                     Text="(euros)"/>
+                     Text=" €" />
 
         </DockPanel>
 

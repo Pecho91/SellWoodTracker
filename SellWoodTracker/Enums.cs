@@ -4,14 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SellWoodTracker.MVVM.ViewModel
+namespace SellWoodTracker
 {
-    public class MainViewModel
+    public enum DatabaseType
     {
-        public MainViewModel()
-        {
-
-        }
-
+        Sql,
+        ExcelFile
     }
 }

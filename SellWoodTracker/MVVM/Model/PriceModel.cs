@@ -8,6 +8,6 @@ namespace SellWoodTracker.MVVM.Model
 {
     public class PriceModel
     {
-
+        public decimal Price { get; set; }
     }
 }

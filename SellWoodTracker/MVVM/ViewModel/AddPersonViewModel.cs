@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace SellWoodTracker.MVVM.ViewModel
 {
-    public class MainViewModel
+    public class AddPersonViewModel
     {
-        public MainViewModel()
-        {
-
-        }
 
     }
 }

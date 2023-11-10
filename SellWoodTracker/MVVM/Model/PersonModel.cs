@@ -39,7 +39,12 @@ namespace SellWoodTracker.MVVM.Model
         /// <summary>
         /// Amount of m3 that person order
         /// </summary>
-        public decimal? Amount { get; set; }
+        public decimal? MetricAmount { get; set; }
+
+        /// <summary>
+        /// Price of m3
+        /// </summary>
+        public decimal MetricPrice { get; set; }
 
 
 
