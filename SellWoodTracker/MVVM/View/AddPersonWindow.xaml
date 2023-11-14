@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SellWoodTracker.MVVM.View"
+        xmlns:local="clr-namespace:SellWoodTracker.MVVM.View" 
+        xmlns:viewmodel="clr-namespace:SellWoodTracker.MVVM.ViewModel"
         mc:Ignorable="d"
         Title="AddPersonWindow" Height="430" Width="475">
     <Window.Resources>
@@ -109,51 +110,52 @@
                      Height="30"
                      Style="{StaticResource TextBoxStyle}"
                      DockPanel.Dock="Top" 
-                     TextAlignment="Center"
-                     Text=""/>
+                     TextAlignment="Center"                   
+                     Text="{Binding NewPerson.FirstName, Mode=TwoWay}"/>
 
-            <TextBox Height="30"
+            <TextBox x:Name="LastNameTextBox"
+                     Height="30"
                      Style="{StaticResource TextBoxStyle}"
                      DockPanel.Dock="Top" 
                      TextAlignment="Center"
-                     Text=""/>
+                     Text="{Binding NewPerson.LastName, Mode=TwoWay}"/>
 
-            <TextBox Height="30"
+            <TextBox x:Name="EmailTextBox"
+                     Height="30"
                      Style="{StaticResource TextBoxStyle}"
                      DockPanel.Dock="Top" 
                      TextAlignment="Center"
-                     Text=""/>
+                     Text="{Binding NewPerson.EmailAddress, Mode=TwoWay}"/>
 
-            <TextBox Height="30"
+            <TextBox x:Name="PhoneNumberTextBox"
+                     Height="30"
                      Style="{StaticResource TextBoxStyle}"
                      DockPanel.Dock="Top" 
                      TextAlignment="Center"
-                     Text=""/>
+                     Text="{Binding NewPerson.CellphoneNumber, Mode=TwoWay}"/>
 
-            <TextBox Height="30"
+            <TextBox x:Name="DateTextBox"
+                     Height="30"
                      Style="{StaticResource TextBoxStyle}"
                      DockPanel.Dock="Top" 
                      TextAlignment="Center"
-                     Text=""/>
+                     Text="{Binding NewPerson.Date, Mode=TwoWay}"/>
 
-            <TextBox Height="30"
+            <TextBox x:Name="MetricAmountTextBox"
+                     Height="30"
                      Style="{StaticResource TextBoxStyle}"
                      DockPanel.Dock="Top"
                      TextAlignment="Center"
-                     Text=""/>
+                     Text="{Binding NewPerson.MetricAmount, Mode=TwoWay}"/>
 
-            <TextBox Height="30"
-         Style="{StaticResource TextBoxStyle}"
-         DockPanel.Dock="Top" 
-         TextAlignment="Center"
-         Text=""/>
+            <TextBox x:Name="MetricPriceTextBox"
+                     Height="30"
+                     Style="{StaticResource TextBoxStyle}"
+                     DockPanel.Dock="Top" 
+                     TextAlignment="Center"
+                     Text="{Binding NewPerson.FirstName, Mode=TwoWay}"/>
 
-            <TextBox Height="30"
-         Style="{StaticResource TextBoxStyle}"
-         DockPanel.Dock="Top"
-         TextAlignment="Center"
-         Text=""/>
-
+            
         </DockPanel>
 
         <DockPanel Grid.Column="2" Grid.Row="3">
