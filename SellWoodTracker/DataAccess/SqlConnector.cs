@@ -32,7 +32,7 @@ namespace SellWoodTracker.DataAccess
                 p.Add("@EmailAddress", model.EmailAddress);
                 p.Add("@Date", model.Date);
                 p.Add("@MetricAmount", model.MetricAmount);
-                p.Add("@MetricPrice", model.MetricPrice);
+                p.Add("@MetricPrice", model.MetricPrice);                
                 p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
                 connection.Execute("dbo.spPerson_Insert", p, commandType: CommandType.StoredProcedure);
@@ -45,15 +45,15 @@ namespace SellWoodTracker.DataAccess
         {
             List<PersonModel> output;
 
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString(db)))
             {
-                output = connection.Query<PersonModel>("dbo.spPerson_GetAll").ToList();
+                output = connection.Query<PersonModel>("dbo.spPeople_GetAll").ToList();
             }
 
             return output;
         }
 
-        //TODO ...
+        
     }  
 
 }

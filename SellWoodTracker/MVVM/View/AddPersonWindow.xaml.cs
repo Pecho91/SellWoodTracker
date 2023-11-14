@@ -23,5 +23,6 @@ namespace SellWoodTracker.MVVM.View
         {
             InitializeComponent();
         }
+       
     }
 }

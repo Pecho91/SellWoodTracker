@@ -16,9 +16,9 @@
         </Style>
     </Window.Resources>
 
-    <!--<Window.DataContext>
-        <viewmodel:MainViewModel/>
-    </Window.DataContext>-->
+    <Window.DataContext>
+        <viewmodel:AddPersonViewModel/>
+    </Window.DataContext>
 
     <Grid>
 
@@ -105,7 +105,8 @@
 
         <DockPanel Grid.Column="2" Grid.Row="2">
 
-            <TextBox Height="30"
+            <TextBox x:Name="FirstNameTextBox"
+                     Height="30"
                      Style="{StaticResource TextBoxStyle}"
                      DockPanel.Dock="Top" 
                      TextAlignment="Center"
@@ -167,7 +168,7 @@
                      DockPanel.Dock="Bottom"
                     Style="{StaticResource ButtonStyle}"
                     Content="Add Person"
-                    Command="{Binding DisconnectFromServerCommand}"/>
+                    Command="{Binding AddPersonCommand}"/>
         </DockPanel>
 
 
