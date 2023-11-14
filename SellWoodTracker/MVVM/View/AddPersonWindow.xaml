@@ -153,21 +153,23 @@
                      Style="{StaticResource TextBoxStyle}"
                      DockPanel.Dock="Top" 
                      TextAlignment="Center"
-                     Text="{Binding NewPerson.FirstName, Mode=TwoWay}"/>
+                     Text="{Binding NewPerson.MetricPrice, Mode=TwoWay}"/>
 
             
         </DockPanel>
 
         <DockPanel Grid.Column="2" Grid.Row="3">
             
-            <Button Height="30"
-                     DockPanel.Dock="Bottom"
+            <Button x:Name="ClearButton"
+                    Height="30"
+                    DockPanel.Dock="Bottom"
                     Style="{StaticResource ButtonStyle}"
                     Content="Clear"
-                    Command="{Binding DisconnectFromServerCommand}"/>
+                    Command="{Binding ClearFieldsCommand}"/>
 
-            <Button Height="30"
-                     DockPanel.Dock="Bottom"
+            <Button x:Name="AddPersonButton"
+                    Height="30"
+                    DockPanel.Dock="Bottom"
                     Style="{StaticResource ButtonStyle}"
                     Content="Add Person"
                     Command="{Binding AddPersonCommand}"/>

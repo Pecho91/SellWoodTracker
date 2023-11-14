@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 using SellWoodTracker.MVVM.ViewModel;
 using System.Data.SqlClient;
 using System.Windows.Navigation;
+using System.Globalization;
 
 namespace SellWoodTracker.DataAccess
 {
     public class SqlConnector : IDataConnection
     {
+        
         private const string db = "SellWoodDatabase";
         /// <summary>
         /// Saves a new people to database
@@ -23,6 +25,8 @@ namespace SellWoodTracker.DataAccess
         /// 
         public void CreatePerson(PersonModel model)
         {
+            
+
             using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString(db)))
             {
                 var p = new DynamicParameters();
@@ -30,7 +34,16 @@ namespace SellWoodTracker.DataAccess
                 p.Add("@LastName", model.LastName);
                 p.Add("@CellphoneNumber", model.CellphoneNumber);
                 p.Add("@EmailAddress", model.EmailAddress);
-                p.Add("@Date", model.Date);
+                
+                if (DateTime.TryParseExact(model.Date, "dd.MM.yyyy.", CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime parsedDate))
+                {
+                    p.Add("@Date", parsedDate, DbType.Date);
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid date format");
+                }
+
                 p.Add("@MetricAmount", model.MetricAmount);
                 p.Add("@MetricPrice", model.MetricPrice);                
                 p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);

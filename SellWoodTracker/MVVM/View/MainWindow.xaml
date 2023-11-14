@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SellWoodTracker"
-        
+        xmlns:local="clr-namespace:SellWoodTracker" xmlns:viewmodel="clr-namespace:SellWoodTracker.MVVM.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000" ResizeMode="CanResizeWithGrip" MinHeight="700" MinWidth="1200">
 
@@ -28,9 +27,9 @@
         </Style>
     </Window.Resources>
 
-    <!--<Window.DataContext>
+    <Window.DataContext>
         <viewmodel:MainViewModel/>
-    </Window.DataContext>-->
+    </Window.DataContext>
 
     <Grid Background="AliceBlue">
 
@@ -63,13 +62,14 @@
 
         <DockPanel Grid.Column="1" Grid.Row="1">
 
-            <Button Height="35"  
+            <Button x:Name="OpenAddPersonWindowButton"
+                    Height="35"  
                     Width="200"
                     Style="{StaticResource ButtonStyle}"
                     DockPanel.Dock="Left" 
                     HorizontalAlignment="Center"
                     Content="Add Person"
-                    Command="{Binding ConnectToServerCommand}"/>
+                    Command="{Binding OpenAddPersonWindowCommand}"/>
 
         </DockPanel>
 

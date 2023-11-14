@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:SellWoodTracker"
              StartupUri="MVVM/View/MainWindow.xaml">
     <Application.Resources>
-         
+   
     </Application.Resources>
+
 </Application>
+

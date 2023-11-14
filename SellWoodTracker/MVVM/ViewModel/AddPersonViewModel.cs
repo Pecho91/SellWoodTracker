@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -34,10 +35,12 @@ namespace SellWoodTracker.MVVM.ViewModel
         }
 
         public ICommand AddPersonCommand { get; }
+        public ICommand ClearFieldsCommand { get; }
 
         public AddPersonViewModel()
         {
             AddPersonCommand = new RelayCommand(AddPerson);
+            ClearFieldsCommand = new RelayCommand(ClearFields);
             NewPerson = new PersonModel();
         }
 
@@ -60,5 +63,9 @@ namespace SellWoodTracker.MVVM.ViewModel
             }
         }
 
+        private void ClearFields(object parameter)
+        {
+            NewPerson = new PersonModel();
+        }
     }
 }
