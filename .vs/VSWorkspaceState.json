@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\SellWoodTracker",
+    "\\SellWoodTracker\\DataAccess",
+    "\\SellWoodTracker\\MVVM",
+    "\\SellWoodTracker\\MVVM\\Core"
+  ],
+  "SelectedNode": "\\SellWoodTracker\\MVVM\\Core\\RelayCommand.cs",
+  "PreviewInSolutionExplorer": false
+}
