@@ -18,7 +18,7 @@ namespace SellWoodTracker.MVVM.Model
         /// <summary>
         /// The first name of the person
         /// </summary>
-        public string? FirstName { get; set; }
+        public string FirstName { get; set; }
 
         /// <summary>
         /// The last name of the person
@@ -28,7 +28,7 @@ namespace SellWoodTracker.MVVM.Model
         /// <summary>
         /// The primary email address of the person
         /// </summary>
-        public string EmailAddress { get; set; }
+        public string? EmailAddress { get; set; }
 
         /// <summary>
         /// The primary cell phone number of the person
@@ -41,7 +41,7 @@ namespace SellWoodTracker.MVVM.Model
         /// <summary>
         /// Amount of m3 that person order
         /// </summary>
-        public decimal? MetricAmount { get; set; }
+        public decimal MetricAmount { get; set; }
 
         /// <summary>
         /// Price of m3

@@ -7,6 +7,7 @@
         xmlns:viewmodel="clr-namespace:SellWoodTracker.MVVM.ViewModel"
         mc:Ignorable="d"
         Title="AddPersonWindow" Height="430" Width="475">
+    
     <Window.Resources>
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
             <Setter Property="FontSize" Value="18"/>

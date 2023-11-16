@@ -67,5 +67,7 @@ namespace SellWoodTracker.MVVM.ViewModel
         {
             NewPerson = new PersonModel();
         }
+
+        
     }
 }

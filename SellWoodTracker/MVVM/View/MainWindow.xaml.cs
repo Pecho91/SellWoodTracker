@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using SellWoodTracker.MVVM.ViewModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -9,7 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SellWoodTracker
+namespace SellWoodTracker.MVVM.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -19,6 +20,8 @@ namespace SellWoodTracker
         public MainWindow()
         {
             InitializeComponent();
+            //DataContext = new MainViewModel();
         }
     }
 }
+
