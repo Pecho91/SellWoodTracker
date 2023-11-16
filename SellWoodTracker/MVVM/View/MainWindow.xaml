@@ -9,19 +9,19 @@
         Title="MainWindow" Height="700" Width="1000" ResizeMode="CanResizeWithGrip" MinHeight="700" MinWidth="1200">
 
     <Window.Resources>
-        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+        <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
         </Style>
 
-        <Style x:Key="ButtonStyle" TargetType="Button">
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
         </Style>
 
-        <Style x:Key="ListBoxStyle" TargetType="ListBox">
+        <Style x:Key="ListBoxStyle" TargetType="{x:Type ListBox}">
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
@@ -50,7 +50,7 @@
             <ColumnDefinition MinWidth="800" Width="800*"/>
             <ColumnDefinition MinWidth="180" Width="180*"/>
             <ColumnDefinition MaxWidth="30" Width="30*"/>
-            
+
         </Grid.ColumnDefinitions>
 
         <TextBox Grid.Row="0" 
@@ -110,7 +110,7 @@
             <ListBox 
                      DockPanel.Dock="Top"  
                      Style="{StaticResource ListBoxStyle}"
-                     d:ItemsSource="{d:SampleData ItemCount= 10}"/>
+                     d:ItemsSource="{d:SampleData ItemCount=10}"/>
 
 
         </DockPanel>
@@ -157,13 +157,13 @@
                     Margin="0,0,0,145"                
                     Content="Remove Requested"
                     Command="{Binding ConnectToServerCommand}"/>
-            
+
             <Button Height="35"  
                      Style="{StaticResource ButtonStyle}"
                      Margin="0,0,0,105" 
                      Content="Remove Completed"
                     Command="{Binding ConnectToServerCommand}"/>
-            
+
             <Button Height="35"  
                     Style="{StaticResource ButtonStyle}"
                     VerticalAlignment="Bottom"  
