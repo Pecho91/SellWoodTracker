@@ -21,11 +21,10 @@ namespace SellWoodTracker.MVVM.ViewModel
         public ObservableCollection<PersonModel> Persons { get; set; }
         private readonly SqlConnector _sqlConnector;
         public MainViewModel()
-        {
-            
-            OpenAddPersonWindowCommand = new RelayCommand(OpenAddPersonWindow);
+        {               
             _sqlConnector = new SqlConnector();
             LoadPersonsToRequestedListBox();
+            OpenAddPersonWindowCommand = new RelayCommand(OpenAddPersonWindow);
         }
 
         private void OpenAddPersonWindow(object parameter)

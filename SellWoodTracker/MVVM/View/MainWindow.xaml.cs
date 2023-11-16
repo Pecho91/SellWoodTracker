@@ -10,7 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SellWoodTracker.MVVM.View
+namespace SellWoodTracker
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -20,7 +20,12 @@ namespace SellWoodTracker.MVVM.View
         public MainWindow()
         {
             InitializeComponent();
-            //DataContext = new MainViewModel();
+            Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            DataContext = new MainViewModel();
         }
     }
 }
