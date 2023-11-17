@@ -18,11 +18,23 @@ namespace SellWoodTracker.MVVM.ViewModel
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         public ICommand OpenAddPersonWindowCommand { get; }
-        public ObservableCollection<PersonModel> Persons { get; set; }
+        private ObservableCollection<PersonModel> _persons;
+        public ObservableCollection<PersonModel> Persons
+        {
+            get => _persons;
+            set
+            {
+                _persons = value;
+                OnPropertyChanged(nameof(Persons));
+            }
+        }
+
         private readonly SqlConnector _sqlConnector;
+
         public MainViewModel()
         {               
             _sqlConnector = new SqlConnector();
+            Persons = new ObservableCollection<PersonModel>();
             LoadPersonsToRequestedListBox();
             OpenAddPersonWindowCommand = new RelayCommand(OpenAddPersonWindow);
         }
@@ -35,7 +47,19 @@ namespace SellWoodTracker.MVVM.ViewModel
 
         private void LoadPersonsToRequestedListBox()
         {
-            Persons = new ObservableCollection<PersonModel>(_sqlConnector.GetPerson_All());
+            // Ensure Persons collection is initialized before assigning it
+            //Persons = new ObservableCollection<PersonModel>(_sqlConnector.GetPerson_All());
+
+            //TODO here is problem
+            foreach (PersonModel person in _sqlConnector.GetPerson_All())
+            {
+                Persons.Add(person);    
+            }
+        }
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
