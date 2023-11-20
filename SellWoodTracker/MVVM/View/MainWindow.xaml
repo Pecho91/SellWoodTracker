@@ -91,15 +91,19 @@
                      Style="{StaticResource ListBoxStyle}"
                      Height="220"
                      d:ItemsSource="{Binding Persons}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding FirstName}" />
-                            <TextBlock Text="{Binding LastName}" />
-                            <!-- Add more bindings for other properties as needed -->
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
+                
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" />
+                                <TextBlock Text="{Binding Age}" />
+                                <TextBlock Text="{Binding Email}" />
+                                
+                            <!-- Add more TextBlocks for other properties of Person -->
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+
             </ListBox>
 
             <TextBox Height="30"

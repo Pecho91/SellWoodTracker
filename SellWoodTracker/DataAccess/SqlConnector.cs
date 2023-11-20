@@ -25,8 +25,7 @@ namespace SellWoodTracker.DataAccess
         /// 
         public void CreatePerson(PersonModel model)
         {
-            
-
+           
             using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString(db)))
             {
                 var p = new DynamicParameters();
@@ -53,7 +52,7 @@ namespace SellWoodTracker.DataAccess
                 model.Id = p.Get<int>("@id");
             }
         }
-
+        
         public List<PersonModel> GetPerson_All()
         {
             List<PersonModel> output;

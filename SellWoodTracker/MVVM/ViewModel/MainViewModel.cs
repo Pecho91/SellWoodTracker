@@ -18,10 +18,11 @@ namespace SellWoodTracker.MVVM.ViewModel
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         public ICommand OpenAddPersonWindowCommand { get; }
-        private ObservableCollection<PersonModel> _persons;
+        private List<PersonModel> _persons;
         public ObservableCollection<PersonModel> Persons
         {
-            get => _persons;
+            get { return _persons; }
+                
             set
             {
                 _persons = value;
@@ -30,7 +31,7 @@ namespace SellWoodTracker.MVVM.ViewModel
         }
 
         private readonly SqlConnector _sqlConnector;
-
+        
         public MainViewModel()
         {               
             _sqlConnector = new SqlConnector();
@@ -47,13 +48,13 @@ namespace SellWoodTracker.MVVM.ViewModel
 
         private void LoadPersonsToRequestedListBox()
         {
-            // Ensure Persons collection is initialized before assigning it
-            //Persons = new ObservableCollection<PersonModel>(_sqlConnector.GetPerson_All());
+           //var people = _sqlConnector.GetPerson_All();
 
-            //TODO here is problem
-            foreach (PersonModel person in _sqlConnector.GetPerson_All())
+           // Persons.Clear();
+
+            foreach (List<PersonModel> person in _persons)
             {
-                Persons.Add(person);    
+                Persons.Add(person);
             }
         }
 

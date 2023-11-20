@@ -47,9 +47,7 @@ namespace SellWoodTracker.MVVM.ViewModel
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-   
+        }  
         
         private void AddPerson(object parameter)
         {
