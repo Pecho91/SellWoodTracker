@@ -85,26 +85,22 @@
                      TextAlignment="Left"
                      IsReadOnly="True"
                      Text="Requested:"/>
+            
+            <DataGrid DockPanel.Dock="Top"
+                      AutoGenerateColumns="False"
+                      Height="220"
+                      ItemsSource="{Binding Persons}"
+                      IsReadOnly="True">
 
-            <ListBox 
-                     DockPanel.Dock="Top"
-                     Style="{StaticResource ListBoxStyle}"
-                     Height="220"
-                     d:ItemsSource="{Binding Persons}">
-                
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Name}" />
-                                <TextBlock Text="{Binding Age}" />
-                                <TextBlock Text="{Binding Email}" />
-                                
-                            <!-- Add more TextBlocks for other properties of Person -->
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" />
+                    <DataGridTextColumn Header="Cellphone Number" Binding="{Binding CellphoneNumber}" />
+                    <DataGridTextColumn Header="Email Address" Binding="{Binding EmailAddress}" />
+                    <!-- Add more columns for other properties of PersonModel -->
+                </DataGrid.Columns>
 
-            </ListBox>
+            </DataGrid>
+          
 
             <TextBox Height="30"
                      Style="{StaticResource TextBoxStyle}"
@@ -113,10 +109,19 @@
                      IsReadOnly="True"
                      Text="Completed:"/>
 
-            <ListBox 
-                     DockPanel.Dock="Top"  
-                     Style="{StaticResource ListBoxStyle}"
-                     d:ItemsSource="{d:SampleData ItemCount=10}"/>
+            <DataGrid DockPanel.Dock="Top"
+                      AutoGenerateColumns="False" 
+                      ItemsSource="{Binding Persons}"
+                      IsReadOnly="True">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" />
+                    <DataGridTextColumn Header="Cellphone Number" Binding="{Binding CellphoneNumber}" />
+                    <DataGridTextColumn Header="Email Address" Binding="{Binding EmailAddress}" />
+                    <!-- Add more columns for other properties of PersonModel -->
+                </DataGrid.Columns>
+
+            </DataGrid>
 
 
         </DockPanel>
@@ -156,37 +161,37 @@
                     Style="{StaticResource ButtonStyle}"
                     Margin="0,0,0,30"              
                     Content="Complete Requested"
-                    Command="{Binding ConnectToServerCommand}"/>
+                    Command="{Binding}"/>
 
             <Button Height="35"  
                     Style="{StaticResource ButtonStyle}"
                     Margin="0,0,0,145"                
                     Content="Remove Requested"
-                    Command="{Binding ConnectToServerCommand}"/>
+                    Command="{Binding}"/>
 
             <Button Height="35"  
                      Style="{StaticResource ButtonStyle}"
                      Margin="0,0,0,105" 
                      Content="Remove Completed"
-                    Command="{Binding ConnectToServerCommand}"/>
+                    Command="{Binding }"/>
 
             <Button Height="35"  
                     Style="{StaticResource ButtonStyle}"
                     VerticalAlignment="Bottom"  
                     Content="Excel (All)"
-                    Command="{Binding ConnectToServerCommand}"/>
+                    Command="{Binding}"/>
 
             <Button Height="35"  
                     Style="{StaticResource ButtonStyle}"
                     VerticalAlignment="Bottom"  
                     Content="Excel (Requested)"
-                    Command="{Binding ConnectToServerCommand}"/>
+                    Command="{Binding}"/>
 
             <Button Height="35"  
                     Style="{StaticResource ButtonStyle}"
                     VerticalAlignment="Bottom"  
                     Content="Excell (Completed)"
-                    Command="{Binding ConnectToServerCommand}"/>
+                    Command="{Binding}"/>
 
         </StackPanel>
 

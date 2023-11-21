@@ -18,7 +18,7 @@ namespace SellWoodTracker.MVVM.ViewModel
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         public ICommand OpenAddPersonWindowCommand { get; }
-        private List<PersonModel> _persons;
+        private ObservableCollection<PersonModel> _persons;
         public ObservableCollection<PersonModel> Persons
         {
             get { return _persons; }
@@ -35,8 +35,9 @@ namespace SellWoodTracker.MVVM.ViewModel
         public MainViewModel()
         {               
             _sqlConnector = new SqlConnector();
-            Persons = new ObservableCollection<PersonModel>();
-            LoadPersonsToRequestedListBox();
+            
+            LoadPeopleToRequestedListBox();
+            
             OpenAddPersonWindowCommand = new RelayCommand(OpenAddPersonWindow);
         }
 
@@ -46,16 +47,11 @@ namespace SellWoodTracker.MVVM.ViewModel
             addPersonWindow.Show();
         }
 
-        private void LoadPersonsToRequestedListBox()
+        private void LoadPeopleToRequestedListBox()
         {
-           //var people = _sqlConnector.GetPerson_All();
-
-           // Persons.Clear();
-
-            foreach (List<PersonModel> person in _persons)
-            {
-                Persons.Add(person);
-            }
+            List<PersonModel> people = _sqlConnector.GetPerson_All();
+           
+            Persons = new ObservableCollection<PersonModel>(people);
         }
 
         protected void OnPropertyChanged(string propertyName)
