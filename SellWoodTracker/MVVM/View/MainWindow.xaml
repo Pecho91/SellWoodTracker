@@ -93,9 +93,14 @@
                       IsReadOnly="True">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" />
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
+                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" />
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" />
                     <DataGridTextColumn Header="Cellphone Number" Binding="{Binding CellphoneNumber}" />
                     <DataGridTextColumn Header="Email Address" Binding="{Binding EmailAddress}" />
+                    <DataGridTextColumn Header="Date" Binding="{Binding Date}" />
+                    <DataGridTextColumn Header="Metric Amount" Binding="{Binding MetricAmount}" />
+                    <DataGridTextColumn Header="Metric Price" Binding="{Binding MetricPrice}" />
                     <!-- Add more columns for other properties of PersonModel -->
                 </DataGrid.Columns>
 
@@ -115,9 +120,14 @@
                       IsReadOnly="True">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Full Name" Binding="{Binding FullName}" />
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
+                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" />
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" />
                     <DataGridTextColumn Header="Cellphone Number" Binding="{Binding CellphoneNumber}" />
                     <DataGridTextColumn Header="Email Address" Binding="{Binding EmailAddress}" />
+                    <DataGridTextColumn Header="Date" Binding="{Binding Date}" />
+                    <DataGridTextColumn Header="Metric Amount" Binding="{Binding MetricAmount}" />
+                    <DataGridTextColumn Header="Metric Price" Binding="{Binding MetricPrice}" />
                     <!-- Add more columns for other properties of PersonModel -->
                 </DataGrid.Columns>
 

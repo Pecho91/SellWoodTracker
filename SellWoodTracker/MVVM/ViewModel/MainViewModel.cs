@@ -34,9 +34,8 @@ namespace SellWoodTracker.MVVM.ViewModel
         
         public MainViewModel()
         {               
-            _sqlConnector = new SqlConnector();
-            
-            LoadPeopleToRequestedListBox();
+            _sqlConnector = new SqlConnector();           
+            LoadPeopleToRequestedDataGrid();
             
             OpenAddPersonWindowCommand = new RelayCommand(OpenAddPersonWindow);
         }
@@ -47,10 +46,15 @@ namespace SellWoodTracker.MVVM.ViewModel
             addPersonWindow.Show();
         }
 
-        private void LoadPeopleToRequestedListBox()
+        private void LoadPeopleToRequestedDataGrid()
         {
-            List<PersonModel> people = _sqlConnector.GetPerson_All();
-           
+            List<PersonModel> people = _sqlConnector.GetPeople_All();          
+            Persons = new ObservableCollection<PersonModel>(people);
+        }
+
+        private void LoadPeopleToCompletedDataGrid()
+        {
+            List<PersonModel> people = _sqlConnector.GetCompletedPeople_All();
             Persons = new ObservableCollection<PersonModel>(people);
         }
 

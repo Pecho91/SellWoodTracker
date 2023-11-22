@@ -53,7 +53,7 @@ namespace SellWoodTracker.DataAccess
             }
         }
         
-        public List<PersonModel> GetPerson_All()
+        public List<PersonModel> GetPeople_All()
         {
             List<PersonModel> output;
 
@@ -65,7 +65,17 @@ namespace SellWoodTracker.DataAccess
             return output;
         }
 
-        
+        public List<PersonModel> GetCompletedPeople_All()
+        {
+            List<PersonModel> output;
+
+            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString(db)))
+            {
+                output = connection.Query<PersonModel>("dbo.spCompletedPeople_GetAll").ToList();
+            }
+
+            return output;
+        }
     }  
 
 }

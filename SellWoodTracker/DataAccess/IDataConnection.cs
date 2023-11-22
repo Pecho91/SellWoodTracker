@@ -11,7 +11,9 @@ namespace SellWoodTracker.DataAccess
     {
         void CreatePerson(PersonModel model);
         
-        List<PersonModel> GetPerson_All();
-        
+        List<PersonModel> GetPeople_All();
+        List<PersonModel> GetCompletedPeople_All();
+
+
     }
 }
