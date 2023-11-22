@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SellWoodTracker.MVVM.ViewModel;
-using System.Data.SqlClient;
 using System.Windows.Navigation;
 using System.Globalization;
 
@@ -16,7 +15,7 @@ namespace SellWoodTracker.DataAccess
     public class SqlConnector : IDataConnection
     {
         
-        private const string db = "SellWoodDatabase";
+        private const string db = "SellWoodTracker";
         /// <summary>
         /// Saves a new people to database
         /// </summary>
@@ -26,7 +25,7 @@ namespace SellWoodTracker.DataAccess
         public void CreatePerson(PersonModel model)
         {
            
-            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString(db)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
             {
                 var p = new DynamicParameters();
                 p.Add("@FirstName", model.FirstName);
@@ -47,19 +46,19 @@ namespace SellWoodTracker.DataAccess
                 p.Add("@MetricPrice", model.MetricPrice);                
                 p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-                connection.Execute("dbo.spPerson_Insert", p, commandType: CommandType.StoredProcedure);
+                connection.Execute("dbo.spRequestedPeople_Insert", p, commandType: CommandType.StoredProcedure);
 
                 model.Id = p.Get<int>("@id");
             }
         }
         
-        public List<PersonModel> GetPeople_All()
+        public List<PersonModel> GetRequestedPeople_All()
         {
             List<PersonModel> output;
 
-            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString(db)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
             {
-                output = connection.Query<PersonModel>("dbo.spPeople_GetAll").ToList();
+                output = connection.Query<PersonModel>("dbo.spRequestedPeople_GetAll").ToList();
             }
 
             return output;
@@ -69,7 +68,7 @@ namespace SellWoodTracker.DataAccess
         {
             List<PersonModel> output;
 
-            using (IDbConnection connection = new SqlConnection(GlobalConfig.CnnString(db)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
             {
                 output = connection.Query<PersonModel>("dbo.spCompletedPeople_GetAll").ToList();
             }

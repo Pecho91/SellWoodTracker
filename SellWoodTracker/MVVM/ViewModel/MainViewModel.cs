@@ -18,18 +18,28 @@ namespace SellWoodTracker.MVVM.ViewModel
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         public ICommand OpenAddPersonWindowCommand { get; }
-        private ObservableCollection<PersonModel> _persons;
-        public ObservableCollection<PersonModel> Persons
+        private ObservableCollection<PersonModel> _requestedPeople;
+        private ObservableCollection<PersonModel> _completedPeople;
+        public ObservableCollection<PersonModel> RequestedPeople
         {
-            get { return _persons; }
+            get { return _requestedPeople; }
                 
             set
             {
-                _persons = value;
-                OnPropertyChanged(nameof(Persons));
+                _requestedPeople = value;
+                OnPropertyChanged(nameof(RequestedPeople));
             }
         }
+        public ObservableCollection<PersonModel> CompletedPeople
+        {
+            get { return _completedPeople; }
 
+            set
+            {
+                _requestedPeople = value;
+                OnPropertyChanged(nameof(CompletedPeople));
+            }
+        }
         private readonly SqlConnector _sqlConnector;
         
         public MainViewModel()
@@ -48,14 +58,14 @@ namespace SellWoodTracker.MVVM.ViewModel
 
         private void LoadPeopleToRequestedDataGrid()
         {
-            List<PersonModel> people = _sqlConnector.GetPeople_All();          
-            Persons = new ObservableCollection<PersonModel>(people);
+            List<PersonModel> requestedPeople = _sqlConnector.GetRequestedPeople_All();          
+            RequestedPeople = new ObservableCollection<PersonModel>(requestedPeople);
         }
 
         private void LoadPeopleToCompletedDataGrid()
         {
-            List<PersonModel> people = _sqlConnector.GetCompletedPeople_All();
-            Persons = new ObservableCollection<PersonModel>(people);
+            List<PersonModel> completedPeople = _sqlConnector.GetCompletedPeople_All();
+            CompletedPeople = new ObservableCollection<PersonModel>(completedPeople);
         }
 
         protected void OnPropertyChanged(string propertyName)

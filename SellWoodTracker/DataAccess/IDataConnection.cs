@@ -10,8 +10,9 @@ namespace SellWoodTracker.DataAccess
     public interface IDataConnection
     {
         void CreatePerson(PersonModel model);
+       // void DeletePerson(PersonModel model);
         
-        List<PersonModel> GetPeople_All();
+        List<PersonModel> GetRequestedPeople_All();
         List<PersonModel> GetCompletedPeople_All();
 
 
