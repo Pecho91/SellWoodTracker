@@ -8,7 +8,7 @@ namespace SellWoodTracker.MVVM.ViewModel
 {
     public class Mediator
     {
-        public static event EventHandler RefreshDataGrids;
+        public static event EventHandler? RefreshDataGrids;
 
         public static void NotifyRefreshDataGrids()
         {

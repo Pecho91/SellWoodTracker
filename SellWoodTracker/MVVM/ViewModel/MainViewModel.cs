@@ -95,10 +95,11 @@ namespace SellWoodTracker.MVVM.ViewModel
         }
 
 
-        private void RefreshPeopleInDataGrids(object sender, EventArgs e)
+        private void RefreshPeopleInDataGrids(object? sender, EventArgs e)
         {
-            LoadPeopleToRequestedDataGrid();
-            LoadPeopleToCompletedDataGrid();
+            
+                LoadPeopleToRequestedDataGrid();
+                LoadPeopleToCompletedDataGrid();         
         }
 
         private void MovePersonToCompleted(object parameter)
