@@ -58,35 +58,19 @@ namespace SellWoodTracker.MVVM.ViewModel
 
         public ICommand MovePersonToCompletedCommand { get; set; }
 
-        private ObservableCollection<PersonModel> _refreshRequestedDataGrid;
-        public ObservableCollection<PersonModel> RefreshRequestedDataGrid
-        {
-            get { return _refreshRequestedDataGrid; }
-            set
-            {
-                _refreshRequestedDataGrid = value;
-                OnPropertyChanged(nameof(RefreshRequestedDataGrid));
-            }
-        }
-
-        private ObservableCollection<PersonModel> _refreshCompletedDataGrid;
-        public ObservableCollection<PersonModel> RefreshCompletedDataGrid
-        {
-            get { return _refreshCompletedDataGrid; }
-            set
-            {
-                _refreshCompletedDataGrid = value;
-                OnPropertyChanged(nameof(RefreshCompletedDataGrid));
-            }
-        }
-
+       
         public MainViewModel()
         {               
-            _sqlConnector = new SqlConnector();           
+            _sqlConnector = new SqlConnector();
+
             LoadPeopleToRequestedDataGrid();
             LoadPeopleToCompletedDataGrid();
+
             MovePersonToCompletedCommand = new RelayCommand(MovePersonToCompleted);
             OpenAddPersonWindowCommand = new RelayCommand(OpenAddPersonWindow);
+
+            Mediator.RefreshDataGrids += RefreshPeopleInDataGrids;
+
         }
 
         private void OpenAddPersonWindow(object parameter)
@@ -98,14 +82,23 @@ namespace SellWoodTracker.MVVM.ViewModel
 
         private void LoadPeopleToRequestedDataGrid()
         {
-            List<PersonModel> requestedPeople = _sqlConnector.GetRequestedPeople_All();          
+            List<PersonModel> requestedPeople = _sqlConnector.GetRequestedPeople_All();
             RequestedPeople = new ObservableCollection<PersonModel>(requestedPeople);
+            OnPropertyChanged(nameof(RequestedPeople));
         }
 
         private void LoadPeopleToCompletedDataGrid()
         {
             List<PersonModel> completedPeople = _sqlConnector.GetCompletedPeople_All();
             CompletedPeople = new ObservableCollection<PersonModel>(completedPeople);
+            OnPropertyChanged(nameof(CompletedPeople));
+        }
+
+
+        private void RefreshPeopleInDataGrids(object sender, EventArgs e)
+        {
+            LoadPeopleToRequestedDataGrid();
+            LoadPeopleToCompletedDataGrid();
         }
 
         private void MovePersonToCompleted(object parameter)
@@ -114,11 +107,8 @@ namespace SellWoodTracker.MVVM.ViewModel
             {
                 _sqlConnector.MoveRequestedPersonToCompleted(SelectedRequestedPerson.Id);
 
-                LoadPeopleToRequestedDataGrid();
-                LoadPeopleToCompletedDataGrid(); 
-                
-                OnPropertyChanged(nameof(RefreshRequestedDataGrid));
-                OnPropertyChanged(nameof(RefreshCompletedDataGrid));
+                Mediator.NotifyRefreshDataGrids();
+
             }
 
             Debug.WriteLine("button move clicked");

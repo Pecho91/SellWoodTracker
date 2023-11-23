@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlTypes;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
@@ -17,6 +18,7 @@ namespace SellWoodTracker.MVVM.ViewModel
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        private MainViewModel _mainViewModel;
         private PersonModel _newPerson;
         public PersonModel NewPerson
         {
@@ -58,7 +60,10 @@ namespace SellWoodTracker.MVVM.ViewModel
                 sqlConnector.CreatePerson(NewPerson);
                 // Clear the input fields after adding the person
                 NewPerson = new PersonModel(); // Optionally reset the NewPerson object for a new entry
-            }
+
+                Mediator.NotifyRefreshDataGrids();
+                Debug.WriteLine("addButton click");
+            }          
         }
 
         private void ClearFields(object parameter)
