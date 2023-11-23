@@ -30,6 +30,7 @@ namespace SellWoodTracker.MVVM.ViewModel
                 OnPropertyChanged(nameof(RequestedPeople));
             }
         }
+
         public ObservableCollection<PersonModel> CompletedPeople
         {
             get { return _completedPeople; }
@@ -40,13 +41,15 @@ namespace SellWoodTracker.MVVM.ViewModel
                 OnPropertyChanged(nameof(CompletedPeople));
             }
         }
+
         private readonly SqlConnector _sqlConnector;
-        
+        public ICommand MovePersonToCompletedCommand { get; }
+
         public MainViewModel()
         {               
             _sqlConnector = new SqlConnector();           
             LoadPeopleToRequestedDataGrid();
-            
+            MovePersonToCompletedCommand = new RelayCommand(MovePersonToCompleted);
             OpenAddPersonWindowCommand = new RelayCommand(OpenAddPersonWindow);
         }
 
@@ -66,6 +69,16 @@ namespace SellWoodTracker.MVVM.ViewModel
         {
             List<PersonModel> completedPeople = _sqlConnector.GetCompletedPeople_All();
             CompletedPeople = new ObservableCollection<PersonModel>(completedPeople);
+        }
+
+        private void MovePersonToCompleted(object parameter)
+        {
+            if(parameter is PersonModel selectedPerson)
+            {
+                _sqlConnector.MoveRequestedPersonToCompleted(selectedPerson.Id);
+                LoadPeopleToRequestedDataGrid();
+                LoadPeopleToCompletedDataGrid();            
+            }
         }
 
         protected void OnPropertyChanged(string propertyName)

@@ -75,6 +75,31 @@ namespace SellWoodTracker.DataAccess
 
             return output;
         }
+
+        public void MoveRequestedPersonToCompleted(int personId)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var person = connection.QueryFirstOrDefault<PersonModel>("dbo.spRequestedPeople_GetById", 
+                             new { Id = personId }, commandType: CommandType.StoredProcedure);
+
+                if (person != null)
+                {
+                    connection.Execute("dbo.spRequestedPeople_DeleteById", new { id = personId }, commandType: CommandType.StoredProcedure);
+
+                    var p = new DynamicParameters();
+                    p.Add("@FirstName", person.FirstName);
+                    p.Add("@LastName", person.LastName);
+                    p.Add("@CellphoneNumber", person.CellphoneNumber);
+                    p.Add("@EmailAddress", person.EmailAddress);
+                    p.Add("@Date", person.Date);
+                    p.Add("@MetricAmount", person.MetricAmount);
+                    p.Add("@MetricPrice", person.MetricPrice);
+
+                    connection.Execute("dbo.spCompletedPeople_Insert", p, commandType: CommandType.StoredProcedure);
+                }
+            }
+        }
     }  
 
 }
