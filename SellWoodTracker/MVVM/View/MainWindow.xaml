@@ -90,7 +90,8 @@
                       AutoGenerateColumns="False"
                       Height="220"
                       ItemsSource="{Binding RequestedPeople}"
-                      IsReadOnly="True">
+                      IsReadOnly="True"
+                      SelectedItem="{Binding SelectedRequestedPerson, Mode=TwoWay}">
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" />

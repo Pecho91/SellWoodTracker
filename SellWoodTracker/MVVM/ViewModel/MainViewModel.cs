@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,18 +38,53 @@ namespace SellWoodTracker.MVVM.ViewModel
 
             set
             {
-                _requestedPeople = value;
+                _completedPeople = value;
                 OnPropertyChanged(nameof(CompletedPeople));
             }
         }
 
         private readonly SqlConnector _sqlConnector;
-        public ICommand MovePersonToCompletedCommand { get; }
+
+        private PersonModel _selectedRequestedPerson;
+        public PersonModel SelectedRequestedPerson
+        {
+            get { return _selectedRequestedPerson; }
+            set
+            {
+                _selectedRequestedPerson = value;
+                OnPropertyChanged(nameof(SelectedRequestedPerson));
+            }
+        }
+
+        public ICommand MovePersonToCompletedCommand { get; set; }
+
+        private ObservableCollection<PersonModel> _refreshRequestedDataGrid;
+        public ObservableCollection<PersonModel> RefreshRequestedDataGrid
+        {
+            get { return _refreshRequestedDataGrid; }
+            set
+            {
+                _refreshRequestedDataGrid = value;
+                OnPropertyChanged(nameof(RefreshRequestedDataGrid));
+            }
+        }
+
+        private ObservableCollection<PersonModel> _refreshCompletedDataGrid;
+        public ObservableCollection<PersonModel> RefreshCompletedDataGrid
+        {
+            get { return _refreshCompletedDataGrid; }
+            set
+            {
+                _refreshCompletedDataGrid = value;
+                OnPropertyChanged(nameof(RefreshCompletedDataGrid));
+            }
+        }
 
         public MainViewModel()
         {               
             _sqlConnector = new SqlConnector();           
             LoadPeopleToRequestedDataGrid();
+            LoadPeopleToCompletedDataGrid();
             MovePersonToCompletedCommand = new RelayCommand(MovePersonToCompleted);
             OpenAddPersonWindowCommand = new RelayCommand(OpenAddPersonWindow);
         }
@@ -57,6 +93,7 @@ namespace SellWoodTracker.MVVM.ViewModel
         {
             AddPersonWindow addPersonWindow = new AddPersonWindow();
             addPersonWindow.Show();
+            Debug.WriteLine("add clicked");
         }
 
         private void LoadPeopleToRequestedDataGrid()
@@ -73,12 +110,18 @@ namespace SellWoodTracker.MVVM.ViewModel
 
         private void MovePersonToCompleted(object parameter)
         {
-            if(parameter is PersonModel selectedPerson)
+            if(SelectedRequestedPerson != null)
             {
-                _sqlConnector.MoveRequestedPersonToCompleted(selectedPerson.Id);
+                _sqlConnector.MoveRequestedPersonToCompleted(SelectedRequestedPerson.Id);
+
                 LoadPeopleToRequestedDataGrid();
-                LoadPeopleToCompletedDataGrid();            
+                LoadPeopleToCompletedDataGrid(); 
+                
+                OnPropertyChanged(nameof(RefreshRequestedDataGrid));
+                OnPropertyChanged(nameof(RefreshCompletedDataGrid));
             }
+
+            Debug.WriteLine("button move clicked");
         }
 
         protected void OnPropertyChanged(string propertyName)
