@@ -144,7 +144,7 @@ namespace SellWoodTracker.MVVM.ViewModel
         {
             if (SelectedCompletedPerson != null)
             {
-                _sqlConnector.DeletePersonFromCompleted(SelectedRequestedPerson.Id);
+                _sqlConnector.DeletePersonFromCompleted(SelectedCompletedPerson.Id);
 
                 Mediator.NotifyRefreshDataGrids();
 

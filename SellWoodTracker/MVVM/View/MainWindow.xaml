@@ -118,7 +118,8 @@
             <DataGrid DockPanel.Dock="Top"
                       AutoGenerateColumns="False" 
                       ItemsSource="{Binding CompletedPeople}"
-                      IsReadOnly="True">
+                      IsReadOnly="True"
+                      SelectedItem="{Binding SelectedCompletedPerson, Mode=TwoWay}">
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
