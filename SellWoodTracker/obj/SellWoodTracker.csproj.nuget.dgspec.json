@@ -48,6 +48,10 @@
         "net7.0-windows7.0": {
           "targetAlias": "net7.0-windows",
           "dependencies": {
+            "ClosedXML": {
+              "target": "Package",
+              "version": "[0.102.1, )"
+            },
             "Dapper": {
               "target": "Package",
               "version": "[2.1.15, )"

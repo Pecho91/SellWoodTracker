@@ -1,6 +1,8 @@
-﻿using SellWoodTracker.MVVM.Model;
+﻿using ClosedXML.Excel;
+using SellWoodTracker.MVVM.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +11,9 @@ namespace SellWoodTracker.DataAccess
 {
     public class ExcelConnector : IDataConnection
     {
+        private const string excelPathFile = "path_to_your_excel_file.xlsx";
+        private object excelFilePath;
+
         public void CreatePerson(PersonModel model)
         {
             SavePersonToExcel(model);
@@ -40,7 +45,7 @@ namespace SellWoodTracker.DataAccess
         {
             using (var workbook = GetOrCreateWorkbook())
             {
-                var worksheet = workbook.Worksheets("RequestedPeople");
+                var worksheet = workbook.Worksheet("RequestedPeople");
 
                 int lastRow = worksheet.LastRowUsed().RowNumber();
 
@@ -86,11 +91,11 @@ namespace SellWoodTracker.DataAccess
         {
             var people = new List<PersonModel>();
 
-            using (var workbook = new XLWorkbook(excelFilePath))
+            using (var workbook = new XLWorkbook(excelPathFile))
             {
                 var worksheet = workbook.Worksheet(sheetName);
 
-                var rows = worksheet.RangeUsed().RowUsed().Skip(1);
+                var rows = worksheet.RangeUsed().RowsUsed().Skip(1);
 
                 foreach (var row in rows)
                 {
@@ -109,6 +114,72 @@ namespace SellWoodTracker.DataAccess
                     people.Add(person);
                 }
             }
+        }
+
+        private List<PersonModel> GetPeopleFromExcel(string sheetName)
+        {
+            var people = new List<PersonModel>();
+
+            using (var workbook = new XLWorkbook(excelPathFile))
+            {
+                var worksheet = workbook.Worksheet(sheetName);
+
+                var rows = worksheet.RangeUsed().RowsUsed().Skip(1); // Skip header row
+
+                foreach (var row in rows)
+                {
+                    var person = new PersonModel
+                    {
+                        Id = row.Cell(1).GetValue<int>(),
+                        FirstName = row.Cell(2).GetValue<string>(),
+                        LastName = row.Cell(3).GetValue<string>(),
+                        CellphoneNumber = row.Cell(4).GetValue<string>(),
+                        EmailAddress = row.Cell(5).GetValue<string>(),
+                        Date = row.Cell(6).GetValue<DateTime>(),
+                        MetricAmount = row.Cell(7).GetValue<int>(),
+                        MetricPrice = row.Cell(8).GetValue<decimal>()
+                    };
+
+                    people.Add(person);
+                }
+            }
+
+            return people;
+        }
+
+        private void DeletePersonFromExcel(string sheetName, int personId)
+        {
+            using (var workbook = new XLWorkbook(excelPathFile))
+            {
+                var worksheet = workbook.Worksheet(sheetName);
+
+                var rowToDelete = worksheet.RowsUsed().FirstOrDefault(r => r.Cell(1).GetValue<int>() == personId);
+
+                if (rowToDelete != null)
+                {
+                    rowToDelete.Delete();
+                    workbook.Save();
+                }
+            }
+        }
+
+        private XLWorkbook GetOrCreateWorkbook()
+        {
+            XLWorkbook workbook;
+
+            if (File.Exists(excelPathFile))
+            {
+                workbook = new XLWorkbook(excelPathFile);
+            }
+            else
+            {
+                workbook = new XLWorkbook();
+                workbook.AddWorksheet("RequestedPeople"); // Change to your desired sheet name
+                workbook.AddWorksheet("CompletedPeople"); // Change to your desired sheet name
+                workbook.SaveAs(excelPathFile);
+            }
+
+            return workbook;
         }
     }
 }
