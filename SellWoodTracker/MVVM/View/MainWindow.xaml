@@ -178,7 +178,7 @@
                     Style="{StaticResource ButtonStyle}"
                     Margin="0,0,0,145"                
                     Content="Remove Requested"
-                    Command="{Binding}"/>
+                    Command="{Binding DeletePersonFromRequestedCommand}"/>
 
             <Button Height="35"  
                      Style="{StaticResource ButtonStyle}"
