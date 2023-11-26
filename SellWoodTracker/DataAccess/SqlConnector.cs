@@ -108,6 +108,14 @@ namespace SellWoodTracker.DataAccess
                 connection.Execute("dbo.spRequestedPeople_DeleteById", new {id = personId}, commandType: CommandType.StoredProcedure);
             }
         }
+
+        public void DeletePersonFromCompleted(int personId)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            {
+                connection.Execute("dbo.spCompletedPeople_DeleteById", new { id = personId }, commandType: CommandType.StoredProcedure);
+            }
+        }
     }  
 
 }

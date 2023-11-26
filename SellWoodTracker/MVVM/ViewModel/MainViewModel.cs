@@ -56,8 +56,20 @@ namespace SellWoodTracker.MVVM.ViewModel
             }
         }
 
+        private PersonModel _selectedCompletedPerson;
+        public PersonModel SelectedCompletedPerson
+        {
+            get { return _selectedCompletedPerson; }
+            set
+            {
+                _selectedCompletedPerson = value;
+                OnPropertyChanged(nameof(SelectedCompletedPerson));
+            }
+        }
+
         public ICommand MovePersonToCompletedCommand { get; set; }
         public ICommand DeletePersonFromRequestedCommand { get; set; }
+        public ICommand DeletePersonFromCompletedCommand { get; set; }
        
         public MainViewModel()
         {               
@@ -68,6 +80,7 @@ namespace SellWoodTracker.MVVM.ViewModel
 
             MovePersonToCompletedCommand = new RelayCommand(MovePersonToCompletedDataGrid);
             DeletePersonFromRequestedCommand = new RelayCommand(DeletePersonFromRequestedDataGrid);
+            DeletePersonFromCompletedCommand = new RelayCommand(DeletePersonFromCompletedDataGrid);
             OpenAddPersonWindowCommand = new RelayCommand(OpenAddPersonWindow);
 
             Mediator.RefreshDataGrids += RefreshPeopleInDataGrids;
@@ -126,6 +139,19 @@ namespace SellWoodTracker.MVVM.ViewModel
                 Debug.WriteLine("delete requested clicked");
             }
         }
+
+        private void DeletePersonFromCompletedDataGrid(object parameter)
+        {
+            if (SelectedCompletedPerson != null)
+            {
+                _sqlConnector.DeletePersonFromCompleted(SelectedRequestedPerson.Id);
+
+                Mediator.NotifyRefreshDataGrids();
+
+                Debug.WriteLine("delete completed clicked");
+            }
+        }
+
 
         protected void OnPropertyChanged(string propertyName)
         {
