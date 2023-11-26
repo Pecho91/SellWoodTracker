@@ -28,6 +28,13 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
         </Style>
+
+        <Style x:Key="DataGridStyle" TargetType="{x:Type DataGrid}">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+        </Style>
+        
     </Window.Resources>
 
     <Window.DataContext>
@@ -89,6 +96,7 @@
             <DataGrid DockPanel.Dock="Top"
                       AutoGenerateColumns="False"
                       Height="220"
+                      Style="{StaticResource DataGridStyle}"
                       ItemsSource="{Binding RequestedPeople}"
                       IsReadOnly="True"
                       SelectedItem="{Binding SelectedRequestedPerson, Mode=TwoWay}">
@@ -117,6 +125,7 @@
 
             <DataGrid DockPanel.Dock="Top"
                       AutoGenerateColumns="False" 
+                      Style="{StaticResource DataGridStyle}"
                       ItemsSource="{Binding CompletedPeople}"
                       IsReadOnly="True"
                       SelectedItem="{Binding SelectedCompletedPerson, Mode=TwoWay}">
