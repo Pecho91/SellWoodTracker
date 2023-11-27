@@ -32,3 +32,9 @@ C:\Users\andri\source\repos\SellWoodTracker\SellWoodTracker\obj\Debug\net7.0-win
 C:\Users\andri\source\repos\SellWoodTracker\SellWoodTracker\obj\Debug\net7.0-windows\GeneratedInternalTypeHelper.g.cs
 C:\Users\andri\source\repos\SellWoodTracker\SellWoodTracker\obj\Debug\net7.0-windows\SellWoodTracker.csproj.CopyComplete
 C:\Users\andri\source\repos\SellWoodTracker\SellWoodTracker\bin\Debug\net7.0-windows\SellWoodTracker.dll.config
+C:\Users\andri\source\repos\SellWoodTracker\SellWoodTracker\bin\Debug\net7.0-windows\ClosedXML.dll
+C:\Users\andri\source\repos\SellWoodTracker\SellWoodTracker\bin\Debug\net7.0-windows\DocumentFormat.OpenXml.dll
+C:\Users\andri\source\repos\SellWoodTracker\SellWoodTracker\bin\Debug\net7.0-windows\ExcelNumberFormat.dll
+C:\Users\andri\source\repos\SellWoodTracker\SellWoodTracker\bin\Debug\net7.0-windows\Irony.dll
+C:\Users\andri\source\repos\SellWoodTracker\SellWoodTracker\bin\Debug\net7.0-windows\SixLabors.Fonts.dll
+C:\Users\andri\source\repos\SellWoodTracker\SellWoodTracker\bin\Debug\net7.0-windows\XLParser.dll

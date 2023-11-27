@@ -12,14 +12,15 @@ namespace SellWoodTracker.DataAccess
 {
     public class ExcelConnector : IDataConnection
     {
-        private const string _excelPathFile = "RequestedPeople.xlsx";
+        private readonly string _excelFilePath;
         
-
-        public void CreatePerson(PersonModel model)
+        public ExcelConnector(string excelFilePath)
         {
-           
-            SavePersonToExcel(model,"RequestedPeople");
-          
+            _excelFilePath = excelFilePath;
+        }
+        public void CreatePerson(PersonModel person)
+        {
+                SavePersonToExcel(person, "RequestedPeople");                 
         }
 
         public List<PersonModel> GetRequestedPeople_All()
@@ -44,11 +45,11 @@ namespace SellWoodTracker.DataAccess
             }
         }
 
-        public void SavePersonToExcel(PersonModel person)
+        public void SavePersonToExcel(PersonModel person, string sheetName)
         {
             using (var workbook = GetOrCreateWorkbook())
             {
-                var worksheet = workbook.Worksheet("RequestedPeople");
+                var worksheet = workbook.Worksheet(sheetName);
 
                 int lastRow = worksheet.LastRowUsed().RowNumber();
 
@@ -67,34 +68,17 @@ namespace SellWoodTracker.DataAccess
             }
         }
 
+      
         private void CreatePersonInCompleted(PersonModel person)
         {
-            using (var workbook = GetOrCreateWorkbook())
-            {
-                var worksheet = workbook.Worksheet("CompletedPeople");
-
-                int lastRow = worksheet.LastRowUsed().RowNumber();
-
-                int nextId = lastRow > 0 ? worksheet.Cell(lastRow, 1).GetValue<int>() + 1 : 1;
-
-                worksheet.Cell(lastRow + 1, 1).Value = nextId;
-                worksheet.Cell(lastRow + 1, 2).Value = person.FirstName;
-                worksheet.Cell(lastRow + 1, 3).Value = person.LastName;
-                worksheet.Cell(lastRow + 1, 4).Value = person.CellphoneNumber;
-                worksheet.Cell(lastRow + 1, 5).Value = person.EmailAddress;
-                worksheet.Cell(lastRow + 1, 6).Value = person.Date;
-                worksheet.Cell(lastRow + 1, 7).Value = person.MetricAmount;
-                worksheet.Cell(lastRow + 1, 8).Value = person.MetricPrice;
-
-                workbook.Save();
-            }
+            SavePersonToExcel(person, "CompletedPeople");
         }
 
         private List<PersonModel> GetPeopleFromExcel(string sheetName)
         {
             var people = new List<PersonModel>();
 
-            using (var workbook = new XLWorkbook(_excelPathFile))
+            using (var workbook = new XLWorkbook(_excelFilePath))
             {
                 var worksheet = workbook.Worksheet(sheetName);
 
@@ -122,7 +106,7 @@ namespace SellWoodTracker.DataAccess
 
         private void DeletePersonFromExcel(string sheetName, int personId)
         {
-            using (var workbook = new XLWorkbook(_excelPathFile))
+            using (var workbook = new XLWorkbook(_excelFilePath))
             {
                 var worksheet = workbook.Worksheet(sheetName);
 
@@ -151,16 +135,16 @@ namespace SellWoodTracker.DataAccess
         {
             XLWorkbook workbook;
 
-            if (File.Exists(_excelPathFile))
+            if (File.Exists(_excelFilePath))
             {
-                workbook = new XLWorkbook(_excelPathFile);
+                workbook = new XLWorkbook(_excelFilePath);
             }
             else
             {
                 workbook = new XLWorkbook();
                 workbook.AddWorksheet("RequestedPeople"); // Change to your desired sheet name
                 workbook.AddWorksheet("CompletedPeople"); // Change to your desired sheet name
-                workbook.SaveAs(_excelPathFile);
+                workbook.SaveAs(_excelFilePath);
             }
 
             return workbook;

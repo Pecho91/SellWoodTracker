@@ -43,8 +43,8 @@ namespace SellWoodTracker.MVVM.ViewModel
             }
         }
 
-        private readonly SqlConnector _sqlConnector;
-        private readonly ExcelConnector _excelConnector;
+        private readonly IDataConnection _sqlConnection;
+        private readonly IDataConnection _excelConnection;
 
         private PersonModel _selectedRequestedPerson;
         public PersonModel SelectedRequestedPerson
@@ -71,14 +71,17 @@ namespace SellWoodTracker.MVVM.ViewModel
         public ICommand MovePersonToCompletedCommand { get; set; }
         public ICommand DeletePersonFromRequestedCommand { get; set; }
         public ICommand DeletePersonFromCompletedCommand { get; set; }
-       
+         
         public MainViewModel()
-        {               
-            _sqlConnector = new SqlConnector();
-            _excelConnector = new ExcelConnector();
+        {
+            GlobalConfig.InitializeConnections(DatabaseType.Sql);
+            _sqlConnection = GlobalConfig.Connection;
 
-            LoadPeopleToRequestedDataGrid();
-            LoadPeopleToCompletedDataGrid();
+            GlobalConfig.InitializeConnections(DatabaseType.ExcelFile);
+            _excelConnection = GlobalConfig.Connection;
+
+            LoadDataFromSql();
+            LoadDataFromExcel();
 
             MovePersonToCompletedCommand = new RelayCommand(MovePersonToCompletedDataGrid);
             DeletePersonFromRequestedCommand = new RelayCommand(DeletePersonFromRequestedDataGrid);
@@ -96,34 +99,41 @@ namespace SellWoodTracker.MVVM.ViewModel
             Debug.WriteLine("add clicked");
         }
 
-        private void LoadPeopleToRequestedDataGrid()
+        private void LoadDataFromSql()
         {
-            List<PersonModel> requestedPeople = _sqlConnector.GetRequestedPeople_All();
-            //TODO
-            RequestedPeople = new ObservableCollection<PersonModel>(requestedPeople);
+            List<PersonModel> requestedSqlPeople = _sqlConnection.GetRequestedPeople_All();
+            RequestedPeople = new ObservableCollection<PersonModel>(requestedSqlPeople);
             OnPropertyChanged(nameof(RequestedPeople));
-        }
 
-        private void LoadPeopleToCompletedDataGrid()
-        {
-            List<PersonModel> completedPeople = _sqlConnector.GetCompletedPeople_All();
-            CompletedPeople = new ObservableCollection<PersonModel>(completedPeople);
+            List<PersonModel> completedSqlPeople = _sqlConnection.GetCompletedPeople_All();
+            CompletedPeople = new ObservableCollection<PersonModel>(completedSqlPeople);
             OnPropertyChanged(nameof(CompletedPeople));
         }
 
+        private void LoadDataFromExcel()
+        {
+            List<PersonModel> requestedExcelPeople = _excelConnection.GetRequestedPeople_All();
+            RequestedPeople = new ObservableCollection<PersonModel>(requestedExcelPeople);
+            OnPropertyChanged(nameof(RequestedPeople));
+
+            List<PersonModel> completedExcelPeople = _excelConnection.GetCompletedPeople_All();
+            CompletedPeople = new ObservableCollection<PersonModel>(completedExcelPeople);
+            OnPropertyChanged(nameof(CompletedPeople));
+        }
+       
 
         private void RefreshPeopleInDataGrids(object? sender, EventArgs e)
         {
-            
-                LoadPeopleToRequestedDataGrid();
-                LoadPeopleToCompletedDataGrid();         
+
+            LoadDataFromExcel();
+            LoadDataFromExcel();
         }
 
         private void MovePersonToCompletedDataGrid(object parameter)
         {
             if(SelectedRequestedPerson != null)
             {
-                _sqlConnector.MoveRequestedPersonToCompleted(SelectedRequestedPerson.Id);
+                _sqlConnection.MoveRequestedPersonToCompleted(SelectedRequestedPerson.Id);
 
                 Mediator.NotifyRefreshDataGrids();
 
@@ -135,7 +145,7 @@ namespace SellWoodTracker.MVVM.ViewModel
         {
             if(SelectedRequestedPerson != null)
             {
-                _sqlConnector.DeletePersonFromRequested(SelectedRequestedPerson.Id);
+                _sqlConnection.DeletePersonFromRequested(SelectedRequestedPerson.Id);
 
                 Mediator.NotifyRefreshDataGrids();
 
@@ -147,7 +157,7 @@ namespace SellWoodTracker.MVVM.ViewModel
         {
             if (SelectedCompletedPerson != null)
             {
-                _sqlConnector.DeletePersonFromCompleted(SelectedCompletedPerson.Id);
+                _sqlConnection.DeletePersonFromCompleted(SelectedCompletedPerson.Id);
 
                 Mediator.NotifyRefreshDataGrids();
 
