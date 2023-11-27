@@ -45,7 +45,7 @@ namespace SellWoodTracker.DataAccess
             }
         }
 
-        public void SavePersonToExcel(PersonModel person, string sheetName)
+        private void SavePersonToExcel(PersonModel person, string sheetName)
         {
             using (var workbook = GetOrCreateWorkbook())
             {
@@ -78,10 +78,10 @@ namespace SellWoodTracker.DataAccess
         {
             var people = new List<PersonModel>();
 
-            using (var workbook = new XLWorkbook(_excelFilePath))
+            using (var workbook = GetOrCreateWorkbook())
             {
                 var worksheet = workbook.Worksheet(sheetName);
-
+                // TODO
                 var rows = worksheet.RangeUsed().RowsUsed().Skip(1);
 
                 foreach (var row in rows)
