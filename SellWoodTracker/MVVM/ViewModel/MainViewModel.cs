@@ -44,6 +44,7 @@ namespace SellWoodTracker.MVVM.ViewModel
         }
 
         private readonly SqlConnector _sqlConnector;
+        private readonly ExcelConnector _excelConnector;
 
         private PersonModel _selectedRequestedPerson;
         public PersonModel SelectedRequestedPerson
@@ -74,6 +75,7 @@ namespace SellWoodTracker.MVVM.ViewModel
         public MainViewModel()
         {               
             _sqlConnector = new SqlConnector();
+            _excelConnector = new ExcelConnector();
 
             LoadPeopleToRequestedDataGrid();
             LoadPeopleToCompletedDataGrid();
@@ -97,6 +99,7 @@ namespace SellWoodTracker.MVVM.ViewModel
         private void LoadPeopleToRequestedDataGrid()
         {
             List<PersonModel> requestedPeople = _sqlConnector.GetRequestedPeople_All();
+            //TODO
             RequestedPeople = new ObservableCollection<PersonModel>(requestedPeople);
             OnPropertyChanged(nameof(RequestedPeople));
         }

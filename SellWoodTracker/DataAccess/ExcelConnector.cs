@@ -11,8 +11,8 @@ namespace SellWoodTracker.DataAccess
 {
     public class ExcelConnector : IDataConnection
     {
-        private const string excelPathFile = "path_to_your_excel_file.xlsx";
-        private object excelFilePath;
+        private const string _excelPathFile = "path_to_your_excel_file.xlsx";
+        
 
         public void CreatePerson(PersonModel model)
         {
@@ -91,7 +91,7 @@ namespace SellWoodTracker.DataAccess
         {
             var people = new List<PersonModel>();
 
-            using (var workbook = new XLWorkbook(excelPathFile))
+            using (var workbook = new XLWorkbook(_excelPathFile))
             {
                 var worksheet = workbook.Worksheet(sheetName);
 
@@ -106,7 +106,7 @@ namespace SellWoodTracker.DataAccess
                         LastName = row.Cell(3).GetValue<string>(),
                         CellphoneNumber = row.Cell(4).GetValue<string>(),
                         EmailAddress = row.Cell(5).GetValue<string>(),
-                        Date = row.Cell(6).GetValue<DateTime>(),
+                        Date = row.Cell(6).GetValue<DateTime>().ToString("dd.MMM.yyyy."),
                         MetricAmount = row.Cell(7).GetValue<int>(),
                         MetricPrice = row.Cell(8).GetValue<decimal>()
                     };
@@ -114,42 +114,12 @@ namespace SellWoodTracker.DataAccess
                     people.Add(person);
                 }
             }
-        }
-
-        private List<PersonModel> GetPeopleFromExcel(string sheetName)
-        {
-            var people = new List<PersonModel>();
-
-            using (var workbook = new XLWorkbook(excelPathFile))
-            {
-                var worksheet = workbook.Worksheet(sheetName);
-
-                var rows = worksheet.RangeUsed().RowsUsed().Skip(1); // Skip header row
-
-                foreach (var row in rows)
-                {
-                    var person = new PersonModel
-                    {
-                        Id = row.Cell(1).GetValue<int>(),
-                        FirstName = row.Cell(2).GetValue<string>(),
-                        LastName = row.Cell(3).GetValue<string>(),
-                        CellphoneNumber = row.Cell(4).GetValue<string>(),
-                        EmailAddress = row.Cell(5).GetValue<string>(),
-                        Date = row.Cell(6).GetValue<DateTime>(),
-                        MetricAmount = row.Cell(7).GetValue<int>(),
-                        MetricPrice = row.Cell(8).GetValue<decimal>()
-                    };
-
-                    people.Add(person);
-                }
-            }
-
             return people;
         }
 
         private void DeletePersonFromExcel(string sheetName, int personId)
         {
-            using (var workbook = new XLWorkbook(excelPathFile))
+            using (var workbook = new XLWorkbook(_excelPathFile))
             {
                 var worksheet = workbook.Worksheet(sheetName);
 
@@ -163,20 +133,31 @@ namespace SellWoodTracker.DataAccess
             }
         }
 
+        public void DeletePersonFromRequested(int personId)
+        {
+            DeletePersonFromExcel("RequestedPeople", personId);
+        }
+
+        public void DeletePersonFromCompleted(int personId)
+        {
+            DeletePersonFromExcel("CompletedPeople", personId);
+        }
+
+
         private XLWorkbook GetOrCreateWorkbook()
         {
             XLWorkbook workbook;
 
-            if (File.Exists(excelPathFile))
+            if (File.Exists(_excelPathFile))
             {
-                workbook = new XLWorkbook(excelPathFile);
+                workbook = new XLWorkbook(_excelPathFile);
             }
             else
             {
                 workbook = new XLWorkbook();
                 workbook.AddWorksheet("RequestedPeople"); // Change to your desired sheet name
                 workbook.AddWorksheet("CompletedPeople"); // Change to your desired sheet name
-                workbook.SaveAs(excelPathFile);
+                workbook.SaveAs(_excelPathFile);
             }
 
             return workbook;
