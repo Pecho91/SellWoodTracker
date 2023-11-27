@@ -9,6 +9,6 @@ namespace SellWoodTracker
     public enum DatabaseType
     {
         Sql,
-       // ExcelFile
+        ExcelFile
     }
 }

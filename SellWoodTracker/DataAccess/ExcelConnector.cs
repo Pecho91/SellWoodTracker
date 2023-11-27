@@ -2,6 +2,7 @@
 using SellWoodTracker.MVVM.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,12 +12,14 @@ namespace SellWoodTracker.DataAccess
 {
     public class ExcelConnector : IDataConnection
     {
-        private const string _excelPathFile = "path_to_your_excel_file.xlsx";
+        private const string _excelPathFile = "RequestedPeople.xlsx";
         
 
         public void CreatePerson(PersonModel model)
         {
-            SavePersonToExcel(model);
+           
+            SavePersonToExcel(model,"RequestedPeople");
+          
         }
 
         public List<PersonModel> GetRequestedPeople_All()

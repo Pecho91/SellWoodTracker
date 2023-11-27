@@ -10,6 +10,8 @@ namespace SellWoodTracker
 {
     public static class GlobalConfig
     {
+        public const string requestedPeopleFile = "RequestedPeople.xlsx";
+        public const string connectedPeopleFile = "ConnectedPeople.xlsx";
         public static IDataConnection? Connection { get; private set; }
 
         public static void InitializeConnections (DatabaseType db)
@@ -18,6 +20,12 @@ namespace SellWoodTracker
             {
                 SqlConnector sql = new SqlConnector ();
                 Connection = sql;
+            }
+
+            if (db == DatabaseType.ExcelFile)
+            {
+                ExcelConnector excelFile = new ExcelConnector();
+                Connection = excelFile;
             }
         }
 
