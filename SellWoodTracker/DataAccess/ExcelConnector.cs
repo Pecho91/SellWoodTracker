@@ -30,12 +30,26 @@ namespace SellWoodTracker.DataAccess
 
         public List<PersonModel> GetRequestedPeople_All()
         {
-            return GetPeopleFromExcel("RequestedPeople");
+            var requestedPeople = GetPeopleFromExcel("RequestedPeople", "Requested");
+
+            if (requestedPeople.Count == 0)
+            {
+                Console.WriteLine("No requested people data found.");
+            }
+
+            return requestedPeople;
         }
 
         public List<PersonModel> GetCompletedPeople_All()
         {
-            return GetPeopleFromExcel("CompletedPeople");
+            var completedPeople = GetPeopleFromExcel("CompletedPeople", "Completed");
+
+            if (completedPeople.Count == 0)
+            {
+                Console.WriteLine("No completed people data found.");
+            }
+
+            return completedPeople;
         }
 
         public void MoveRequestedPersonToCompleted(int personId)
@@ -64,16 +78,15 @@ namespace SellWoodTracker.DataAccess
 
                         if (lastRow == 0)
                         {
-                            
                             worksheet.Cell(1, 1).Value = "Id";
                             worksheet.Cell(1, 2).Value = "First Name";
                             worksheet.Cell(1, 3).Value = "Last Name";
                             worksheet.Cell(1, 4).Value = "Email";
                             worksheet.Cell(1, 5).Value = "Cellphone";
                             worksheet.Cell(1, 6).Value = "Date";
-                            worksheet.Cell(1, 5).Value = "Metric Amount";
-                            worksheet.Cell(1, 6).Value = "Metric Price";
-                          
+                            worksheet.Cell(1, 7).Value = "Metric Amount";
+                            worksheet.Cell(1, 8).Value = "Metric Price";
+
                             var range = worksheet.Range("A1:H1");
                             range.Style.Font.Bold = true;
                             range.Style.Fill.BackgroundColor = XLColor.LightGray;
@@ -97,8 +110,8 @@ namespace SellWoodTracker.DataAccess
                         worksheet.Cell(lastRow + 1, 1).Value = nextId;
                         worksheet.Cell(lastRow + 1, 2).Value = person.FirstName;
                         worksheet.Cell(lastRow + 1, 3).Value = person.LastName;
-                        worksheet.Cell(lastRow + 1, 4).Value = person.CellphoneNumber;
-                        worksheet.Cell(lastRow + 1, 5).Value = person.EmailAddress;
+                        worksheet.Cell(lastRow + 1, 4).Value = person.EmailAddress;
+                        worksheet.Cell(lastRow + 1, 5).Value = person.CellphoneNumber;
                         worksheet.Cell(lastRow + 1, 6).Value = person.Date;
                         worksheet.Cell(lastRow + 1, 7).Value = person.MetricAmount;
                         worksheet.Cell(lastRow + 1, 8).Value = person.MetricPrice;
@@ -124,30 +137,34 @@ namespace SellWoodTracker.DataAccess
             SavePersonToExcel(person, "CompletedPeople");
         }
 
-        private List<PersonModel> GetPeopleFromExcel(string sheetName)
+        private List<PersonModel> GetPeopleFromExcel(string sheetName, string status)
         {
             var people = new List<PersonModel>();
 
             try
             {
                 XLWorkbook workbook = GetOrCreateWorkbook();
+                var worksheet = workbook.Worksheet(sheetName);
 
-                if (workbook != null)
+                if (worksheet != null)
                 {
-                    var worksheet = workbook.Worksheet(sheetName);
+                    var range = worksheet.RangeUsed();
 
-                    if (worksheet != null)
+                    if (range != null)
                     {
-                        var range = worksheet.RangeUsed();
+                        var rows = range.RowsUsed()?.Skip(1);
 
-                        if (range != null)
+                        if (rows != null)
                         {
-                            var rows = range.RowsUsed()?.Skip(1);
-
-                            if (rows != null)
+                            foreach (var row in rows)
                             {
-                                foreach (var row in rows)
+                                // Assuming status is in column 10
+                                var rowStatus = row.Cell(10).GetValue<string>();
+
+                                // Check if the status matches the expected status (Requested/Completed)
+                                if (rowStatus.Equals(status, StringComparison.OrdinalIgnoreCase))
                                 {
+                                    // Your code to populate PersonModel
                                     var person = new PersonModel()
                                     {
                                         Id = row.Cell(1).GetValue<int>(),
@@ -163,29 +180,25 @@ namespace SellWoodTracker.DataAccess
                                     people.Add(person);
                                 }
                             }
-                            else
-                            {
-                                Debug.WriteLine($"No rows found in '{sheetName}'.");
-                            }
                         }
                         else
                         {
-                            Debug.WriteLine($"No used range found in '{sheetName}'.");
+                            Console.WriteLine($"No rows found in '{sheetName}'.");
                         }
                     }
                     else
                     {
-                        Debug.WriteLine($"Worksheet '{sheetName}' not found.");
+                        Console.WriteLine($"No used range found in '{sheetName}'.");
                     }
                 }
                 else
                 {
-                    Debug.WriteLine("Workbook not obtained.");
+                    Console.WriteLine($"Worksheet '{sheetName}' not found.");
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Error: {ex.Message}");
             }
 
             return people;
