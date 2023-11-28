@@ -59,6 +59,9 @@ namespace SellWoodTracker.MVVM.ViewModel
                 SqlConnector sqlConnector = new SqlConnector();
                 sqlConnector.CreatePerson(NewPerson);
                 // Clear the input fields after adding the person
+                ExcelConnector excelConnector = new ExcelConnector(GlobalConfig.ExcelFilePath);
+                excelConnector.CreatePerson(NewPerson);
+
                 NewPerson = new PersonModel(); // Optionally reset the NewPerson object for a new entry
 
                 Mediator.NotifyRefreshDataGrids();

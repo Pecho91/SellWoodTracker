@@ -80,7 +80,7 @@ namespace SellWoodTracker.MVVM.ViewModel
             GlobalConfig.InitializeConnections(DatabaseType.ExcelFile);
             _excelConnection = GlobalConfig.Connection;
 
-            LoadDataFromSql();
+            //LoadDataFromSql();
             LoadDataFromExcel();
 
             MovePersonToCompletedCommand = new RelayCommand(MovePersonToCompletedDataGrid);
@@ -125,7 +125,7 @@ namespace SellWoodTracker.MVVM.ViewModel
         private void RefreshPeopleInDataGrids(object? sender, EventArgs e)
         {
 
-            LoadDataFromExcel();
+            //LoadDataFromSql();
             LoadDataFromExcel();
         }
 
@@ -134,6 +134,7 @@ namespace SellWoodTracker.MVVM.ViewModel
             if(SelectedRequestedPerson != null)
             {
                 _sqlConnection.MoveRequestedPersonToCompleted(SelectedRequestedPerson.Id);
+                _excelConnection.MoveRequestedPersonToCompleted(SelectedRequestedPerson.Id);
 
                 Mediator.NotifyRefreshDataGrids();
 
@@ -146,6 +147,7 @@ namespace SellWoodTracker.MVVM.ViewModel
             if(SelectedRequestedPerson != null)
             {
                 _sqlConnection.DeletePersonFromRequested(SelectedRequestedPerson.Id);
+                _excelConnection.DeletePersonFromRequested(SelectedRequestedPerson.Id);
 
                 Mediator.NotifyRefreshDataGrids();
 
@@ -158,6 +160,7 @@ namespace SellWoodTracker.MVVM.ViewModel
             if (SelectedCompletedPerson != null)
             {
                 _sqlConnection.DeletePersonFromCompleted(SelectedCompletedPerson.Id);
+                _excelConnection.DeletePersonFromCompleted(SelectedCompletedPerson.Id);
 
                 Mediator.NotifyRefreshDataGrids();
 
