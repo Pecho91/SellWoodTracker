@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SellWoodTracker.MVVM.ViewModel
@@ -140,12 +141,17 @@ namespace SellWoodTracker.MVVM.ViewModel
         {
             if(SelectedRequestedPerson != null)
             {
-                _sqlConnection.MoveRequestedPersonToCompleted(SelectedRequestedPerson.Id);
-                _excelConnection.MoveRequestedPersonToCompleted(SelectedRequestedPerson.Id);
+                bool confirmed = ShowCompleteConfirmationDialog();
 
-                Mediator.NotifyRefreshDataGrids();
+                if (confirmed)
+                {
+                    _sqlConnection.MoveRequestedPersonToCompleted(SelectedRequestedPerson.Id);
+                    _excelConnection.MoveRequestedPersonToCompleted(SelectedRequestedPerson.Id);
 
-                Debug.WriteLine("move requested clicked");
+                    Mediator.NotifyRefreshDataGrids();
+
+                    Debug.WriteLine("move requested clicked"); 
+                }
             }        
         }
 
@@ -153,12 +159,17 @@ namespace SellWoodTracker.MVVM.ViewModel
         {
             if(SelectedRequestedPerson != null)
             {
-                _sqlConnection.DeletePersonFromRequested(SelectedRequestedPerson.Id);
-                _excelConnection.DeletePersonFromRequested(SelectedRequestedPerson.Id);
+                bool confirmed = ShowDeleteConfirmationDialog();
 
-                Mediator.NotifyRefreshDataGrids();
+                if (confirmed)
+                {
+                    _sqlConnection.DeletePersonFromRequested(SelectedRequestedPerson.Id);
+                    _excelConnection.DeletePersonFromRequested(SelectedRequestedPerson.Id);
 
-                Debug.WriteLine("delete requested clicked");
+                    Mediator.NotifyRefreshDataGrids();
+
+                    Debug.WriteLine("delete requested clicked"); 
+                }
             }
         }
 
@@ -166,16 +177,31 @@ namespace SellWoodTracker.MVVM.ViewModel
         {
             if (SelectedCompletedPerson != null)
             {
-                _sqlConnection.DeletePersonFromCompleted(SelectedCompletedPerson.Id);
-                _excelConnection.DeletePersonFromCompleted(SelectedCompletedPerson.Id);
+                bool confirmed = ShowDeleteConfirmationDialog();
 
-                Mediator.NotifyRefreshDataGrids();
+                if (confirmed)
+                {
+                    _sqlConnection.DeletePersonFromCompleted(SelectedCompletedPerson.Id);
+                    _excelConnection.DeletePersonFromCompleted(SelectedCompletedPerson.Id);
 
-                Debug.WriteLine("delete completed clicked");
+                    Mediator.NotifyRefreshDataGrids();
+
+                    Debug.WriteLine("delete completed clicked"); 
+                }
             }
         }
 
+        private bool ShowDeleteConfirmationDialog()
+        {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            return result == MessageBoxResult.Yes;
+        }
 
+        private bool ShowCompleteConfirmationDialog()
+        {
+            MessageBoxResult result = MessageBox.Show("Is it completed?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            return result == MessageBoxResult.Yes;
+        }
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

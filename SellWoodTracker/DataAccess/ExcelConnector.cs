@@ -245,12 +245,13 @@ namespace SellWoodTracker.DataAccess
         private DateTime? GetSafeDateValue(IXLCell cell)
         {
             DateTime dateValue;
-            if (DateTime.TryParseExact(cell.Value.ToString(), "dd.MM.yyyy.", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateValue))
+            if (DateTime.TryParse(cell.Value.ToString(), out dateValue))
             {
                 return dateValue;
             }
             else
             {
+                Debug.WriteLine($"Error parsing date from Excel cell: {cell.Address} - Value: {cell.Value}");
                 return null; // Return null if the date cannot be parsed
             }
         }

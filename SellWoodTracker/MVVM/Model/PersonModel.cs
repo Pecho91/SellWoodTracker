@@ -48,7 +48,10 @@ namespace SellWoodTracker.MVVM.Model
         /// </summary>
         public decimal MetricPrice { get; set; }
 
-
+        public PersonModel() 
+        {   
+            Date = DateTime.Now;
+        }
 
         public string FullName
         {
