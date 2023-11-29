@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -30,7 +31,7 @@ namespace SellWoodTracker.DataAccess
 
         public List<PersonModel> GetRequestedPeople_All()
         {
-            var requestedPeople = GetPeopleFromExcel("RequestedPeople", "Requested");
+            var requestedPeople = GetPeopleFromExcel("RequestedPeople");
 
             if (requestedPeople.Count == 0)
             {
@@ -42,7 +43,7 @@ namespace SellWoodTracker.DataAccess
 
         public List<PersonModel> GetCompletedPeople_All()
         {
-            var completedPeople = GetPeopleFromExcel("CompletedPeople", "Completed");
+            var completedPeople = GetPeopleFromExcel("CompletedPeople");
 
             if (completedPeople.Count == 0)
             {
@@ -78,6 +79,7 @@ namespace SellWoodTracker.DataAccess
 
                         if (lastRow == 0)
                         {
+                            // Header row
                             worksheet.Cell(1, 1).Value = "Id";
                             worksheet.Cell(1, 2).Value = "First Name";
                             worksheet.Cell(1, 3).Value = "Last Name";
@@ -90,22 +92,11 @@ namespace SellWoodTracker.DataAccess
                             var range = worksheet.Range("A1:H1");
                             range.Style.Font.Bold = true;
                             range.Style.Fill.BackgroundColor = XLColor.LightGray;
+
+                            lastRow = 1; // Reset lastRow to 1 after adding headers
                         }
 
-                        int nextId = 1;
-                        if (lastRow > 0)
-                        {
-                            int tempId;
-                            if (worksheet.Cell(lastRow, 1).TryGetValue(out tempId))
-                            {
-                                nextId = tempId + 1;
-                            }
-                            else
-                            {
-                                // Handle invalid or non-integer value in the cell
-                                Debug.WriteLine($"Cell A{lastRow} does not contain a valid integer.");
-                            }
-                        }
+                        int nextId = lastRow; // Using lastRow as nextId for simplicity, you can adjust this logic as needed
 
                         worksheet.Cell(lastRow + 1, 1).Value = nextId;
                         worksheet.Cell(lastRow + 1, 2).Value = person.FirstName;
@@ -137,7 +128,7 @@ namespace SellWoodTracker.DataAccess
             SavePersonToExcel(person, "CompletedPeople");
         }
 
-        private List<PersonModel> GetPeopleFromExcel(string sheetName, string status)
+        private List<PersonModel> GetPeopleFromExcel(string sheetName)
         {
             var people = new List<PersonModel>();
 
@@ -150,67 +141,69 @@ namespace SellWoodTracker.DataAccess
                 {
                     var range = worksheet.RangeUsed();
 
-                    if (range != null)
+                    if (range != null && range.RowCount() > 1) // Checking if there's data beyond the header row
                     {
-                        var rows = range.RowsUsed()?.Skip(1);
+                        var rows = range.RowsUsed().Skip(1); // Skipping the header row
 
-                        if (rows != null)
+                        foreach (var row in rows)
                         {
-                            foreach (var row in rows)
+                            try
                             {
-                                // Assuming status is in column 10
-                                var rowStatus = row.Cell(10).GetValue<string>();
-
-                                // Check if the status matches the expected status (Requested/Completed)
-                                if (rowStatus.Equals(status, StringComparison.OrdinalIgnoreCase))
+                                var person = new PersonModel()
                                 {
-                                    // Your code to populate PersonModel
-                                    var person = new PersonModel()
-                                    {
-                                        Id = row.Cell(1).GetValue<int>(),
-                                        FirstName = row.Cell(2).GetValue<string>(),
-                                        LastName = row.Cell(3).GetValue<string>(),
-                                        CellphoneNumber = row.Cell(4).GetValue<string>(),
-                                        EmailAddress = row.Cell(5).GetValue<string>(),
-                                        Date = row.Cell(6).GetValue<DateTime>().ToString("dd.MMM.yyyy."),
-                                        MetricAmount = row.Cell(7).GetValue<int>(),
-                                        MetricPrice = row.Cell(8).GetValue<decimal>()
-                                    };
+                                    Id = row.Cell(1).GetValue<int>(),
+                                    FirstName = row.Cell(2).GetValue<string>(),
+                                    LastName = row.Cell(3).GetValue<string>(),
+                                    CellphoneNumber = row.Cell(4).GetValue<string>(),
+                                    EmailAddress = row.Cell(5).GetValue<string>(),
+                                    Date = GetSafeDateValue(row.Cell(6)),
+                                    MetricAmount = row.Cell(7).GetValue<decimal>(),
+                                    MetricPrice = row.Cell(8).GetValue<decimal>()
+                                };
 
-                                    people.Add(person);
-                                }
+                                people.Add(person);
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine($"No rows found in '{sheetName}'.");
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine($"Error processing row {row.RowNumber()} in '{sheetName}': {ex.Message}");
+                                // Add any specific details or logging you want here
+                            }
                         }
                     }
                     else
                     {
-                        Console.WriteLine($"No used range found in '{sheetName}'.");
+                        Debug.WriteLine($"No data found in '{sheetName}' or the sheet is empty.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine($"Worksheet '{sheetName}' not found.");
+                    Debug.WriteLine($"Worksheet '{sheetName}' not found.");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Debug.WriteLine($"Error: {ex.Message}");
             }
 
             return people;
         }
-
         private void DeletePersonFromExcel(string sheetName, int personId)
         {
             using (var workbook = new XLWorkbook(_excelFilePath))
             {
                 var worksheet = workbook.Worksheet(sheetName);
 
-                var rowToDelete = worksheet.RowsUsed().FirstOrDefault(r => r.Cell(1).GetValue<int>() == personId);
+                // Find the row based on the personId and handle conversion issues or empty cells
+                var rowToDelete = worksheet.RowsUsed()
+                    .FirstOrDefault(r =>
+                    {
+                        int id;
+                        if (r.Cell(1).TryGetValue(out id))
+                        {
+                            return id == personId;
+                        }
+                        return false;
+                    });
 
                 if (rowToDelete != null)
                 {
@@ -248,6 +241,18 @@ namespace SellWoodTracker.DataAccess
             }
 
             return workbook;
+        }
+        private DateTime? GetSafeDateValue(IXLCell cell)
+        {
+            DateTime dateValue;
+            if (DateTime.TryParseExact(cell.Value.ToString(), "dd.MM.yyyy.", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateValue))
+            {
+                return dateValue;
+            }
+            else
+            {
+                return null; // Return null if the date cannot be parsed
+            }
         }
     }
 }

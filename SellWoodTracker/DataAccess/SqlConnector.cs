@@ -32,14 +32,15 @@ namespace SellWoodTracker.DataAccess
                 p.Add("@LastName", model.LastName);
                 p.Add("@CellphoneNumber", model.CellphoneNumber);
                 p.Add("@EmailAddress", model.EmailAddress);
-                
-                if (DateTime.TryParseExact(model.Date, "dd.MM.yyyy.", CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out DateTime parsedDate))
+
+                if (model.Date.HasValue) // Check if the nullable DateTime has a value
                 {
-                    p.Add("@Date", parsedDate, DbType.Date);
+                    p.Add("@Date", model.Date.Value, DbType.Date); // Use model.Date.Value to access the DateTime value
                 }
                 else
                 {
-                    throw new ArgumentException("Invalid date format");
+                    // Handle case where Date is null (if needed)
+                    p.Add("@Date", DBNull.Value, DbType.Date); // Or specify another default value, like DBNull.Value
                 }
 
                 p.Add("@MetricAmount", model.MetricAmount);

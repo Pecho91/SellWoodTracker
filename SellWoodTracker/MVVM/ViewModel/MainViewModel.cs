@@ -112,13 +112,20 @@ namespace SellWoodTracker.MVVM.ViewModel
 
         private void LoadDataFromExcel()
         {
-            List<PersonModel> requestedExcelPeople = _excelConnection.GetRequestedPeople_All();
-            RequestedPeople = new ObservableCollection<PersonModel>(requestedExcelPeople);
-            OnPropertyChanged(nameof(RequestedPeople));
+            try
+            {
+                List<PersonModel> requestedExcelPeople = _excelConnection.GetRequestedPeople_All();
+                RequestedPeople = new ObservableCollection<PersonModel>(requestedExcelPeople);
+                OnPropertyChanged(nameof(RequestedPeople));
 
-            List<PersonModel> completedExcelPeople = _excelConnection.GetCompletedPeople_All();
-            CompletedPeople = new ObservableCollection<PersonModel>(completedExcelPeople);
-            OnPropertyChanged(nameof(CompletedPeople));
+                List<PersonModel> completedExcelPeople = _excelConnection.GetCompletedPeople_All();
+                CompletedPeople = new ObservableCollection<PersonModel>(completedExcelPeople);
+                OnPropertyChanged(nameof(CompletedPeople));
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading data from Excel: {ex.Message}");
+            }
         }
        
 

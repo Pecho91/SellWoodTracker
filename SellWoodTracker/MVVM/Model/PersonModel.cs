@@ -37,7 +37,7 @@ namespace SellWoodTracker.MVVM.Model
         /// <summary>
         /// Date order
         /// </summary>
-        public string Date { get; set; }
+        public DateTime? Date { get; set; }
         /// <summary>
         /// Amount of m3 that person order
         /// </summary>
