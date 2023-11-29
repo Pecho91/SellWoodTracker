@@ -10,29 +10,32 @@ namespace SellWoodTracker
 {
     public static class GlobalConfig
     {
-        //public const string requestedPeopleFile = "RequestedPeople.xlsx";
-        //public const string connectedPeopleFile = "ConnectedPeople.xlsx";
-        public const string ExcelFilePath = "C:/Users/andri/OneDrive/Documents/SellWoodTracker.xlsx";
+        
+        //public const string ExcelFilePath = "C:/Users/andri/OneDrive/Documents/SellWoodTracker.xlsx";
         public static IDataConnection? Connection { get; private set; }
 
         public static void InitializeConnections (DatabaseType db)
         {
-            if (db == DatabaseType.Sql)
-            {
-                SqlConnector sql = new SqlConnector();
-                Connection = sql;
-            }
-
-            //if (db == DatabaseType.ExcelFile)
+            //if (db == DatabaseType.Sql)
             //{
-            //    ExcelConnector excelFile = new ExcelConnector(ExcelFilePath);
-            //    Connection = excelFile;
+            //    SqlConnector sql = new SqlConnector();
+            //    Connection = sql;
             //}
+
+            // TODO sql/excel 
+            if (db == DatabaseType.ExcelFile)
+            {
+                ExcelConnector excelFile = new ExcelConnector();
+                Connection = excelFile;
+            }
         }
 
         public static string CnnString(string name)
         {
-            return ConfigurationManager.ConnectionStrings[name].ConnectionString;
+            // return ConfigurationManager.ConnectionStrings[name].ConnectionString;
+
+            var connectionString = ConfigurationManager.ConnectionStrings[name];
+            return connectionString != null ? connectionString.ConnectionString : string.Empty;
         }
 
         public static string AppKeyLookup(string key)

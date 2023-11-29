@@ -19,23 +19,26 @@ namespace SellWoodTracker.DataAccess
     public class ExcelConnector : IDataConnection
     {
         private readonly string _excelFilePath;
-        
-        public ExcelConnector(string excelFilePath)
+        private const string db = "SellWoodTracker.xlxs";
+
+        public ExcelConnector()
         {
-            _excelFilePath = excelFilePath;
+            _excelFilePath = GlobalConfig.CnnString(db);
         }
         public void CreatePerson(PersonModel person)
         {
-             SavePersonToExcel(person, "RequestedPeople");                 
+           
+                SavePersonToExcel(person, "RequestedPeople"); 
+                         
         }
 
         public List<PersonModel> GetRequestedPeople_All()
-        {
+        {           
             var requestedPeople = GetPeopleFromExcel("RequestedPeople");
 
             if (requestedPeople.Count == 0)
             {
-                Console.WriteLine("No requested people data found.");
+                Debug.WriteLine("No requested people data found.");
             }
 
             return requestedPeople;
@@ -47,7 +50,7 @@ namespace SellWoodTracker.DataAccess
 
             if (completedPeople.Count == 0)
             {
-                Console.WriteLine("No completed people data found.");
+                Debug.WriteLine("No completed people data found.");
             }
 
             return completedPeople;
