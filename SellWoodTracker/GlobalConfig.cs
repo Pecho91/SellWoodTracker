@@ -17,17 +17,17 @@ namespace SellWoodTracker
 
         public static void InitializeConnections (DatabaseType db)
         {
-            //if (db == DatabaseType.Sql)
-            //{
-            //    SqlConnector sql = new SqlConnector();
-            //    Connection = sql;
-            //}
-
-            if (db == DatabaseType.ExcelFile)
+            if (db == DatabaseType.Sql)
             {
-                ExcelConnector excelFile = new ExcelConnector(ExcelFilePath);
-                Connection = excelFile;
+                SqlConnector sql = new SqlConnector();
+                Connection = sql;
             }
+
+            //if (db == DatabaseType.ExcelFile)
+            //{
+            //    ExcelConnector excelFile = new ExcelConnector(ExcelFilePath);
+            //    Connection = excelFile;
+            //}
         }
 
         public static string CnnString(string name)

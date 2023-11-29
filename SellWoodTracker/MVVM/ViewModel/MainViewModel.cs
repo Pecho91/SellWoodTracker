@@ -78,11 +78,13 @@ namespace SellWoodTracker.MVVM.ViewModel
             GlobalConfig.InitializeConnections(DatabaseType.Sql);
             _sqlConnection = GlobalConfig.Connection;
 
-            GlobalConfig.InitializeConnections(DatabaseType.ExcelFile);
-            _excelConnection = GlobalConfig.Connection;
+            //TODO at same time saves sql,excel
 
-            //LoadDataFromSql();
-            LoadDataFromExcel();
+            //GlobalConfig.InitializeConnections(DatabaseType.ExcelFile);
+            //_excelConnection = GlobalConfig.Connection;
+
+            LoadDataFromSql();
+            //LoadDataFromExcel();
 
             MovePersonToCompletedCommand = new RelayCommand(MovePersonToCompletedDataGrid);
             DeletePersonFromRequestedCommand = new RelayCommand(DeletePersonFromRequestedDataGrid);
@@ -133,8 +135,8 @@ namespace SellWoodTracker.MVVM.ViewModel
         private void RefreshPeopleInDataGrids(object? sender, EventArgs e)
         {
 
-            //LoadDataFromSql();
-            LoadDataFromExcel();
+            LoadDataFromSql();
+            //LoadDataFromExcel();
         }
 
         private void MovePersonToCompletedDataGrid(object parameter)
