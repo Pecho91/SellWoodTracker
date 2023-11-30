@@ -39,6 +39,7 @@ namespace SellWoodTracker.MVVM.ViewModel
         public ICommand AddPersonCommand { get; }
         public ICommand ClearFieldsCommand { get; }
 
+        
         public AddPersonViewModel()
         {
             AddPersonCommand = new RelayCommand(AddPerson);
@@ -91,21 +92,15 @@ namespace SellWoodTracker.MVVM.ViewModel
         {
             if (NewPerson != null)
             {
-                // Choose the database type here based on your conditions or user input
-                DatabaseType chosenDatabase = DatabaseType.ExcelFile; // For example, defaulting to SQL here
-
-                // Initialize connections based on chosen database
-                GlobalConfig.InitializeConnections(chosenDatabase);
-
-                // Create the person based on the selected database
-                switch (chosenDatabase)
+                                       
+                switch (GlobalConfig.ChosenDatabase)
                 {
                     case DatabaseType.ExcelFile:
-                        GlobalConfig.Connection?.CreatePerson(NewPerson); // Call CreatePerson based on Excel connection
+                        GlobalConfig.Connection?.CreatePerson(NewPerson); 
                         break;
 
                     case DatabaseType.Sql:
-                        GlobalConfig.Connection?.CreatePerson(NewPerson); // Call CreatePerson based on SQL connection
+                        GlobalConfig.Connection?.CreatePerson(NewPerson); 
                         break;
 
                     default:

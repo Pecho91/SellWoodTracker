@@ -10,29 +10,37 @@ namespace SellWoodTracker
 {
     public static class GlobalConfig
     {
+        private static DatabaseType _chosenDatabase = DatabaseType.Sql;
+        public static DatabaseType ChosenDatabase
+        {
+            get { return _chosenDatabase; }
+        }
         
-        //public const string ExcelFilePath = "C:/Users/andri/OneDrive/Documents/SellWoodTracker.xlsx";
         public static IDataConnection? Connection { get; private set; }
 
         public static void InitializeConnections (DatabaseType db)
         {
-            //if (db == DatabaseType.Sql)
-            //{
-            //    SqlConnector sql = new SqlConnector();
-            //    Connection = sql;
-            //}
-
-            // TODO sql/excel 
-            if (db == DatabaseType.ExcelFile)
+            switch (db)
             {
-                ExcelConnector excelFile = new ExcelConnector();
-                Connection = excelFile;
+                case DatabaseType.Sql:
+                    Connection = new SqlConnector();
+                    break;
+
+                case DatabaseType.ExcelFile:
+                    Connection = new ExcelConnector();
+                    break;
+
+                default:
+                    throw new ArgumentException("Invalid database type provided.");
             }
+
+            _chosenDatabase = db; // Update the chosen database type
         }
+    
 
         public static string CnnString(string name)
         {
-            // return ConfigurationManager.ConnectionStrings[name].ConnectionString;
+            //return ConfigurationManager.ConnectionStrings[name].ConnectionString;
 
             var connectionString = ConfigurationManager.ConnectionStrings[name];
             return connectionString != null ? connectionString.ConnectionString : string.Empty;

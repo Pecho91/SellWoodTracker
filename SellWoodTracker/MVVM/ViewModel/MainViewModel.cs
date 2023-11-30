@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -72,16 +73,25 @@ namespace SellWoodTracker.MVVM.ViewModel
         public ICommand MovePersonToCompletedCommand { get; set; }
         public ICommand DeletePersonFromRequestedCommand { get; set; }
         public ICommand DeletePersonFromCompletedCommand { get; set; }
-         
+        
         public MainViewModel()
-        {
-            GlobalConfig.InitializeConnections(DatabaseType.Sql);
-            _sqlConnection = GlobalConfig.Connection;
+        {                    
+            switch (GlobalConfig.ChosenDatabase)
+            {
+                case DatabaseType.Sql:
+                    GlobalConfig.InitializeConnections(DatabaseType.Sql);
+                    _sqlConnection = GlobalConfig.Connection;                  
+                    break;                   
 
-            //TODO at same time saves sql,excel
+                case DatabaseType.ExcelFile:
+                    GlobalConfig.InitializeConnections(DatabaseType.ExcelFile);
+                    _excelConnection = GlobalConfig.Connection;                 
+                    break;
 
-            GlobalConfig.InitializeConnections(DatabaseType.ExcelFile);
-            _excelConnection = GlobalConfig.Connection;
+                default:
+                    Debug.WriteLine("Database not selected / no database");
+                    break;
+            }
 
             LoadDataFromSql();
             LoadDataFromExcel();
@@ -104,50 +114,62 @@ namespace SellWoodTracker.MVVM.ViewModel
 
         private void LoadDataFromSql()
         {
-            try
+            if (_sqlConnection != null)
             {
-                List<PersonModel> requestedSqlPeople = _sqlConnection.GetRequestedPeople_All();
-                List<PersonModel> completedSqlPeople = _sqlConnection.GetCompletedPeople_All();
+                try
+                {
+                    List<PersonModel> requestedSqlPeople = _sqlConnection.GetRequestedPeople_All();
+                    List<PersonModel> completedSqlPeople = _sqlConnection.GetCompletedPeople_All();
 
-                
-                RequestedPeople = new ObservableCollection<PersonModel>(requestedSqlPeople);
-                CompletedPeople = new ObservableCollection<PersonModel>(completedSqlPeople);
 
-                OnPropertyChanged(nameof(RequestedPeople));               
-                OnPropertyChanged(nameof(CompletedPeople));
-            }
-            catch (Exception ex)
-            {
+                    RequestedPeople = new ObservableCollection<PersonModel>(requestedSqlPeople);
+                    CompletedPeople = new ObservableCollection<PersonModel>(completedSqlPeople);
 
-                Debug.WriteLine($"Error loading data from Sql: {ex.Message}");
+                    OnPropertyChanged(nameof(RequestedPeople));
+                    OnPropertyChanged(nameof(CompletedPeople));
+                }
+                catch (Exception ex)
+                {
+
+                    Debug.WriteLine($"Error loading data from Sql: {ex.Message}");
+                } 
             }
         }
 
         private void LoadDataFromExcel()
         {
-            try
-            {
-                List<PersonModel> requestedExcelPeople = _excelConnection.GetRequestedPeople_All();
-                List<PersonModel> completedExcelPeople = _excelConnection.GetCompletedPeople_All();
 
-                RequestedPeople = new ObservableCollection<PersonModel>(requestedExcelPeople);
-                CompletedPeople = new ObservableCollection<PersonModel>(completedExcelPeople);
-
-                OnPropertyChanged(nameof(RequestedPeople));                       
-                OnPropertyChanged(nameof(CompletedPeople));
-            }
-            catch (Exception ex)
+            if (_excelConnection != null)
             {
-                Debug.WriteLine($"Error loading data from Excel: {ex.Message}");
-            }
+                try
+                {
+                    List<PersonModel> requestedExcelPeople = _excelConnection.GetRequestedPeople_All();
+                    List<PersonModel> completedExcelPeople = _excelConnection.GetCompletedPeople_All();
+
+                    RequestedPeople = new ObservableCollection<PersonModel>(requestedExcelPeople);
+                    CompletedPeople = new ObservableCollection<PersonModel>(completedExcelPeople);
+
+                    OnPropertyChanged(nameof(RequestedPeople));
+                    OnPropertyChanged(nameof(CompletedPeople));
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error loading data from Excel: {ex.Message}");
+                } 
+            }        
         }
        
 
         private void RefreshPeopleInDataGrids(object? sender, EventArgs e)
         {
-
-            LoadDataFromSql();
-            LoadDataFromExcel();
+            if (_sqlConnection != null)
+            {
+                LoadDataFromSql(); 
+            }
+            if (_excelConnection != null)
+            {
+                LoadDataFromExcel(); 
+            }
         }
 
         private void MovePersonToCompletedDataGrid(object parameter)

@@ -19,7 +19,7 @@ namespace SellWoodTracker.DataAccess
     public class ExcelConnector : IDataConnection
     {
         private readonly string _excelFilePath;
-        private const string db = "SellWoodTracker.xlxs";
+        private const string db = "SellWoodTracker.xlsx";
 
         public ExcelConnector()
         {
