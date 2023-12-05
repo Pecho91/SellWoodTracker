@@ -117,6 +117,11 @@ namespace SellWoodTracker.DataAccess
                 connection.Execute("dbo.spCompletedPeople_DeleteById", new { id = personId }, commandType: CommandType.StoredProcedure);
             }
         }
+
+        public decimal GetTotalMetricPriceFromCompleted()
+        {
+            throw new NotImplementedException();
+        }
     }  
 
 }

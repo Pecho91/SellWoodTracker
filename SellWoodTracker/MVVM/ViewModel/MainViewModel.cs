@@ -73,6 +73,20 @@ namespace SellWoodTracker.MVVM.ViewModel
         public ICommand MovePersonToCompletedCommand { get; set; }
         public ICommand DeletePersonFromRequestedCommand { get; set; }
         public ICommand DeletePersonFromCompletedCommand { get; set; }
+
+        private decimal _totalCompletedMetricPrice;
+        public decimal TotalCompletedMetricPrice
+        {
+            get { return _totalCompletedMetricPrice; }
+            set
+            {
+                _totalCompletedMetricPrice = value;
+                OnPropertyChanged(nameof(TotalCompletedMetricPrice));
+            }
+                
+
+                
+        }
         
         public MainViewModel()
         {                    
@@ -102,6 +116,7 @@ namespace SellWoodTracker.MVVM.ViewModel
             OpenAddPersonWindowCommand = new RelayCommand(OpenAddPersonWindow);
 
             Mediator.RefreshDataGrids += RefreshPeopleInDataGrids;
+            UpdatTotalCompletedMetricPrice();
 
         }
 
@@ -170,6 +185,8 @@ namespace SellWoodTracker.MVVM.ViewModel
             {
                 LoadDataFromExcel(); 
             }
+
+            UpdatTotalCompletedMetricPrice();
         }
 
         private void MovePersonToCompletedDataGrid(object parameter)
@@ -262,6 +279,28 @@ namespace SellWoodTracker.MVVM.ViewModel
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private decimal CalculatedTotalMetricPriceFromCompleted()
+        {
+            if (_excelConnection != null)
+            {
+                try
+                {
+                    return _excelConnection.GetTotalMetricPriceFromCompleted();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error calculating total MetricPrice from Excel: {ex.Message}");
+                }
+            }
+
+            return 0;
+        }
+
+        private void UpdatTotalCompletedMetricPrice()
+        {
+            TotalCompletedMetricPrice = CalculatedTotalMetricPriceFromCompleted();
         }
     }
 }

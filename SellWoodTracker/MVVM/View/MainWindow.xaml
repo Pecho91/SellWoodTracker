@@ -163,7 +163,7 @@
                      DockPanel.Dock="Left"
                      TextAlignment="Right"
                      IsReadOnly="True"
-                     Text=" "/>
+                     Text="{Binding TotalCompletedMetricPrice}"/>
 
             <TextBox Height="30"  
                      Width="30"

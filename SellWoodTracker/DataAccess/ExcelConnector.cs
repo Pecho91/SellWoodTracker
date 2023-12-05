@@ -82,7 +82,6 @@ namespace SellWoodTracker.DataAccess
 
                         if (lastRow == 0)
                         {
-                            // Header row
                             worksheet.Cell(1, 1).Value = "Id";
                             worksheet.Cell(1, 2).Value = "First Name";
                             worksheet.Cell(1, 3).Value = "Last Name";
@@ -257,6 +256,14 @@ namespace SellWoodTracker.DataAccess
                 Debug.WriteLine($"Error parsing date from Excel cell: {cell.Address} - Value: {cell.Value}");
                 return null; // Return null if the date cannot be parsed
             }
+        }
+
+        public decimal GetTotalMetricPriceFromCompleted()
+        {
+            var completedPeople = GetCompletedPeople_All();
+            decimal totalMetricPrice = completedPeople.Sum(person  => person.MetricPrice);
+
+            return totalMetricPrice;
         }
     }
 }

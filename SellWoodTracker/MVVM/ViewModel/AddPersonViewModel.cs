@@ -51,43 +51,7 @@ namespace SellWoodTracker.MVVM.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }  
-        
-        //private void AddPerson(object parameter)
-        //{
-        //    if (NewPerson != null)
-        //    {
-        //        DatabaseType chosenDatabase = DatabaseType.Sql;
-
-        //        switch (chosenDatabase)
-        //        {
-        //            case DatabaseType.ExcelFile:
-
-        //                ExcelConnector excelConnector = new ExcelConnector();
-        //                excelConnector.CreatePerson(NewPerson);
-
-        //                NewPerson = new PersonModel(); // Optionally reset the NewPerson object for a new entry
-
-        //                Mediator.NotifyRefreshDataGrids();
-        //                Debug.WriteLine("addButton click");
-        //                break;
-
-        //            case DatabaseType.Sql:
-        //                SqlConnector sqlConnector = new SqlConnector();
-        //                sqlConnector.CreatePerson(NewPerson);
-
-        //                NewPerson = new PersonModel(); // Optionally reset the NewPerson object for a new entry
-
-        //                Mediator.NotifyRefreshDataGrids();
-        //                Debug.WriteLine("addButton click");
-        //                break;
-                        
-        //            default:
-        //                Debug.WriteLine("Database not selected / no database");
-        //                break;
-        //        }                            
-        //    }          
-        //}
-
+    
         private void AddPerson(object parameter)
         {
             if (NewPerson != null)
