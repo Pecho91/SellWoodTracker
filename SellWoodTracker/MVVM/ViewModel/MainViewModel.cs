@@ -110,14 +110,16 @@ namespace SellWoodTracker.MVVM.ViewModel
             LoadDataFromSql();
             LoadDataFromExcel();
 
+            UpdateTotalEarnMetricPrice();
+
             MovePersonToCompletedCommand = new RelayCommand(MovePersonToCompletedDataGrid);
             DeletePersonFromRequestedCommand = new RelayCommand(DeletePersonFromRequestedDataGrid);
             DeletePersonFromCompletedCommand = new RelayCommand(DeletePersonFromCompletedDataGrid);
             OpenAddPersonWindowCommand = new RelayCommand(OpenAddPersonWindow);
 
             Mediator.RefreshDataGrids += RefreshPeopleInDataGrids;
-            UpdatTotalCompletedMetricPrice();
-
+            Mediator.RefreshTotalEarn += RefreshTotalEarn;
+         
         }
 
         private void OpenAddPersonWindow(object parameter)
@@ -136,7 +138,6 @@ namespace SellWoodTracker.MVVM.ViewModel
                     List<PersonModel> requestedSqlPeople = _sqlConnection.GetRequestedPeople_All();
                     List<PersonModel> completedSqlPeople = _sqlConnection.GetCompletedPeople_All();
 
-
                     RequestedPeople = new ObservableCollection<PersonModel>(requestedSqlPeople);
                     CompletedPeople = new ObservableCollection<PersonModel>(completedSqlPeople);
 
@@ -145,9 +146,8 @@ namespace SellWoodTracker.MVVM.ViewModel
                 }
                 catch (Exception ex)
                 {
-
                     Debug.WriteLine($"Error loading data from Sql: {ex.Message}");
-                } 
+                }                 
             }
         }
 
@@ -170,7 +170,7 @@ namespace SellWoodTracker.MVVM.ViewModel
                 catch (Exception ex)
                 {
                     Debug.WriteLine($"Error loading data from Excel: {ex.Message}");
-                } 
+                }            
             }        
         }
        
@@ -179,14 +179,26 @@ namespace SellWoodTracker.MVVM.ViewModel
         {
             if (_sqlConnection != null)
             {
-                LoadDataFromSql(); 
+                LoadDataFromSql();          
             }
             if (_excelConnection != null)
             {
-                LoadDataFromExcel(); 
+                LoadDataFromExcel();                
+            }         
+        }
+
+        private void RefreshTotalEarn(object? sender, EventArgs e)
+        {
+            if (_sqlConnection != null)
+            {
+                
             }
 
-            UpdatTotalCompletedMetricPrice();
+            if (_excelConnection != null)
+            {
+                UpdateTotalEarnMetricPrice();
+            }
+           
         }
 
         private void MovePersonToCompletedDataGrid(object parameter)
@@ -207,9 +219,8 @@ namespace SellWoodTracker.MVVM.ViewModel
                         _excelConnection.MoveRequestedPersonToCompleted(SelectedRequestedPerson.Id);
                     }
 
-
                     Mediator.NotifyRefreshDataGrids();
-
+                    
                     Debug.WriteLine("move requested clicked"); 
                 }
             }        
@@ -292,15 +303,16 @@ namespace SellWoodTracker.MVVM.ViewModel
                 catch (Exception ex)
                 {
                     Debug.WriteLine($"Error calculating total MetricPrice from Excel: {ex.Message}");
-                }
+                }                
             }
 
             return 0;
         }
 
-        private void UpdatTotalCompletedMetricPrice()
+        private void UpdateTotalEarnMetricPrice()
         {
             TotalCompletedMetricPrice = CalculatedTotalMetricPriceFromCompleted();
+            
         }
     }
 }
