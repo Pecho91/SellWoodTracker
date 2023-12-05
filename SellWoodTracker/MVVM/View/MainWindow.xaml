@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SellWoodTracker" 
         xmlns:viewmodel="clr-namespace:SellWoodTracker.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1000" ResizeMode="CanResizeWithGrip" MinHeight="700" MinWidth="1200">
+        Title="MainWindow" Height="700" Width="1200" ResizeMode="CanResizeWithGrip" MinHeight="700" MinWidth="1200">
 
     
 
@@ -111,7 +111,7 @@
                     <DataGridTextColumn Header="Date" Binding="{Binding Date}" />
                     <DataGridTextColumn Header="Metric Amount" Binding="{Binding MetricAmount}" />
                     <DataGridTextColumn Header="Metric Price" Binding="{Binding MetricPrice}" />
-                    <!-- Add more columns for other properties of PersonModel -->
+                    <DataGridTextColumn Header="Gross Income" Binding="{Binding GrossIncome}" />
                 </DataGrid.Columns>
 
             </DataGrid>
@@ -140,7 +140,7 @@
                     <DataGridTextColumn Header="Date" Binding="{Binding Date}" />
                     <DataGridTextColumn Header="Metric Amount" Binding="{Binding MetricAmount}" />
                     <DataGridTextColumn Header="Metric Price" Binding="{Binding MetricPrice}" />
-                    <!-- Add more columns for other properties of PersonModel -->
+                    <DataGridTextColumn Header="Gross Income" Binding="{Binding GrossIncome}" />
                 </DataGrid.Columns>
 
             </DataGrid>

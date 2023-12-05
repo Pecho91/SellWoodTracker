@@ -90,8 +90,9 @@ namespace SellWoodTracker.DataAccess
                             worksheet.Cell(1, 6).Value = "Date";
                             worksheet.Cell(1, 7).Value = "Metric Amount";
                             worksheet.Cell(1, 8).Value = "Metric Price";
+                            worksheet.Cell(1, 8).Value = "Gross Income";
 
-                            var range = worksheet.Range("A1:H1");
+                            var range = worksheet.Range("A1:I1");
                             range.Style.Font.Bold = true;
                             range.Style.Fill.BackgroundColor = XLColor.LightGray;
 
@@ -108,6 +109,7 @@ namespace SellWoodTracker.DataAccess
                         worksheet.Cell(lastRow + 1, 6).Value = person.Date;
                         worksheet.Cell(lastRow + 1, 7).Value = person.MetricAmount;
                         worksheet.Cell(lastRow + 1, 8).Value = person.MetricPrice;
+                        worksheet.Cell(lastRow + 1, 9).Value = person.MetricAmount * person.MetricPrice;
 
                         workbook.Save();
                     }
@@ -160,7 +162,8 @@ namespace SellWoodTracker.DataAccess
                                     EmailAddress = row.Cell(5).GetValue<string>(),
                                     Date = GetSafeDateValue(row.Cell(6)),
                                     MetricAmount = row.Cell(7).GetValue<decimal>(),
-                                    MetricPrice = row.Cell(8).GetValue<decimal>()
+                                    MetricPrice = row.Cell(8).GetValue<decimal>(),
+                                    GrossIncome = row.Cell(9).GetValue<decimal>(),
                                 };
 
                                 people.Add(person);
@@ -261,7 +264,7 @@ namespace SellWoodTracker.DataAccess
         public decimal GetTotalMetricPriceFromCompleted()
         {
             var completedPeople = GetCompletedPeople_All();
-            decimal totalMetricPrice = completedPeople.Sum(person  => person.MetricPrice);
+            decimal totalMetricPrice = completedPeople.Sum(person  => person.GrossIncome);
 
             return totalMetricPrice;
         }

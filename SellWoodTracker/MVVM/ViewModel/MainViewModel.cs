@@ -110,7 +110,7 @@ namespace SellWoodTracker.MVVM.ViewModel
             LoadDataFromSql();
             LoadDataFromExcel();
 
-            UpdateTotalEarnMetricPrice();
+            UpdateTotalGrossIncome();
 
             MovePersonToCompletedCommand = new RelayCommand(MovePersonToCompletedDataGrid);
             DeletePersonFromRequestedCommand = new RelayCommand(DeletePersonFromRequestedDataGrid);
@@ -196,7 +196,7 @@ namespace SellWoodTracker.MVVM.ViewModel
 
             if (_excelConnection != null)
             {
-                UpdateTotalEarnMetricPrice();
+                UpdateTotalGrossIncome();
             }
            
         }
@@ -308,8 +308,11 @@ namespace SellWoodTracker.MVVM.ViewModel
 
             return 0;
         }
+        //private decimal TotalGrossIncomePerPerson()
+        //{
 
-        private void UpdateTotalEarnMetricPrice()
+        //}
+        private void UpdateTotalGrossIncome()
         {
             TotalCompletedMetricPrice = CalculatedTotalMetricPriceFromCompleted();
             
