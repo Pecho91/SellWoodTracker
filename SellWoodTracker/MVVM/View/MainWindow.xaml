@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SellWoodTracker" 
         xmlns:viewmodel="clr-namespace:SellWoodTracker.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1200" ResizeMode="CanResizeWithGrip" MinHeight="700" MinWidth="1200">
+        Title="MainWindow" Height="700" Width="1300" ResizeMode="CanResizeWithGrip" MinHeight="700" MinWidth="1300">
 
     
 
