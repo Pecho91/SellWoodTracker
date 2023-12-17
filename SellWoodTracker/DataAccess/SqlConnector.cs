@@ -122,6 +122,11 @@ namespace SellWoodTracker.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        public decimal GetTotalMetricAmountFromCompleted() 
+        {  
+            throw new NotImplementedException(); 
+        }
     }  
 
 }

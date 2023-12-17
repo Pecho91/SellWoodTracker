@@ -21,5 +21,7 @@ namespace SellWoodTracker.DataAccess
 
         decimal GetTotalMetricPriceFromCompleted();
 
+        decimal GetTotalMetricAmountFromCompleted();
+
     }
 }

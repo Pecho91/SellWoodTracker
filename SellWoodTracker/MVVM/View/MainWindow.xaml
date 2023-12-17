@@ -71,18 +71,18 @@
                  IsReadOnly="True"
                  Text="Sell Wood Tracker"/>
 
-        <DockPanel Grid.Column="1" Grid.Row="1">
+        <StackPanel Grid.Column="1" Grid.Row="1">
 
             <Button x:Name="OpenAddPersonWindowButton"
                     Height="35"  
                     Width="200"
                     Style="{StaticResource ButtonStyle}"
                     DockPanel.Dock="Left" 
-                    HorizontalAlignment="Center"
+                    HorizontalAlignment="Left"
                     Content="Add Person"
                     Command="{Binding OpenAddPersonWindowCommand}"/>
 
-        </DockPanel>
+        </StackPanel>
 
         <DockPanel Grid.Column="1" Grid.Row="2">
 
@@ -155,6 +155,36 @@
                      DockPanel.Dock="Left"
                      TextAlignment="Left"
                      IsReadOnly="True"
+                     Text="Total cubic meters: "/>
+
+            <TextBox Height="30"
+                     Width="120"
+                     Style="{StaticResource TextBoxStyle}"   
+                     DockPanel.Dock="Left"
+                     TextAlignment="Right"
+                     IsReadOnly="True"
+                     Text="{Binding TotalCompletedMetricAmount}"/>
+
+            <TextBox Height="30"  
+                     Width="60"
+                     DockPanel.Dock="Left"
+                     HorizontalAlignment="Left"
+                     Style="{StaticResource TextBoxStyle}"
+                     TextAlignment="Left"
+                     IsReadOnly="True"
+                     Text=" m^3" />
+            <TextBox Height="30"
+                     Width="60"
+                     Style="{StaticResource TextBoxStyle}" 
+                     Background="AliceBlue"
+                     DockPanel.Dock="Left"
+                     TextAlignment="Left"
+                     IsReadOnly="True"/>
+            <TextBox Height="30"
+                     Style="{StaticResource TextBoxStyle}" 
+                     DockPanel.Dock="Left"
+                     TextAlignment="Left"
+                     IsReadOnly="True"
                      Text="Total earn: "/>
 
             <TextBox Height="30"
@@ -170,8 +200,7 @@
                      DockPanel.Dock="Left"
                      HorizontalAlignment="Left"
                      Style="{StaticResource TextBoxStyle}"
-                     TextAlignment="Left"
-                     
+                     TextAlignment="Left"                    
                      IsReadOnly="True"
                      Text=" €" />
 

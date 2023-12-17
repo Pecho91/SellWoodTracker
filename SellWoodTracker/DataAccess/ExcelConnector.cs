@@ -109,7 +109,7 @@ namespace SellWoodTracker.DataAccess
                         worksheet.Cell(lastRow + 1, 6).Value = person.Date;
                         worksheet.Cell(lastRow + 1, 7).Value = person.MetricAmount;
                         worksheet.Cell(lastRow + 1, 8).Value = person.MetricPrice;
-                        worksheet.Cell(lastRow + 1, 9).Value = person.MetricAmount * person.MetricPrice;
+                        worksheet.Cell(lastRow + 1, 9).Value = (person.MetricAmount * person.MetricPrice);
 
                         workbook.Save();
                     }
@@ -267,6 +267,14 @@ namespace SellWoodTracker.DataAccess
             decimal totalMetricPrice = completedPeople.Sum(person  => person.GrossIncome);
 
             return totalMetricPrice;
+        }
+
+        public decimal GetTotalMetricAmountFromCompleted()
+        {
+            var completedPeople = GetCompletedPeople_All();
+            decimal totalMetricAmount = completedPeople.Sum(person => person.MetricAmount);
+
+            return totalMetricAmount;
         }
     }
 }

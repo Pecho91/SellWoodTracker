@@ -82,12 +82,23 @@ namespace SellWoodTracker.MVVM.ViewModel
             {
                 _totalCompletedMetricPrice = value;
                 OnPropertyChanged(nameof(TotalCompletedMetricPrice));
-            }
-                
-
-                
+            }             
         }
-        
+
+        private decimal _totalCompletedMetricAmount;
+        public decimal TotalCompletedMetricAmount
+        {
+            get { return _totalCompletedMetricAmount; }
+            set
+            {
+                _totalCompletedMetricAmount = value;
+                OnPropertyChanged(nameof(TotalCompletedMetricAmount));
+            }
+
+
+
+        }
+
         public MainViewModel()
         {                    
             switch (GlobalConfig.ChosenDatabase)
@@ -111,6 +122,7 @@ namespace SellWoodTracker.MVVM.ViewModel
             LoadDataFromExcel();
 
             UpdateTotalGrossIncome();
+            UpdateTotalMetricAmount();
 
             MovePersonToCompletedCommand = new RelayCommand(MovePersonToCompletedDataGrid);
             DeletePersonFromRequestedCommand = new RelayCommand(DeletePersonFromRequestedDataGrid);
@@ -197,6 +209,7 @@ namespace SellWoodTracker.MVVM.ViewModel
             if (_excelConnection != null)
             {
                 UpdateTotalGrossIncome();
+                UpdateTotalMetricAmount();
             }
            
         }
@@ -308,14 +321,31 @@ namespace SellWoodTracker.MVVM.ViewModel
 
             return 0;
         }
-        //private decimal TotalGrossIncomePerPerson()
-        //{
+        private decimal CalculateTotalMetricAmountFromCompleted()
+        {
+            if (_excelConnection != null)
+            {
+                try
+                {
+                    return _excelConnection.GetTotalMetricAmountFromCompleted();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error calculating total MetricAmount from Excel: {ex.Message}");
+                }
+            }
 
-        //}
+            return 0;
+        }
         private void UpdateTotalGrossIncome()
         {
             TotalCompletedMetricPrice = CalculatedTotalMetricPriceFromCompleted();
             
+        }
+
+        private void UpdateTotalMetricAmount()
+        {
+            TotalCompletedMetricAmount = CalculateTotalMetricAmountFromCompleted();
         }
     }
 }
