@@ -90,7 +90,7 @@ namespace SellWoodTracker.DataAccess
                             worksheet.Cell(1, 6).Value = "Date";
                             worksheet.Cell(1, 7).Value = "Metric Amount";
                             worksheet.Cell(1, 8).Value = "Metric Price";
-                            worksheet.Cell(1, 8).Value = "Gross Income";
+                            worksheet.Cell(1, 9).Value = "Gross Income";
 
                             var range = worksheet.Range("A1:I1");
                             range.Style.Font.Bold = true;

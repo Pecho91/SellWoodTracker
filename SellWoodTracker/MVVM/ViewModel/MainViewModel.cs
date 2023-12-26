@@ -307,6 +307,18 @@ namespace SellWoodTracker.MVVM.ViewModel
 
         private decimal CalculatedTotalMetricPriceFromCompleted()
         {
+            if (_sqlConnection != null)
+            {
+                try
+                {
+                    return _sqlConnection.GetTotalMetricPriceFromCompleted();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error calculating total MetricPrice from Sql: {ex.Message}");
+                }
+            }
+
             if (_excelConnection != null)
             {
                 try
@@ -323,6 +335,18 @@ namespace SellWoodTracker.MVVM.ViewModel
         }
         private decimal CalculateTotalMetricAmountFromCompleted()
         {
+            if (_sqlConnection != null)
+            {
+                try
+                {
+                    return _sqlConnection.GetTotalMetricAmountFromCompleted();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error calculating total MetricAmount from Sql: {ex.Message}");
+                }
+            }
+
             if (_excelConnection != null)
             {
                 try
@@ -346,6 +370,7 @@ namespace SellWoodTracker.MVVM.ViewModel
         private void UpdateTotalMetricAmount()
         {
             TotalCompletedMetricAmount = CalculateTotalMetricAmountFromCompleted();
+            
         }
     }
 }
