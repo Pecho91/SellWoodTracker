@@ -94,9 +94,6 @@ namespace SellWoodTracker.MVVM.ViewModel
                 _totalCompletedMetricAmount = value;
                 OnPropertyChanged(nameof(TotalCompletedMetricAmount));
             }
-
-
-
         }
 
         public MainViewModel()
@@ -161,6 +158,11 @@ namespace SellWoodTracker.MVVM.ViewModel
                     Debug.WriteLine($"Error loading data from Sql: {ex.Message}");
                 }                 
             }
+            else
+            {
+                Debug.WriteLine("SQL connection is not initialized.(null)");
+                return;
+            }
         }
 
         private void LoadDataFromExcel()
@@ -183,7 +185,12 @@ namespace SellWoodTracker.MVVM.ViewModel
                 {
                     Debug.WriteLine($"Error loading data from Excel: {ex.Message}");
                 }            
-            }        
+            }
+            else
+            {
+                Debug.WriteLine("Excel connection is not initialized.(null)");
+                return;
+            }
         }
        
 
@@ -203,7 +210,8 @@ namespace SellWoodTracker.MVVM.ViewModel
         {
             if (_sqlConnection != null)
             {
-                
+                UpdateTotalGrossIncome();
+                UpdateTotalMetricAmount();
             }
 
             if (_excelConnection != null)
