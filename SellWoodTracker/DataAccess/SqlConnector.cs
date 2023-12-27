@@ -120,11 +120,19 @@ namespace SellWoodTracker.DataAccess
 
         public decimal GetTotalMetricPriceFromCompleted()
         {
-            throw new NotImplementedException();
+            decimal totalMetricPrice;
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            {
+                totalMetricPrice = connection.Query<decimal>("dbo.spCompletedPeople_GetSumMetricPrice").FirstOrDefault();
+            }
+
+            return totalMetricPrice;
         }
 
         public decimal GetTotalMetricAmountFromCompleted() 
         {  
+            // TODO this + total gross income (spMetricAMount * spMetricPrice)
             throw new NotImplementedException(); 
         }
     }  
