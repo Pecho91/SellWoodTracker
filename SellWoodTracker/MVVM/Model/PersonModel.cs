@@ -34,30 +34,44 @@ namespace SellWoodTracker.MVVM.Model
         /// The primary cell phone number of the person
         /// </summary>
         public string? CellphoneNumber { get; set; }
+
         /// <summary>
         /// Date order
         /// </summary>
         public DateTime? Date { get; set; }
+
         /// <summary>
         /// Amount of m3 that person order
         /// </summary>
-        public decimal MetricAmount { get; set; }
+        public decimal MetricAmount
+        {
+            get => Math.Round(_metricAmount, 2);
+            set => _metricAmount = value;
+        }
+       
+        private decimal _metricAmount;
 
         /// <summary>
         /// Price of m3
         /// </summary>
         public decimal MetricPrice
         {
-            get => Math.Round(_metricPrice, 2); // Rounds to 2 decimal places when accessed
-            set => _metricPrice = value; // Regular setter
+            get => Math.Round(_metricPrice, 2); 
+            set => _metricPrice = value; 
         }
 
-        private decimal _metricPrice; // Backing field for the property
+        private decimal _metricPrice; 
 
         /// <summary>
         /// Gross income (metric price * metric amount)
         /// </summary>
-        public decimal GrossIncome { get; set; }
+        public decimal GrossIncome 
+        {
+            get => Math.Round(_grossIncome, 2);
+            set => _grossIncome = value;
+        }
+
+        private decimal _grossIncome;
 
         public PersonModel() 
         {   

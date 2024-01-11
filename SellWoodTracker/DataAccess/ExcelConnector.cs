@@ -284,6 +284,9 @@ namespace SellWoodTracker.DataAccess
             throw new NotImplementedException();
         }
 
-        
+        public decimal GetTotalGrossIncomeFromCompleted()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
