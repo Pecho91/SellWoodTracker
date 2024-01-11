@@ -10,7 +10,7 @@ namespace SellWoodTracker
 {
     public static class GlobalConfig
     {
-        private static DatabaseType _chosenDatabase = DatabaseType.Sql;
+        private static DatabaseType _chosenDatabase = DatabaseType.ExcelFile;
         public static DatabaseType ChosenDatabase
         {
             get { return _chosenDatabase; }
@@ -46,7 +46,7 @@ namespace SellWoodTracker
             return connectionString != null ? connectionString.ConnectionString : string.Empty;
         }
 
-        public static string AppKeyLookup(string key)
+        public static string? AppKeyLookup(string key)
         {
             return ConfigurationManager.AppSettings[key];
         }

@@ -33,14 +33,14 @@ namespace SellWoodTracker.DataAccess
                 p.Add("@CellphoneNumber", model.CellphoneNumber);
                 p.Add("@EmailAddress", model.EmailAddress);
 
-                if (model.Date.HasValue) // Check if the nullable DateTime has a value
+                if (model.DateTime.HasValue)
                 {
-                    p.Add("@Date", model.Date.Value, DbType.Date); // Use model.Date.Value to access the DateTime value
+                    p.Add("@DateTime", model.DateTime.Value, DbType.DateTime);
+                    
                 }
                 else
                 {
-                    // Handle case where Date is null (if needed)
-                    p.Add("@Date", DBNull.Value, DbType.Date); // Or specify another default value, like DBNull.Value
+                    p.Add("@DateTime", DBNull.Value, DbType.DateTime);
                 }
 
                 p.Add("@MetricAmount", model.MetricAmount);
@@ -94,7 +94,7 @@ namespace SellWoodTracker.DataAccess
                     p.Add("@LastName", person.LastName);
                     p.Add("@CellphoneNumber", person.CellphoneNumber);
                     p.Add("@EmailAddress", person.EmailAddress);
-                    p.Add("@Date", person.Date);
+                    p.Add("@DateTime", person.DateTime);
                     p.Add("@MetricAmount", person.MetricAmount);
                     p.Add("@MetricPrice", person.MetricPrice);
                     p.Add("@GrossIncome", person.GrossIncome);
@@ -130,20 +130,6 @@ namespace SellWoodTracker.DataAccess
             }
 
             return totalGrossIncome;
-        }
-
-        public decimal GetGrossIncomeFromCompleted()
-        {
-            //decimal grossIncome;
-
-            //using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
-            //{
-            //    grossIncome = connection.Query<decimal>("dbo.spCompletedPeople_GetGrossIncome").FirstOrDefault();
-            //}
-
-            //return grossIncome;
-
-            throw new NotImplementedException();
         }
 
         public decimal GetTotalMetricAmountFromCompleted() 

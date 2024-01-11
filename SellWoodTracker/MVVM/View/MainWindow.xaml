@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SellWoodTracker" 
         xmlns:viewmodel="clr-namespace:SellWoodTracker.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1300" ResizeMode="CanResizeWithGrip" MinHeight="700" MinWidth="1300">
+        Title="MainWindow" Height="700" Width="1390" ResizeMode="CanResizeWithGrip" MinHeight="700" MinWidth="1300">
 
     
 
@@ -56,9 +56,9 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition MaxWidth="30" Width="30*"/>
-            <ColumnDefinition MinWidth="800" Width="800*"/>
+            <ColumnDefinition MinWidth="100" Width="1000*"/>
             <ColumnDefinition MaxWidth="30" Width="30*"/>
-            <ColumnDefinition MinWidth="180" Width="180*"/>
+            <ColumnDefinition MinWidth="180" Width="150*"/>
             <ColumnDefinition MaxWidth="30" Width="30*"/>
 
         </Grid.ColumnDefinitions>
@@ -103,15 +103,15 @@
                       SelectedItem="{Binding SelectedRequestedPerson, Mode=TwoWay}">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
-                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" />
-                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" />
-                    <DataGridTextColumn Header="Cellphone Number" Binding="{Binding CellphoneNumber}" />
-                    <DataGridTextColumn Header="Email Address" Binding="{Binding EmailAddress}" />
-                    <DataGridTextColumn Header="Date" Binding="{Binding Date}" />
-                    <DataGridTextColumn Header="Metric Amount" Binding="{Binding MetricAmount}" />
-                    <DataGridTextColumn Header="Metric Price" Binding="{Binding MetricPrice}" />
-                    <DataGridTextColumn Header="Gross Income" Binding="{Binding GrossIncome}" />
+                    <DataGridTextColumn Header=" ID " Binding="{Binding Id}" />
+                    <DataGridTextColumn Header=" First Name " Binding="{Binding FirstName}" />
+                    <DataGridTextColumn Header=" Last Name " Binding="{Binding LastName}" />
+                    <DataGridTextColumn Header=" Cellphone Number " Binding="{Binding CellphoneNumber}" />
+                    <DataGridTextColumn Header=" Email Address " Binding="{Binding EmailAddress}" />
+                    <DataGridTextColumn Header=" Date Time " Binding="{Binding DateTime}" />
+                    <DataGridTextColumn Header=" Metric Amount [m^3] " Binding="{Binding MetricAmount}" />
+                    <DataGridTextColumn Header=" Metric Price [€] " Binding="{Binding MetricPrice}" />
+                    <DataGridTextColumn Header="Gross Income [€] " Binding="{Binding GrossIncome}" />
                 </DataGrid.Columns>
 
             </DataGrid>
@@ -132,15 +132,15 @@
                       SelectedItem="{Binding SelectedCompletedPerson, Mode=TwoWay}">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
-                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" />
-                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" />
-                    <DataGridTextColumn Header="Cellphone Number" Binding="{Binding CellphoneNumber}" />
-                    <DataGridTextColumn Header="Email Address" Binding="{Binding EmailAddress}" />
-                    <DataGridTextColumn Header="Date" Binding="{Binding Date}" />
-                    <DataGridTextColumn Header="Metric Amount" Binding="{Binding MetricAmount}" />
-                    <DataGridTextColumn Header="Metric Price" Binding="{Binding MetricPrice}" />
-                    <DataGridTextColumn Header="Gross Income" Binding="{Binding GrossIncome}" />
+                    <DataGridTextColumn Header=" ID " Binding="{Binding Id}" />
+                    <DataGridTextColumn Header=" First Name " Binding="{Binding FirstName}" />
+                    <DataGridTextColumn Header=" Last Name " Binding="{Binding LastName}" />
+                    <DataGridTextColumn Header=" Cellphone Number " Binding="{Binding CellphoneNumber}" />
+                    <DataGridTextColumn Header=" Email Address " Binding="{Binding EmailAddress}" />
+                    <DataGridTextColumn Header=" Date Time " Binding="{Binding DateTime}" />
+                    <DataGridTextColumn Header=" Metric Amount [m^3] " Binding="{Binding MetricAmount}" />
+                    <DataGridTextColumn Header=" Metric Price [€]" Binding="{Binding MetricPrice}" />
+                    <DataGridTextColumn Header=" Gross Income [€]" Binding="{Binding GrossIncome}" />
                 </DataGrid.Columns>
 
             </DataGrid>
@@ -155,7 +155,7 @@
                      DockPanel.Dock="Left"
                      TextAlignment="Left"
                      IsReadOnly="True"
-                     Text="Total cubic meters: "/>
+                     Text=" Total cubic meters: "/>
 
             <TextBox Height="30"
                      Width="120"
@@ -172,7 +172,7 @@
                      Style="{StaticResource TextBoxStyle}"
                      TextAlignment="Left"
                      IsReadOnly="True"
-                     Text=" m^3" />
+                     Text=" m^3 " />
             
             <TextBox Height="30"
                      Width="60"
@@ -187,7 +187,7 @@
                      DockPanel.Dock="Left"
                      TextAlignment="Left"
                      IsReadOnly="True"
-                     Text="Total Gross Income: "/>
+                     Text=" Total Gross Income: "/>
 
             <TextBox Height="30"
                      Width="120"
@@ -204,7 +204,7 @@
                      Style="{StaticResource TextBoxStyle}"
                      TextAlignment="Left"                    
                      IsReadOnly="True"
-                     Text=" €" />
+                     Text=" € " />
 
         </DockPanel>
 
@@ -212,7 +212,7 @@
 
             <Button Height="35"  
                     Style="{StaticResource ButtonStyle}"
-                    Margin="0,0,0,30"                     
+                    Margin="0,30,0,30"                     
                     Content="Complete Requested"
                     Command="{Binding MovePersonToCompletedCommand}"/>
 
@@ -227,24 +227,6 @@
                      Margin="0,0,0,105" 
                      Content="Remove Completed"
                     Command="{Binding DeletePersonFromCompletedCommand }"/>
-
-            <Button Height="35"  
-                    Style="{StaticResource ButtonStyle}"
-                    VerticalAlignment="Bottom"  
-                    Content="Excel (All)"
-                    Command="{Binding}"/>
-
-            <Button Height="35"  
-                    Style="{StaticResource ButtonStyle}"
-                    VerticalAlignment="Bottom"  
-                    Content="Excel (Requested)"
-                    Command="{Binding}"/>
-
-            <Button Height="35"  
-                    Style="{StaticResource ButtonStyle}"
-                    VerticalAlignment="Bottom"  
-                    Content="Excell (Completed)"
-                    Command="{Binding}"/>
 
         </StackPanel>
 

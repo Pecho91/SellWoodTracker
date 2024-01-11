@@ -140,7 +140,7 @@
                      Style="{StaticResource TextBoxStyle}"
                      DockPanel.Dock="Top" 
                      TextAlignment="Center"
-                     Text="{Binding NewPerson.Date, Mode=TwoWay}"/>
+                     Text="{Binding NewPerson.DateTime, Mode=TwoWay}"/>
 
             <TextBox x:Name="MetricAmountTextBox"
                      Height="30"

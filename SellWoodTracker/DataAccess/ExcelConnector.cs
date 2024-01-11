@@ -107,10 +107,10 @@ namespace SellWoodTracker.DataAccess
                         worksheet.Cell(lastRow + 1, 3).Value = person.LastName;
                         worksheet.Cell(lastRow + 1, 4).Value = person.EmailAddress;
                         worksheet.Cell(lastRow + 1, 5).Value = person.CellphoneNumber;
-                        worksheet.Cell(lastRow + 1, 6).Value = person.Date;
+                        worksheet.Cell(lastRow + 1, 6).Value = person.DateTime;
                         worksheet.Cell(lastRow + 1, 7).Value = person.MetricAmount;
                         worksheet.Cell(lastRow + 1, 8).Value = person.MetricPrice;
-                        worksheet.Cell(lastRow + 1, 9).Value = person.GrossIncome;
+                        worksheet.Cell(lastRow + 1, 9).Value = person.GrossIncome = (person.MetricAmount * person.MetricPrice);
                        // worksheet.Cell(lastRow + 1, 9).Value = (person.MetricAmount * person.MetricPrice);
 
                         workbook.Save();
@@ -162,7 +162,7 @@ namespace SellWoodTracker.DataAccess
                                     LastName = row.Cell(3).GetValue<string>(),
                                     CellphoneNumber = row.Cell(4).GetValue<string>(),
                                     EmailAddress = row.Cell(5).GetValue<string>(),
-                                    Date = GetSafeDateValue(row.Cell(6)),
+                                    DateTime = GetSafeDateValue(row.Cell(6)),
                                     MetricAmount = row.Cell(7).GetValue<decimal>(),
                                     MetricPrice = row.Cell(8).GetValue<decimal>(),                                  
                                     GrossIncome = row.Cell(9).GetValue<decimal>(),
@@ -263,12 +263,12 @@ namespace SellWoodTracker.DataAccess
             }
         }
 
-        public decimal GetTotalMetricPriceFromCompleted()
+        public decimal GetTotalGrossIncomeFromCompleted()
         {
             var completedPeople = GetCompletedPeople_All();
-            decimal totalMetricPrice = completedPeople.Sum(person  => person.GrossIncome);
+            decimal totalGrossIncome = completedPeople.Sum(person  => person.GrossIncome);
 
-            return totalMetricPrice;
+            return totalGrossIncome;
         }
 
         public decimal GetTotalMetricAmountFromCompleted()
@@ -279,14 +279,5 @@ namespace SellWoodTracker.DataAccess
             return totalMetricAmount;
         }
 
-        public decimal GetGrossIncomeFromCompleted()
-        {
-            throw new NotImplementedException();
-        }
-
-        public decimal GetTotalGrossIncomeFromCompleted()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

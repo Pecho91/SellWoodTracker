@@ -38,7 +38,7 @@ namespace SellWoodTracker.MVVM.Model
         /// <summary>
         /// Date order
         /// </summary>
-        public DateTime? Date { get; set; }
+        public DateTime? DateTime { get; set; }
 
         /// <summary>
         /// Amount of m3 that person order
@@ -74,8 +74,8 @@ namespace SellWoodTracker.MVVM.Model
         private decimal _grossIncome;
 
         public PersonModel() 
-        {   
-            Date = DateTime.Now;
+        {
+            DateTime = System.DateTime.Now;
         }
 
         //public string FullName
