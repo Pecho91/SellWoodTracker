@@ -126,7 +126,7 @@ namespace SellWoodTracker.DataAccess
 
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
             {
-                totalGrossIncome = connection.Query<decimal>("dbo.spCompletedPeople_GetGrossIncome").FirstOrDefault();
+                totalGrossIncome = connection.Query<decimal>("dbo.spCompletedPeople_GetTotalGrossIncome").FirstOrDefault();
             }
 
             return totalGrossIncome;

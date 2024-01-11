@@ -173,6 +173,7 @@
                      TextAlignment="Left"
                      IsReadOnly="True"
                      Text=" m^3" />
+            
             <TextBox Height="30"
                      Width="60"
                      Style="{StaticResource TextBoxStyle}" 
@@ -180,12 +181,13 @@
                      DockPanel.Dock="Left"
                      TextAlignment="Left"
                      IsReadOnly="True"/>
+            
             <TextBox Height="30"
                      Style="{StaticResource TextBoxStyle}" 
                      DockPanel.Dock="Left"
                      TextAlignment="Left"
                      IsReadOnly="True"
-                     Text="Total earn: "/>
+                     Text="Total Gross Income: "/>
 
             <TextBox Height="30"
                      Width="120"
@@ -193,7 +195,7 @@
                      DockPanel.Dock="Left"
                      TextAlignment="Right"
                      IsReadOnly="True"
-                     Text="{Binding TotalCompletedMetricPrice}"/>
+                     Text="{Binding TotalCompletedGrossIncome}"/>
 
             <TextBox Height="30"  
                      Width="30"

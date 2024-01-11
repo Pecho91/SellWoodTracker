@@ -80,7 +80,7 @@ namespace SellWoodTracker.MVVM.ViewModel
             get { return _totalCompletedGrossIncome; }
             set
             {
-                _totalCompletedGrossIncome = value;
+                _totalCompletedGrossIncome = Math.Round(value, 2);
                 OnPropertyChanged(nameof(TotalCompletedGrossIncome));
             }             
         }
@@ -91,7 +91,7 @@ namespace SellWoodTracker.MVVM.ViewModel
             get { return _totalCompletedMetricAmount; }
             set
             {
-                _totalCompletedMetricAmount = value;
+                _totalCompletedMetricAmount = Math.Round(value, 2);
                 OnPropertyChanged(nameof(TotalCompletedMetricAmount));
             }
         }
@@ -337,35 +337,6 @@ namespace SellWoodTracker.MVVM.ViewModel
                 {
                     Debug.WriteLine($"Error calculating total MetricPrice from Excel: {ex.Message}");
                 }                
-            }
-
-            return 0;
-        }
-
-        private decimal GrossIncomeFromCompleted()
-        {
-            if (_sqlConnection != null)
-            {
-                try
-                {
-                    return _sqlConnection.GetGrossIncomeFromCompleted();
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"Error calculating total MetricPrice from Sql: {ex.Message}");
-                }
-            }
-
-            if (_excelConnection != null)
-            {
-                try
-                {
-                    return _excelConnection.GetGrossIncomeFromCompleted();
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"Error calculating total MetricPrice from Excel: {ex.Message}");
-                }
             }
 
             return 0;
