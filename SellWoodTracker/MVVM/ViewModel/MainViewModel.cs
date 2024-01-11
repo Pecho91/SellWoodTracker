@@ -74,14 +74,14 @@ namespace SellWoodTracker.MVVM.ViewModel
         public ICommand DeletePersonFromRequestedCommand { get; set; }
         public ICommand DeletePersonFromCompletedCommand { get; set; }
 
-        private decimal _totalCompletedMetricPrice;
-        public decimal TotalCompletedMetricPrice
+        private decimal _totalCompletedGrossIncome;
+        public decimal TotalCompletedGrossIncome
         {
-            get { return _totalCompletedMetricPrice; }
+            get { return _totalCompletedGrossIncome; }
             set
             {
-                _totalCompletedMetricPrice = value;
-                OnPropertyChanged(nameof(TotalCompletedMetricPrice));
+                _totalCompletedGrossIncome = value;
+                OnPropertyChanged(nameof(TotalCompletedGrossIncome));
             }             
         }
 
@@ -313,13 +313,13 @@ namespace SellWoodTracker.MVVM.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private decimal CalculatedTotalMetricPriceFromCompleted()
+        private decimal TotalGrossIncomeFromCompleted()
         {
             if (_sqlConnection != null)
             {
                 try
                 {
-                    return _sqlConnection.GetTotalMetricPriceFromCompleted();
+                    return _sqlConnection.GetTotalGrossIncomeFromCompleted();
                 }
                 catch (Exception ex)
                 {
@@ -331,7 +331,7 @@ namespace SellWoodTracker.MVVM.ViewModel
             {
                 try
                 {
-                    return _excelConnection.GetTotalMetricPriceFromCompleted();
+                    return _excelConnection.GetTotalGrossIncomeFromCompleted();
                 }
                 catch (Exception ex)
                 {
@@ -341,7 +341,37 @@ namespace SellWoodTracker.MVVM.ViewModel
 
             return 0;
         }
-        private decimal CalculateTotalMetricAmountFromCompleted()
+
+        private decimal GrossIncomeFromCompleted()
+        {
+            if (_sqlConnection != null)
+            {
+                try
+                {
+                    return _sqlConnection.GetGrossIncomeFromCompleted();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error calculating total MetricPrice from Sql: {ex.Message}");
+                }
+            }
+
+            if (_excelConnection != null)
+            {
+                try
+                {
+                    return _excelConnection.GetGrossIncomeFromCompleted();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error calculating total MetricPrice from Excel: {ex.Message}");
+                }
+            }
+
+            return 0;
+        }
+
+        private decimal TotalMetricAmountFromCompleted()
         {
             if (_sqlConnection != null)
             {
@@ -371,13 +401,13 @@ namespace SellWoodTracker.MVVM.ViewModel
         }
         private void UpdateTotalGrossIncome()
         {
-            TotalCompletedMetricPrice = CalculatedTotalMetricPriceFromCompleted();
+            TotalCompletedGrossIncome = TotalGrossIncomeFromCompleted();
             
         }
 
         private void UpdateTotalMetricAmount()
         {
-            TotalCompletedMetricAmount = CalculateTotalMetricAmountFromCompleted();
+            TotalCompletedMetricAmount = TotalMetricAmountFromCompleted();
             
         }
     }

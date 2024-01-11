@@ -90,16 +90,17 @@ namespace SellWoodTracker.DataAccess
                             worksheet.Cell(1, 6).Value = "Date";
                             worksheet.Cell(1, 7).Value = "Metric Amount";
                             worksheet.Cell(1, 8).Value = "Metric Price";
+                            worksheet.Cell(1, 8).Style.NumberFormat.Format = "#0.00";
                             worksheet.Cell(1, 9).Value = "Gross Income";
 
                             var range = worksheet.Range("A1:I1");
                             range.Style.Font.Bold = true;
                             range.Style.Fill.BackgroundColor = XLColor.LightGray;
 
-                            lastRow = 1; // Reset lastRow to 1 after adding headers
+                            lastRow = 1; 
                         }
 
-                        int nextId = lastRow; // Using lastRow as nextId for simplicity, you can adjust this logic as needed
+                        int nextId = lastRow; 
 
                         worksheet.Cell(lastRow + 1, 1).Value = nextId;
                         worksheet.Cell(lastRow + 1, 2).Value = person.FirstName;
@@ -109,7 +110,8 @@ namespace SellWoodTracker.DataAccess
                         worksheet.Cell(lastRow + 1, 6).Value = person.Date;
                         worksheet.Cell(lastRow + 1, 7).Value = person.MetricAmount;
                         worksheet.Cell(lastRow + 1, 8).Value = person.MetricPrice;
-                        worksheet.Cell(lastRow + 1, 9).Value = (person.MetricAmount * person.MetricPrice);
+                        worksheet.Cell(lastRow + 1, 9).Value = person.GrossIncome;
+                       // worksheet.Cell(lastRow + 1, 9).Value = (person.MetricAmount * person.MetricPrice);
 
                         workbook.Save();
                     }
@@ -122,7 +124,7 @@ namespace SellWoodTracker.DataAccess
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error saving person to Excel: {ex.Message}");
-                throw; // Rethrow the exception for higher-level handling
+                throw; 
             }
         }
 
@@ -162,7 +164,7 @@ namespace SellWoodTracker.DataAccess
                                     EmailAddress = row.Cell(5).GetValue<string>(),
                                     Date = GetSafeDateValue(row.Cell(6)),
                                     MetricAmount = row.Cell(7).GetValue<decimal>(),
-                                    MetricPrice = row.Cell(8).GetValue<decimal>(),
+                                    MetricPrice = row.Cell(8).GetValue<decimal>(),                                  
                                     GrossIncome = row.Cell(9).GetValue<decimal>(),
                                 };
 
@@ -276,5 +278,12 @@ namespace SellWoodTracker.DataAccess
 
             return totalMetricAmount;
         }
+
+        public decimal GetGrossIncomeFromCompleted()
+        {
+            throw new NotImplementedException();
+        }
+
+        
     }
 }

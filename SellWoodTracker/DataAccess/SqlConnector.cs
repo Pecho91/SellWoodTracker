@@ -44,7 +44,8 @@ namespace SellWoodTracker.DataAccess
                 }
 
                 p.Add("@MetricAmount", model.MetricAmount);
-                p.Add("@MetricPrice", model.MetricPrice);                
+                p.Add("@MetricPrice", model.MetricPrice);
+                p.Add("@GrossIncome", (model.GrossIncome == model.MetricAmount * model.MetricPrice));
                 p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
                 connection.Execute("dbo.spRequestedPeople_Insert", p, commandType: CommandType.StoredProcedure);
@@ -96,7 +97,7 @@ namespace SellWoodTracker.DataAccess
                     p.Add("@Date", person.Date);
                     p.Add("@MetricAmount", person.MetricAmount);
                     p.Add("@MetricPrice", person.MetricPrice);
-
+                    p.Add("@GrossIncome", (person.GrossIncome == person.MetricAmount * person.MetricPrice));
                     connection.Execute("dbo.spCompletedPeople_Insert", p, commandType: CommandType.StoredProcedure);
                 }
             }
@@ -118,22 +119,41 @@ namespace SellWoodTracker.DataAccess
             }
         }
 
-        public decimal GetTotalMetricPriceFromCompleted()
+        public decimal GetTotalGrossIncomeFromCompleted()
         {
-            decimal totalMetricPrice;
+            // TODO
+            decimal totalGrossIncome;
 
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
             {
-                totalMetricPrice = connection.Query<decimal>("dbo.spCompletedPeople_GetSumMetricPrice").FirstOrDefault();
+                totalGrossIncome = connection.Query<decimal>("dbo.spCompletedPeople_GetTotalGrossIncome").FirstOrDefault();
             }
 
-            return totalMetricPrice;
+            return totalGrossIncome;
         }
 
+        //public decimal GetGrossIncomeFromCompleted()
+        //{
+        //    decimal grossIncome;
+
+        //    using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+        //    {
+        //        grossIncome = connection.Query<decimal>("dbo.spCompletedPeople_GetGrossIncome").FirstOrDefault();
+        //    }
+
+        //    return grossIncome;
+        //}
+
         public decimal GetTotalMetricAmountFromCompleted() 
-        {  
-            // TODO this + total gross income (spMetricAMount * spMetricPrice)
-            throw new NotImplementedException(); 
+        {
+            decimal totalMetricAmount;
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            {
+                totalMetricAmount = connection.Query<decimal>("dbo.spCompletedPeople_GetTotalMetricAmount").FirstOrDefault();
+            }
+
+            return totalMetricAmount;
         }
     }  
 

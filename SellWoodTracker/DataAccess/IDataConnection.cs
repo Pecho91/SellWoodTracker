@@ -19,9 +19,11 @@ namespace SellWoodTracker.DataAccess
         List<PersonModel> GetRequestedPeople_All();
         List<PersonModel> GetCompletedPeople_All();
 
-        decimal GetTotalMetricPriceFromCompleted();
+        decimal GetTotalGrossIncomeFromCompleted();
 
         decimal GetTotalMetricAmountFromCompleted();
+
+        decimal GetGrossIncomeFromCompleted();
 
     }
 }

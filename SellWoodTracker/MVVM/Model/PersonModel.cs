@@ -46,8 +46,17 @@ namespace SellWoodTracker.MVVM.Model
         /// <summary>
         /// Price of m3
         /// </summary>
-        public decimal MetricPrice { get; set; }
+        public decimal MetricPrice
+        {
+            get => Math.Round(_metricPrice, 2); // Rounds to 2 decimal places when accessed
+            set => _metricPrice = value; // Regular setter
+        }
 
+        private decimal _metricPrice; // Backing field for the property
+
+        /// <summary>
+        /// Gross income (metric price * metric amount)
+        /// </summary>
         public decimal GrossIncome { get; set; }
 
         public PersonModel() 
