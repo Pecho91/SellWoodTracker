@@ -23,7 +23,7 @@ namespace SellWoodTracker.MVVM.Model
         /// <summary>
         /// The last name of the person
         /// </summary>
-        public string? LastName { get; set; }
+        public string LastName { get; set; }
 
         /// <summary>
         /// The primary email address of the person
@@ -73,10 +73,16 @@ namespace SellWoodTracker.MVVM.Model
 
         private decimal _grossIncome;
 
-        public PersonModel() 
+        public PersonModel()
         {
             DateTime = System.DateTime.Now;
         }
+
+        public PersonModel(DateTime dateTime)
+        {
+            DateTime = dateTime;
+        }
+       
 
         //public string FullName
         //{

@@ -10,7 +10,7 @@ namespace SellWoodTracker
 {
     public static class GlobalConfig
     {
-        private static DatabaseType _chosenDatabase = DatabaseType.ExcelFile;
+        private static DatabaseType _chosenDatabase = DatabaseType.Sql;
         public static DatabaseType ChosenDatabase
         {
             get { return _chosenDatabase; }

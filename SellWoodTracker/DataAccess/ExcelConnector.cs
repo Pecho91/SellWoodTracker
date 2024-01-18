@@ -242,8 +242,8 @@ namespace SellWoodTracker.DataAccess
             else
             {
                 workbook = new XLWorkbook();
-                workbook.AddWorksheet("RequestedPeople"); // Change to your desired sheet name
-                workbook.AddWorksheet("CompletedPeople"); // Change to your desired sheet name
+                workbook.AddWorksheet("RequestedPeople"); 
+                workbook.AddWorksheet("CompletedPeople"); 
                 workbook.SaveAs(_excelFilePath);
             }
 

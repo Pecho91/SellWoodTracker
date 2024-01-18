@@ -16,12 +16,8 @@ namespace SellWoodTracker.DataAccess
     {
         
         private const string db = "SellWoodTracker";
-        /// <summary>
-        /// Saves a new people to database
-        /// </summary>
-        /// <param name="model">The people information</param>
-        /// <returns>The people information, including the unique identifier</returns>
-        /// 
+     
+      
         public void CreatePerson(PersonModel model)
         {
            
@@ -121,7 +117,6 @@ namespace SellWoodTracker.DataAccess
 
         public decimal GetTotalGrossIncomeFromCompleted()
         {
-            // TODO total gross income / MetricAmount (2 decimal) ??
             decimal totalGrossIncome;
 
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
