@@ -25,11 +25,11 @@ namespace SellWoodTracker.DataAccess
         {
             _excelFilePath = GlobalConfig.CnnString(db);
         }
+
+
         public void CreatePerson(PersonModel person)
-        {
-           
-                SavePersonToExcel(person, "RequestedPeople"); 
-                         
+        { 
+            SavePersonToExcel(person, "RequestedPeople");                 
         }
 
         public List<PersonModel> GetRequestedPeople_All()
@@ -88,11 +88,10 @@ namespace SellWoodTracker.DataAccess
                             worksheet.Cell(1, 4).Value = "Email";
                             worksheet.Cell(1, 5).Value = "Cellphone";
                             worksheet.Cell(1, 6).Value = "Date";
-                            worksheet.Cell(1, 7).Value = "Metric Amount";
-                            worksheet.Cell(1, 8).Value = "Metric Price";
-                            worksheet.Cell(1, 8).Style.NumberFormat.Format = "#0.00";
+                            worksheet.Cell(1, 7).Value = "Metric Amount";                           
+                            worksheet.Cell(1, 8).Value = "Metric Price";                           
                             worksheet.Cell(1, 9).Value = "Gross Income";
-
+                            
                             var range = worksheet.Range("A1:I1");
                             range.Style.Font.Bold = true;
                             range.Style.Fill.BackgroundColor = XLColor.LightGray;
@@ -111,7 +110,11 @@ namespace SellWoodTracker.DataAccess
                         worksheet.Cell(lastRow + 1, 7).Value = person.MetricAmount;
                         worksheet.Cell(lastRow + 1, 8).Value = person.MetricPrice;
                         worksheet.Cell(lastRow + 1, 9).Value = person.GrossIncome = (person.MetricAmount * person.MetricPrice);
-                       // worksheet.Cell(lastRow + 1, 9).Value = (person.MetricAmount * person.MetricPrice);
+                        // worksheet.Cell(lastRow + 1, 9).Value = (person.MetricAmount * person.MetricPrice);
+
+                        worksheet.Cell(lastRow + 1, 7).Style.NumberFormat.Format = "#0.00";
+                        worksheet.Cell(lastRow + 1, 8).Style.NumberFormat.Format = "#0.00";
+                        worksheet.Cell(lastRow + 1, 9).Style.NumberFormat.Format = "#0.00";
 
                         workbook.Save();
                     }
