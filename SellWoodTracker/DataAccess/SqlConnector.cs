@@ -14,14 +14,20 @@ namespace SellWoodTracker.DataAccess
 {
     public class SqlConnector : IDataConnection
     {
-        
-        private const string db = "SellWoodTracker";
-     
-      
+
+        private readonly IGlobalConfig _globalConfig;
+        private readonly string _dataBase;
+
+        public SqlConnector(IGlobalConfig globalConfig)
+        {
+            _globalConfig = globalConfig;
+            _dataBase = _globalConfig.CnnString("SellWoodTracker");
+        }
+
         public void CreatePerson(PersonModel model)
         {
            
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_dataBase))
             {
                 var p = new DynamicParameters();
                 p.Add("@FirstName", model.FirstName);
@@ -54,7 +60,7 @@ namespace SellWoodTracker.DataAccess
         {
             List<PersonModel> output;
 
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_dataBase))
             {
                 output = connection.Query<PersonModel>("dbo.spRequestedPeople_GetAll").ToList();
             }
@@ -66,7 +72,7 @@ namespace SellWoodTracker.DataAccess
         {
             List<PersonModel> output;
 
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_dataBase))
             {
                 output = connection.Query<PersonModel>("dbo.spCompletedPeople_GetAll").ToList();
             }
@@ -76,7 +82,7 @@ namespace SellWoodTracker.DataAccess
 
         public void MoveRequestedPersonToCompleted(int personId)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_dataBase))
             {
                 var person = connection.QueryFirstOrDefault<PersonModel>("dbo.spRequestedPeople_GetById", 
                              new { Id = personId }, commandType: CommandType.StoredProcedure);
@@ -101,7 +107,7 @@ namespace SellWoodTracker.DataAccess
 
         public void DeletePersonFromRequested(int  personId)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_dataBase))
             {
                 connection.Execute("dbo.spRequestedPeople_DeleteById", new {id = personId}, commandType: CommandType.StoredProcedure);
             }
@@ -109,7 +115,7 @@ namespace SellWoodTracker.DataAccess
 
         public void DeletePersonFromCompleted(int personId)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_dataBase))
             {
                 connection.Execute("dbo.spCompletedPeople_DeleteById", new { id = personId }, commandType: CommandType.StoredProcedure);
             }
@@ -119,7 +125,7 @@ namespace SellWoodTracker.DataAccess
         {
             decimal totalGrossIncome;
 
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_dataBase))
             {
                 totalGrossIncome = connection.Query<decimal>("dbo.spCompletedPeople_GetTotalGrossIncome").FirstOrDefault();
             }
@@ -131,7 +137,7 @@ namespace SellWoodTracker.DataAccess
         {
             decimal totalMetricAmount;
 
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_dataBase))
             {
                 totalMetricAmount = connection.Query<decimal>("dbo.spCompletedPeople_GetTotalMetricAmount").FirstOrDefault();
             }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SellWoodTracker.MVVM.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,12 @@ namespace SellWoodTracker.MVVM.View
         public AddPersonWindow()
         {
             InitializeComponent();
+            Loaded += AddPersonWindow_Loaded;
         }
-       
+
+        private void AddPersonWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            DataContext = new AddPersonViewModel();
+        }
     }
 }

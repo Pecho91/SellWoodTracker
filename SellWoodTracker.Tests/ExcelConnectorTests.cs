@@ -20,7 +20,7 @@ namespace SellWoodTracker.Tests
      
         public ExcelConnectorTests(ITestOutputHelper output) 
         {
-            _excelConnector = new ExcelConnector();
+           // _excelConnector = new ExcelConnector();
         }
 
         [Fact]

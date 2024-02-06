@@ -17,8 +17,8 @@ using System.Windows.Input;
 namespace SellWoodTracker.MVVM.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
-
     {
+        private readonly GlobalConfig _globalConfig;
         public event PropertyChangedEventHandler? PropertyChanged;
         public ICommand OpenAddPersonWindowCommand { get; }
         private ObservableCollection<PersonModel>? _requestedPeople;
@@ -97,17 +97,19 @@ namespace SellWoodTracker.MVVM.ViewModel
         }
 
         public MainViewModel()
-        {                    
-            switch (GlobalConfig.ChosenDatabase)
+        {
+            _globalConfig = new GlobalConfig();
+
+            switch (_globalConfig.ChosenDatabase)
             {
                 case DatabaseType.Sql:
-                    GlobalConfig.InitializeConnections(DatabaseType.Sql);
-                    _sqlConnection = GlobalConfig.Connection;                  
+                    _globalConfig.InitializeConnections(DatabaseType.Sql);
+                    _sqlConnection = _globalConfig.Connection;                  
                     break;                   
 
                 case DatabaseType.ExcelFile:
-                    GlobalConfig.InitializeConnections(DatabaseType.ExcelFile);
-                    _excelConnection = GlobalConfig.Connection;                 
+                    _globalConfig.InitializeConnections(DatabaseType.ExcelFile);
+                    _excelConnection = _globalConfig.Connection;                 
                     break;
 
                 default:

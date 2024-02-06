@@ -56,6 +56,7 @@ namespace SellWoodTracker.MVVM.ViewModel
     
         private void AddPerson(object parameter)
         {
+
             if (NewPerson != null)
             {
                                        

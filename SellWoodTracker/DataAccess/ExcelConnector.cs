@@ -18,16 +18,17 @@ namespace SellWoodTracker.DataAccess
 {
     public class ExcelConnector : IDataConnection
     {
-        
-       // private const string db = "SellWoodTracker.xlsx";
+         
         private readonly IGlobalConfig _globalConfig;
+        private readonly string _filePath;
 
         public ExcelConnector(IGlobalConfig globalConfig)
         {
             _globalConfig = globalConfig;
+            _filePath = _globalConfig.CnnString("SellWoodTracker.xlsx");
         }
 
-
+      
         public void CreatePerson(PersonModel person)
         { 
             SavePersonToExcel(person, "RequestedPeople");                 
@@ -73,7 +74,7 @@ namespace SellWoodTracker.DataAccess
         {
             try
             {
-                using (var workbook = GetOrCreateWorkbook())
+                using (var workbook = GetOrCreateWorkbook(_filePath))
                 {
                     var worksheet = workbook.Worksheet(sheetName);
 
@@ -144,7 +145,7 @@ namespace SellWoodTracker.DataAccess
 
             try
             {
-                XLWorkbook workbook = GetOrCreateWorkbook();
+                XLWorkbook workbook = GetOrCreateWorkbook(_filePath);
                 var worksheet = workbook.Worksheet(sheetName);
 
                 if (worksheet != null)
@@ -198,9 +199,9 @@ namespace SellWoodTracker.DataAccess
 
             return people;
         }
-        private void DeletePersonFromExcel(string sheetName, string filePath, int personId)
+        private void DeletePersonFromExcel(string sheetName, int personId)
         {
-            using (var workbook = new XLWorkbook(filePath))
+            using (var workbook = new XLWorkbook(_filePath))
             {
                 var worksheet = workbook.Worksheet(sheetName);
 
@@ -255,8 +256,8 @@ namespace SellWoodTracker.DataAccess
         }
         private DateTime? GetSafeDateValue(IXLCell cell)
         {
-            DateTime dateValue;
-            if (DateTime.TryParse(cell.Value.ToString(), out dateValue))
+           
+            if (DateTime.TryParse(cell.Value.ToString(), out DateTime dateValue))
             {
                 return dateValue;
             }

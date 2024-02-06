@@ -10,13 +10,18 @@ namespace SellWoodTracker
 {
     public  class GlobalConfig : IGlobalConfig
     {
-        private  DatabaseType _chosenDatabase = DatabaseType.ExcelFile;
+        private  DatabaseType _chosenDatabase = DatabaseType.Sql;
         public  DatabaseType ChosenDatabase
         {
             get { return _chosenDatabase; }
         }
-        
+       
         public  IDataConnection? Connection { get; private set; }
+
+        public GlobalConfig()
+        {
+            InitializeConnections(_chosenDatabase);
+        }
 
         public void InitializeConnections (DatabaseType databaseType)
         {
