@@ -18,12 +18,13 @@ namespace SellWoodTracker.DataAccess
 {
     public class ExcelConnector : IDataConnection
     {
-        private readonly string _excelFilePath;
-        private const string db = "SellWoodTracker.xlsx";
+        
+       // private const string db = "SellWoodTracker.xlsx";
+        private readonly IGlobalConfig _globalConfig;
 
-        public ExcelConnector()
+        public ExcelConnector(IGlobalConfig globalConfig)
         {
-            _excelFilePath = GlobalConfig.CnnString(db);
+            _globalConfig = globalConfig;
         }
 
 
@@ -197,9 +198,9 @@ namespace SellWoodTracker.DataAccess
 
             return people;
         }
-        private void DeletePersonFromExcel(string sheetName, int personId)
+        private void DeletePersonFromExcel(string sheetName, string filePath, int personId)
         {
-            using (var workbook = new XLWorkbook(_excelFilePath))
+            using (var workbook = new XLWorkbook(filePath))
             {
                 var worksheet = workbook.Worksheet(sheetName);
 
@@ -234,20 +235,20 @@ namespace SellWoodTracker.DataAccess
         }
 
 
-        private XLWorkbook GetOrCreateWorkbook()
+        private XLWorkbook GetOrCreateWorkbook(string filePath)
         {
             XLWorkbook workbook;
 
-            if (File.Exists(_excelFilePath))
+            if (File.Exists(filePath))
             {
-                workbook = new XLWorkbook(_excelFilePath);
+                workbook = new XLWorkbook(filePath);
             }
             else
             {
                 workbook = new XLWorkbook();
                 workbook.AddWorksheet("RequestedPeople"); 
                 workbook.AddWorksheet("CompletedPeople"); 
-                workbook.SaveAs(_excelFilePath);
+                workbook.SaveAs(filePath);
             }
 
             return workbook;

@@ -8,37 +8,37 @@ using SellWoodTracker.DataAccess;
 
 namespace SellWoodTracker
 {
-    public static class GlobalConfig
+    public  class GlobalConfig : IGlobalConfig
     {
-        private static DatabaseType _chosenDatabase = DatabaseType.ExcelFile;
-        public static DatabaseType ChosenDatabase
+        private  DatabaseType _chosenDatabase = DatabaseType.ExcelFile;
+        public  DatabaseType ChosenDatabase
         {
             get { return _chosenDatabase; }
         }
         
-        public static IDataConnection? Connection { get; private set; }
+        public  IDataConnection? Connection { get; private set; }
 
-        public static void InitializeConnections (DatabaseType db)
+        public void InitializeConnections (DatabaseType databaseType)
         {
-            switch (db)
+            _chosenDatabase = databaseType;
+
+            switch (databaseType)
             {
                 case DatabaseType.Sql:
-                    Connection = new SqlConnector();
+                    Connection = new SqlConnector(this);
                     break;
 
                 case DatabaseType.ExcelFile:
-                    Connection = new ExcelConnector();
+                    Connection = new ExcelConnector(this);
                     break;
 
                 default:
                     throw new ArgumentException("Invalid database type provided.");
             }
-
-            _chosenDatabase = db; // Update the chosen database type
         }
     
 
-        public static string CnnString(string name)
+        public string CnnString(string name)
         {
             //return ConfigurationManager.ConnectionStrings[name].ConnectionString;
 
@@ -46,7 +46,7 @@ namespace SellWoodTracker
             return connectionString != null ? connectionString.ConnectionString : string.Empty;
         }
 
-        public static string? AppKeyLookup(string key)
+        public string? AppKeyLookup(string key)
         {
             return ConfigurationManager.AppSettings[key];
         }

@@ -16,6 +16,7 @@ namespace SellWoodTracker.MVVM.ViewModel
 {
     public class AddPersonViewModel : INotifyPropertyChanged
     {
+        private readonly GlobalConfig _globalConfig;
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private MainViewModel _mainViewModel;
@@ -42,6 +43,7 @@ namespace SellWoodTracker.MVVM.ViewModel
         
         public AddPersonViewModel()
         {
+            _globalConfig = new GlobalConfig();
             AddPersonCommand = new RelayCommand(AddPerson);
             ClearFieldsCommand = new RelayCommand(ClearFields);
             NewPerson = new PersonModel();
@@ -57,14 +59,14 @@ namespace SellWoodTracker.MVVM.ViewModel
             if (NewPerson != null)
             {
                                        
-                switch (GlobalConfig.ChosenDatabase)
+                switch (_globalConfig.ChosenDatabase)
                 {
                     case DatabaseType.ExcelFile:
-                        GlobalConfig.Connection?.CreatePerson(NewPerson); 
+                        _globalConfig.Connection?.CreatePerson(NewPerson); 
                         break;
 
                     case DatabaseType.Sql:
-                        GlobalConfig.Connection?.CreatePerson(NewPerson); 
+                        _globalConfig.Connection?.CreatePerson(NewPerson); 
                         break;
 
                     default:
