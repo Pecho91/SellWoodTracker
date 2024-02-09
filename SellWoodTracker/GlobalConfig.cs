@@ -20,14 +20,13 @@ namespace SellWoodTracker
 
         public GlobalConfig()
         {
-            InitializeConnections(_chosenDatabase);
+            InitializeConnections();
         }
 
-        public void InitializeConnections (DatabaseType databaseType)
+        public void InitializeConnections ()
         {
-            _chosenDatabase = databaseType;
-
-            switch (databaseType)
+            
+            switch (_chosenDatabase)
             {
                 case DatabaseType.Sql:
                     Connection = new SqlConnector(this);

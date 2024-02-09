@@ -11,7 +11,7 @@ namespace SellWoodTracker
     {
         DatabaseType ChosenDatabase { get; }
         IDataConnection? Connection { get; }
-        void InitializeConnections(DatabaseType databaseType);
+        void InitializeConnections();
         string CnnString(string name);
         string? AppKeyLookup(string key);
     }

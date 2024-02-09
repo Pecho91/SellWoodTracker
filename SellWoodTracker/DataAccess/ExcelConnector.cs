@@ -20,15 +20,16 @@ namespace SellWoodTracker.DataAccess
     {
          
         private readonly IGlobalConfig _globalConfig;
+       // private readonly IDataConnection _dataConnection;   
         private readonly string _filePath;
 
         public ExcelConnector(IGlobalConfig globalConfig)
         {
             _globalConfig = globalConfig;
             _filePath = _globalConfig.CnnString("SellWoodTracker.xlsx");
+           
         }
 
-      
         public void CreatePerson(PersonModel person)
         { 
             SavePersonToExcel(person, "RequestedPeople");                 

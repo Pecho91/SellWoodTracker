@@ -103,12 +103,12 @@ namespace SellWoodTracker.MVVM.ViewModel
             switch (_globalConfig.ChosenDatabase)
             {
                 case DatabaseType.Sql:
-                    _globalConfig.InitializeConnections(DatabaseType.Sql);
+                    _globalConfig.InitializeConnections();
                     _sqlConnection = _globalConfig.Connection;                  
                     break;                   
 
                 case DatabaseType.ExcelFile:
-                    _globalConfig.InitializeConnections(DatabaseType.ExcelFile);
+                    _globalConfig.InitializeConnections();
                     _excelConnection = _globalConfig.Connection;                 
                     break;
 
