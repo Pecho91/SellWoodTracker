@@ -1,15 +1,7 @@
-﻿using SellWoodTracker.DataAccess;
-using SellWoodTracker.MVVM.Core;
+﻿using SellWoodTracker.MVVM.Core;
 using SellWoodTracker.MVVM.Model;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data.SqlTypes;
 using System.Diagnostics;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace SellWoodTracker.MVVM.ViewModel

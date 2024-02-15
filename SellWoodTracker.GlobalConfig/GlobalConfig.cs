@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SellWoodTracker.DataAccess;
 
-namespace SellWoodTracker
+namespace SellWoodTracker.GlobalConfig
 {
     public  class GlobalConfig : IGlobalConfig
     {
