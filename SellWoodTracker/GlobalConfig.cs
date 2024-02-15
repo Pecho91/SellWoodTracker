@@ -24,8 +24,7 @@ namespace SellWoodTracker
         }
 
         public void InitializeConnections ()
-        {
-            
+        {           
             switch (_chosenDatabase)
             {
                 case DatabaseType.Sql:

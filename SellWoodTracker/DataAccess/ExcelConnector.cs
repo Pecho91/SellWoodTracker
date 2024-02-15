@@ -26,8 +26,7 @@ namespace SellWoodTracker.DataAccess
         public ExcelConnector(IGlobalConfig globalConfig)
         {
             _globalConfig = globalConfig;
-            _filePath = _globalConfig.CnnString("SellWoodTracker.xlsx");
-           
+            _filePath = _globalConfig.CnnString("SellWoodTracker.xlsx");     
         }
 
         public void CreatePerson(PersonModel person)
