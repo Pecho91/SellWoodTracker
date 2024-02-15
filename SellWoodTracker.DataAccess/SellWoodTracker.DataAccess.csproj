@@ -7,4 +7,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SellWoodTracker.GlobalConfig\SellWoodTracker.GlobalConfig.csproj" />
+    <ProjectReference Include="..\SellWoodTracker\SellWoodTracker.csproj" />
+  </ItemGroup>
+
 </Project>
