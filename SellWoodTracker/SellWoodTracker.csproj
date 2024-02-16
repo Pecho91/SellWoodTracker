@@ -16,7 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SellWoodTracker.Common\SellWoodTracker.Common.csproj" />
     <ProjectReference Include="..\SellWoodTracker.DataAccess\SellWoodTracker.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="MVVM\Model\" />
   </ItemGroup>
 
 </Project>

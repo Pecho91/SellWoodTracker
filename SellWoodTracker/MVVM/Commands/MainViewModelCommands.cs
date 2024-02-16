@@ -1,7 +1,6 @@
 ﻿using SellWoodTracker.DataAccess;
 using SellWoodTracker.GlobalConfig;
 using SellWoodTracker.MVVM.Core;
-using SellWoodTracker.MVVM.Model;
 using SellWoodTracker.MVVM.View;
 using SellWoodTracker.MVVM.ViewModel;
 using System;
@@ -16,6 +15,7 @@ using System.Windows.Input;
 using System.Windows;
 using System.Data.SqlClient;
 using SellWoodTracker.MVVM.DataLoading;
+using SellWoodTracker.Common.Model;
 
 namespace SellWoodTracker.MVVM.Commands
 {
@@ -69,7 +69,7 @@ namespace SellWoodTracker.MVVM.Commands
                 if (confirmed)
                 {
 
-                    _mainViewModelDataLoading.MovePersonToCompleted(SelectedCompletedPerson.Id)
+                    _mainViewModelDataLoading.MoveRequestedPersonToCompleted(SelectedCompletedPerson.Id);
 
                     //if (_sqlConnection != null)
                     //{

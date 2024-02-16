@@ -1,5 +1,5 @@
-﻿using SellWoodTracker.MVVM.Core;
-using SellWoodTracker.MVVM.Model;
+﻿using SellWoodTracker.Common.Model;
+using SellWoodTracker.MVVM.Core;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Input;

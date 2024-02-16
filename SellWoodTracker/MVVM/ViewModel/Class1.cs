@@ -1,8 +1,8 @@
-﻿using SellWoodTracker.DataAccess;
+﻿using SellWoodTracker.Common.Model;
+using SellWoodTracker.DataAccess;
 using SellWoodTracker.MVVM.Commands;
 using SellWoodTracker.MVVM.Core;
 using SellWoodTracker.MVVM.DataLoading;
-using SellWoodTracker.MVVM.Model;
 using SellWoodTracker.MVVM.View;
 using System;
 using System.Collections.Generic;

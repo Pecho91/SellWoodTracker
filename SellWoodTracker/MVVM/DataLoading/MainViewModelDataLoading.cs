@@ -1,5 +1,4 @@
-﻿using SellWoodTracker.MVVM.Model;
-using SellWoodTracker.MVVM.ViewModel;
+﻿using SellWoodTracker.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,11 +8,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using SellWoodTracker.Common;
+using SellWoodTracker.DataAccess.SqlDataAccess;
+using SellWoodTracker.Common.Model;
 
 namespace SellWoodTracker.MVVM.DataLoading
 {
     public class MainViewModelDataLoading : BaseViewModel
     {
+        
+        private readonly SqlDataOperations _connection;
         private ObservableCollection<PersonModel>? _requestedPeople;
         public ObservableCollection<PersonModel> RequestedPeople
         {
@@ -58,6 +62,11 @@ namespace SellWoodTracker.MVVM.DataLoading
                 _totalCompletedMetricAmount = Math.Round(value, 2);
                 OnPropertyChanged(nameof(TotalCompletedMetricAmount));
             }
+        }
+
+        public MainViewModelDataLoading(SqlDataOperations sqlDataConnections)
+        {
+            _sqlDataConnections = sqlDataConnections;
         }
 
         private void LoadDataFromSql()

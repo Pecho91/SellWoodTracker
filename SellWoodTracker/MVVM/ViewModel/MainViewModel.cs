@@ -3,7 +3,6 @@ using SellWoodTracker.MVVM.Commands;
 using SellWoodTracker.MVVM.DataLoading;
 using SellWoodTracker.MVVM.Core;
 using SellWoodTracker.MVVM.DataLoading;
-using SellWoodTracker.MVVM.Model;
 using SellWoodTracker.MVVM.View;
 using System;
 using System.Collections.Generic;
@@ -16,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using SellWoodTracker.Common.Model;
 
 namespace SellWoodTracker.MVVM.ViewModel
 {

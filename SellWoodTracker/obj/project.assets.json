@@ -1576,10 +1576,21 @@
           "lib/netstandard1.6/XLParser.dll": {}
         }
       },
+      "SellWoodTracker.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/SellWoodTracker.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SellWoodTracker.Common.dll": {}
+        }
+      },
       "SellWoodTracker.DataAccess/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
+          "SellWoodTracker.Common": "1.0.0",
           "SellWoodTracker.GlobalConfig": "1.0.0"
         },
         "compile": {
@@ -1587,10 +1598,7 @@
         },
         "runtime": {
           "bin/placeholder/SellWoodTracker.DataAccess.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.WindowsDesktop.App.WPF"
-        ]
+        }
       },
       "SellWoodTracker.GlobalConfig/1.0.0": {
         "type": "project",
@@ -1600,10 +1608,7 @@
         },
         "runtime": {
           "bin/placeholder/SellWoodTracker.GlobalConfig.dll": {}
-        },
-        "frameworkReferences": [
-          "Microsoft.WindowsDesktop.App.WPF"
-        ]
+        }
       }
     }
   },
@@ -5339,6 +5344,11 @@
         "xlparser.nuspec"
       ]
     },
+    "SellWoodTracker.Common/1.0.0": {
+      "type": "project",
+      "path": "../SellWoodTracker.Common/SellWoodTracker.Common.csproj",
+      "msbuildProject": "../SellWoodTracker.Common/SellWoodTracker.Common.csproj"
+    },
     "SellWoodTracker.DataAccess/1.0.0": {
       "type": "project",
       "path": "../SellWoodTracker.DataAccess/SellWoodTracker.DataAccess.csproj",
@@ -5355,6 +5365,7 @@
       "ClosedXML >= 0.102.1",
       "Dapper >= 2.1.15",
       "Microsoft.Extensions.Configuration.Abstractions >= 8.0.0",
+      "SellWoodTracker.Common >= 1.0.0",
       "SellWoodTracker.DataAccess >= 1.0.0",
       "System.Data.SqlClient >= 4.8.6"
     ]
@@ -5392,6 +5403,9 @@
         "net7.0-windows7.0": {
           "targetAlias": "net7.0-windows",
           "projectReferences": {
+            "C:\\Users\\andri\\source\\repos\\SellWoodTracker\\SellWoodTracker.Common\\SellWoodTracker.Common.csproj": {
+              "projectPath": "C:\\Users\\andri\\source\\repos\\SellWoodTracker\\SellWoodTracker.Common\\SellWoodTracker.Common.csproj"
+            },
             "C:\\Users\\andri\\source\\repos\\SellWoodTracker\\SellWoodTracker.DataAccess\\SellWoodTracker.DataAccess.csproj": {
               "projectPath": "C:\\Users\\andri\\source\\repos\\SellWoodTracker\\SellWoodTracker.DataAccess\\SellWoodTracker.DataAccess.csproj"
             }
