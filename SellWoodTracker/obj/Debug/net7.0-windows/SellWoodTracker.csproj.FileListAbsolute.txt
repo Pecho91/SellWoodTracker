@@ -1,0 +1,7 @@
+C:\Users\andri\source\repos\SellWoodTracker\SellWoodTracker\obj\Debug\net7.0-windows\SellWoodTracker.csproj.AssemblyReference.cache
+C:\Users\andri\source\repos\SellWoodTracker\SellWoodTracker\obj\Debug\net7.0-windows\MVVM\View\AddPersonWindow.g.cs
+C:\Users\andri\source\repos\SellWoodTracker\SellWoodTracker\obj\Debug\net7.0-windows\MVVM\View\MainWindow.g.cs
+C:\Users\andri\source\repos\SellWoodTracker\SellWoodTracker\obj\Debug\net7.0-windows\App.g.cs
+C:\Users\andri\source\repos\SellWoodTracker\SellWoodTracker\obj\Debug\net7.0-windows\GeneratedInternalTypeHelper.g.cs
+C:\Users\andri\source\repos\SellWoodTracker\SellWoodTracker\obj\Debug\net7.0-windows\SellWoodTracker_MarkupCompile.cache
+C:\Users\andri\source\repos\SellWoodTracker\SellWoodTracker\obj\Debug\net7.0-windows\SellWoodTracker_MarkupCompile.lref

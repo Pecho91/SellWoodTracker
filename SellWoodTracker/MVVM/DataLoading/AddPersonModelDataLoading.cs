@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SellWoodTracker.MVVM.DataLoading
 {
-    internal class AddPersonModelDataLoading
+    public class AddPersonModelDataLoading
     {
     }
 }
