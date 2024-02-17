@@ -15,22 +15,20 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
 {
     public class SqlPersonRepository : ISqlPersonRepository
     {
-        
         private readonly SqlConnectionFactory _sqlConnectionFactory;
         private readonly SqlDynamicParametersBuilder _sqlDynamicParametersBuilder;
 
-        public SqlPersonRepository(IGlobalConfig globalConfig,SqlConnectionFactory connectionFactory, SqlDynamicParametersBuilder sqlDynamicParametersBuilder)
+        public SqlPersonRepository(IGlobalConfig globalConfig, SqlConnectionFactory connectionFactory, SqlDynamicParametersBuilder sqlDynamicParametersBuilder)
         {
-               
             _sqlConnectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(_sqlConnectionFactory));
             _sqlDynamicParametersBuilder = sqlDynamicParametersBuilder ?? throw new ArgumentNullException(nameof(sqlDynamicParametersBuilder);
         }
 
         public void CreatePerson(PersonModel model)
         {
-            using (IDbConnection connection = _sqlConnectionFactory?.CreateSqlConnection())
+            using (IDbConnection connection = _sqlConnectionFactory.CreateSqlConnection())
             {
-                var p = _sqlDynamicParametersBuilder.BuildParametersForPerson(model);
+                var p = _sqlDynamicParametersBuilder.GetPersonDynamicParameters(model);
                 connection.Execute("dbo.spRequestedPeople_Insert", p, commandType: CommandType.StoredProcedure);
                 model.Id = p.Get<int>("@id");
             }
@@ -71,29 +69,44 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
 
                 if (person != null)
                 {
-                    _sqlPersonService.MoveRequestedPersonToCompleted(connection, person);
+                    connection.Execute("dbo.spRequestedPeople_DeleteById", new { id = personId }, commandType: CommandType.StoredProcedure);
+
+                    var parameters = _sqlDynamicParametersBuilder.GetPersonDynamicParameters(person);
+                    connection.Execute("dbo.spCompletedPeople_Insert", parameters, commandType: CommandType.StoredProcedure);
                 }
             }
         }
 
         public void DeletePersonFromRequested(int personId)
         {
-            throw new NotImplementedException();
+            using (IDbConnection connection = _sqlConnectionFactory.CreateSqlConnection())
+            {
+                connection.Execute("dbo.spRequestedPeople_DeleteById", new { id = personId }, commandType: CommandType.StoredProcedure); 
+            }
         }
 
         public void DeletePersonFromCompleted(int personId)
         {
-            throw new NotImplementedException();
+            using (IDbConnection connection = _sqlConnectionFactory.CreateSqlConnection())
+            {
+                connection.Execute("dbo.spCompletedPeople_DeleteById", new { id = personId }, commandType: CommandType.StoredProcedure);
+            }
         }
 
         public decimal GetTotalGrossIncomeFromCompleted()
         {
-            throw new NotImplementedException();
+            using (IDbConnection connection = _sqlConnectionFactory.CreateSqlConnection())
+            {
+                return connection.Query<decimal>("dbo.spCompletedPeople_GetTotalGrossIncome").FirstOrDefault();
+            }
         }
 
         public decimal GetTotalMetricAmountFromCompleted()
         {
-            throw new NotImplementedException();
+            using (IDbConnection connection = _sqlConnectionFactory.CreateSqlConnection())
+            {
+                return connection.Query<decimal>("dbo.spCompletedPeople_GetTotalMetricAmount").FirstOrDefault();
+            }
         }
     }
 }

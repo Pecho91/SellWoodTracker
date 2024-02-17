@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SellWoodTracker.DataAccess.SqlDataRepository
 {
-    public class SqlConnectionFactory
+    public class SqlConnectionFactory 
     {
         private readonly IGlobalConfig _globalConfig;
         private readonly string _dataBase;

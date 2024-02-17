@@ -13,7 +13,7 @@ using SellWoodTracker.Common.Model;
 
 namespace SellWoodTracker.DataAccess.SqlDataAccess
 {
-    public class SqlDynamicParametersBuilder : ISqlPersonRepository
+    public class SqlDynamicParametersBuilder 
     {
 
         private readonly IGlobalConfig _globalConfig;
@@ -26,7 +26,7 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
         }
 
         
-        public DynamicParameters BuildParametersForPerson(PersonModel model)
+        public DynamicParameters GetPersonDynamicParameters(PersonModel model)
               {
                   var p = new DynamicParameters();
                     p.Add("@FirstName", model.FirstName);

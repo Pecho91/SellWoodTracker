@@ -16,5 +16,9 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
             _repository = repository;
         }
 
+        public void CreatePerson(PersonModel model)
+        {
+            _repository.CreatePerson(model);
+        }
     }
 }
