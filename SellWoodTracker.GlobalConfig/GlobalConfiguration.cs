@@ -8,7 +8,7 @@ using SellWoodTracker;
 
 namespace SellWoodTracker.GlobalConfig
 {
-    public  class GlobalConfig : IGlobalConfig
+    public  class GlobalConfiguration : IGlobalConfig
     {
         private  DatabaseType _chosenDatabase = DatabaseType.ExcelFile;
         public  DatabaseType ChosenDatabase
@@ -18,7 +18,7 @@ namespace SellWoodTracker.GlobalConfig
        
         public  IDataConnection? Connection { get; private set; }
 
-        public GlobalConfig()
+        public GlobalConfiguration()
         {
             InitializeConnections();
         }

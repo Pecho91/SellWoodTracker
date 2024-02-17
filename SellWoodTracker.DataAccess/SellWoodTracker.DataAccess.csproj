@@ -8,6 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.28" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SellWoodTracker.Common\SellWoodTracker.Common.csproj" />
     <ProjectReference Include="..\SellWoodTracker.GlobalConfig\SellWoodTracker.GlobalConfig.csproj" />
   </ItemGroup>

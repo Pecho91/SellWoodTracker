@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "KlSMfrFlT8WqJr3Da/v76HCPg7WLB7DAvaG/ZksLg3kO7BUuJnLKp2E0MLGHPZCoHbmzQDWlm6HnHPzc1Wv5fQ==",
+  "dgSpecHash": "2/8o/c8gZC5alitqDee3sUhsDTINAtuBAeWcgtgpk4p3D0y9UyX5STVAypwTliavn7b1PuRWxPEQhGMuVGR8Fg==",
   "success": true,
   "projectFilePath": "C:\\Users\\andri\\source\\repos\\SellWoodTracker\\SellWoodTracker\\SellWoodTracker.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\andri\\.nuget\\packages\\closedxml\\0.102.1\\closedxml.0.102.1.nupkg.sha512",
-    "C:\\Users\\andri\\.nuget\\packages\\dapper\\2.1.15\\dapper.2.1.15.nupkg.sha512",
+    "C:\\Users\\andri\\.nuget\\packages\\dapper\\2.1.28\\dapper.2.1.28.nupkg.sha512",
     "C:\\Users\\andri\\.nuget\\packages\\documentformat.openxml\\2.16.0\\documentformat.openxml.2.16.0.nupkg.sha512",
     "C:\\Users\\andri\\.nuget\\packages\\excelnumberformat\\1.1.0\\excelnumberformat.1.1.0.nupkg.sha512",
     "C:\\Users\\andri\\.nuget\\packages\\irony.netcore\\1.0.11\\irony.netcore.1.0.11.nupkg.sha512",

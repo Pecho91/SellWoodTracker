@@ -23,11 +23,11 @@
           }
         }
       },
-      "Dapper/2.1.15": {
+      "Dapper/2.1.28": {
         "runtime": {
-          "lib/net5.0/Dapper.dll": {
+          "lib/net7.0/Dapper.dll": {
             "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.1.15.52653"
+            "fileVersion": "2.1.28.55233"
           }
         }
       },
@@ -1278,12 +1278,12 @@
       "path": "closedxml/0.102.1",
       "hashPath": "closedxml.0.102.1.nupkg.sha512"
     },
-    "Dapper/2.1.15": {
+    "Dapper/2.1.28": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-1aWSAosZymEM+mRwfrXteRIN74/JTUjqj9B/KqEbanH6vfUKy9D9cemRN0q1ZOEfSB7d1PpFTpVOCbf2Uv70Og==",
-      "path": "dapper/2.1.15",
-      "hashPath": "dapper.2.1.15.nupkg.sha512"
+      "sha512": "sha512-ha49pzOEDmCPkMxwfPSR/wxa/6RD3r42TESIgpzpi7FXq/gNVUuJVEO+wtUzntNRhtmq3BKCl0s0aAlSZLkBUA==",
+      "path": "dapper/2.1.28",
+      "hashPath": "dapper.2.1.28.nupkg.sha512"
     },
     "DocumentFormat.OpenXml/2.16.0": {
       "type": "package",

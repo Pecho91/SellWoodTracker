@@ -19,91 +19,60 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
         private readonly IGlobalConfig _globalConfig;
         private readonly string _dataBase;
 
-        public SqlDataOperations(IGlobalConfig globalConfig)
+        public SqlDataOperations()
         {
-            _globalConfig = globalConfig;
+            
             _dataBase = _globalConfig.CnnString("SellWoodTracker");
         }
 
-        public void CreatePerson(PersonModel model)
+        
+        public DynamicParameters CreatePerson(PersonModel model)
+              {
+                  var p = new DynamicParameters();
+                    p.Add("@FirstName", model.FirstName);
+                    p.Add("@LastName", model.LastName);
+                    p.Add("@CellphoneNumber", model.CellphoneNumber);
+                    p.Add("@EmailAddress", model.EmailAddress);
+
+                    if (model.DateTime.HasValue)
+                    {
+                        p.Add("@DateTime", model.DateTime.Value, DbType.DateTime);
+
+                    }
+                    else
+                    {
+                        p.Add("@DateTime", DBNull.Value, DbType.DateTime);
+
+                    }
+                    p.Add("@MetricAmount", model.MetricAmount);
+                    p.Add("@MetricPrice", model.MetricPrice);
+                    p.Add("@GrossIncome", model.GrossIncome = model.MetricAmount * model.MetricPrice);
+                    p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+                    return p;
+                }
+
+
+        public PersonModel GetPersonById(IDbConnection connection, int personId)
         {
-
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_dataBase))
-            {
-                var p = new DynamicParameters();
-                p.Add("@FirstName", model.FirstName);
-                p.Add("@LastName", model.LastName);
-                p.Add("@CellphoneNumber", model.CellphoneNumber);
-                p.Add("@EmailAddress", model.EmailAddress);
-
-                if (model.DateTime.HasValue)
-                {
-                    p.Add("@DateTime", model.DateTime.Value, DbType.DateTime);
-
-                }
-                else
-                {
-                    p.Add("@DateTime", DBNull.Value, DbType.DateTime);
-                }
-
-                p.Add("@MetricAmount", model.MetricAmount);
-                p.Add("@MetricPrice", model.MetricPrice);
-                p.Add("@GrossIncome", model.GrossIncome = model.MetricAmount * model.MetricPrice);
-                p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-                connection.Execute("dbo.spRequestedPeople_Insert", p, commandType: CommandType.StoredProcedure);
-
-                model.Id = p.Get<int>("@id");
-            }
+            return connection.QueryFirstOrDefault<PersonModel>("dbo.spRequestedPeople_GetById",
+                    new { Id = personId }, commandType: CommandType.StoredProcedure);
         }
 
-        public List<PersonModel> GetRequestedPeople_All()
+
+
+        public void MoveRequestedPersonToCompleted(IDbConnection connection, PersonModel person)
         {
-            List<PersonModel> output;
-
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_dataBase))
-            {
-                output = connection.Query<PersonModel>("dbo.spRequestedPeople_GetAll").ToList();
-            }
-
-            return output;
-        }
-
-        public List<PersonModel> GetCompletedPeople_All()
-        {
-            List<PersonModel> output;
-
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_dataBase))
-            {
-                output = connection.Query<PersonModel>("dbo.spCompletedPeople_GetAll").ToList();
-            }
-
-            return output;
-        }
-
-        public void MoveRequestedPersonToCompleted(int personId)
-        {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_dataBase))
-            {
-                var person = connection.QueryFirstOrDefault<PersonModel>("dbo.spRequestedPeople_GetById",
-                             new { Id = personId }, commandType: CommandType.StoredProcedure);
-
-                if (person != null)
-                {
-                    connection.Execute("dbo.spRequestedPeople_DeleteById", new { id = personId }, commandType: CommandType.StoredProcedure);
-
-                    var p = new DynamicParameters();
-                    p.Add("@FirstName", person.FirstName);
-                    p.Add("@LastName", person.LastName);
-                    p.Add("@CellphoneNumber", person.CellphoneNumber);
-                    p.Add("@EmailAddress", person.EmailAddress);
-                    p.Add("@DateTime", person.DateTime);
-                    p.Add("@MetricAmount", person.MetricAmount);
-                    p.Add("@MetricPrice", person.MetricPrice);
-                    p.Add("@GrossIncome", person.GrossIncome);
-                    connection.Execute("dbo.spCompletedPeople_Insert", p, commandType: CommandType.StoredProcedure);
-                }
-            }
+            var p = new DynamicParameters();
+            p.Add("@FirstName", person.FirstName);
+            p.Add("@LastName", person.LastName);
+            p.Add("@CellphoneNumber", person.CellphoneNumber);
+            p.Add("@EmailAddress", person.EmailAddress);
+            p.Add("@DateTime", person.DateTime);
+            p.Add("@MetricAmount", person.MetricAmount);
+            p.Add("@MetricPrice", person.MetricPrice);
+            p.Add("@GrossIncome", person.GrossIncome);
+            connection.Execute("dbo.spRequestedPeople_DeleteById", new { id = person.Id }, commandType: CommandType.StoredProcedure);
+            connection.Execute("dbo.spCompletedPeople_Insert", p, commandType: CommandType.StoredProcedure);
         }
 
         public void DeletePersonFromRequested(int personId)
