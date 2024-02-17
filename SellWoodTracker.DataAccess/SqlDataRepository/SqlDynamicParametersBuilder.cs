@@ -13,20 +13,20 @@ using SellWoodTracker.Common.Model;
 
 namespace SellWoodTracker.DataAccess.SqlDataAccess
 {
-    public class SqlDataOperations : IDataConnection
+    public class SqlDynamicParametersBuilder : ISqlPersonRepository
     {
 
         private readonly IGlobalConfig _globalConfig;
         private readonly string _dataBase;
 
-        public SqlDataOperations()
+        public SqlDynamicParametersBuilder()
         {
             
             _dataBase = _globalConfig.CnnString("SellWoodTracker");
         }
 
         
-        public DynamicParameters CreatePerson(PersonModel model)
+        public DynamicParameters BuildParametersForPerson(PersonModel model)
               {
                   var p = new DynamicParameters();
                     p.Add("@FirstName", model.FirstName);
@@ -52,12 +52,8 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
                 }
 
 
-        public PersonModel GetPersonById(IDbConnection connection, int personId)
-        {
-            return connection.QueryFirstOrDefault<PersonModel>("dbo.spRequestedPeople_GetById",
-                    new { Id = personId }, commandType: CommandType.StoredProcedure);
-        }
-
+      
+        //TODO
 
 
         public void MoveRequestedPersonToCompleted(IDbConnection connection, PersonModel person)

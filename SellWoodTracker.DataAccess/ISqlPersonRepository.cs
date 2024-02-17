@@ -9,20 +9,16 @@ using System.Threading.Tasks;
 
 namespace SellWoodTracker.DataAccess
 {
-    public interface IDataConnection
+    public interface ISqlPersonRepository
     {
         void CreatePerson(PersonModel model);
-
-        void MoveRequestedPersonToCompleted(int personId);
-        void DeletePersonFromRequested(int personId);
-
-        void DeletePersonFromCompleted(int personId);
-
+        public PersonModel GetPersonById(IDbConnection connection, int personId);
         List<PersonModel> GetRequestedPeople_All();
         List<PersonModel> GetCompletedPeople_All();
-
+        void MoveRequestedPersonToCompleted(int personId);
+        void DeletePersonFromRequested(int personId);
+        void DeletePersonFromCompleted(int personId);
         decimal GetTotalGrossIncomeFromCompleted();
-
         decimal GetTotalMetricAmountFromCompleted();
 
     
@@ -105,7 +101,8 @@ namespace SellWoodTracker.DataAccess.Repositories
                 _connection.Execute("dbo.spCompletedPeople_Insert", parameters, commandType: CommandType.StoredProcedure);
             }
         }
-
+        
+        // TODO
         public void DeleteFromRequested(int personId)
         {
             _connection.Execute("dbo.spRequestedPeople_DeleteById", new { id = personId }, commandType: CommandType.StoredProcedure);

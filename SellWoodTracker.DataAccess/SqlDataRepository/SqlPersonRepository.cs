@@ -11,28 +11,35 @@ using Dapper;
 
 namespace SellWoodTracker.DataAccess.SqlDataAccess
 {
-    public class SqlConnector
+    public class SqlPersonRepository : ISqlPersonRepository
     {
         private readonly IGlobalConfig _globalConfig;
         private readonly string _dataBase;
-        private readonly SqlDataOperations _sqlDataOperations;
+        private readonly SqlDynamicParametersBuilder _sqlDynamicParametersBuilder;
 
-        public SqlConnector(IGlobalConfig globalConfig, SqlDataOperations sqlDataOperations)
+        public SqlPersonRepository(IGlobalConfig globalConfig, SqlDynamicParametersBuilder sqlDynamicParametersBuilder)
         {
             
             _globalConfig = globalConfig ?? throw new ArgumentNullException(nameof(globalConfig));
             _dataBase = _globalConfig.CnnString("SellWoodTracker");
-            _sqlDataOperations = sqlDataOperations ?? throw new ArgumentNullException(nameof(sqlDataOperations));
+            _sqlDynamicParametersBuilder = sqlDynamicParametersBuilder ?? throw new ArgumentNullException(nameof(sqlDynamicParametersBuilder);
         }
 
         public void CreatePerson(PersonModel model)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_dataBase)) 
             {
-                var p = _sqlDataOperations.CreatePerson(model);
+                var p = _sqlDynamicParametersBuilder.BuildParametersForPerson(model);
                 connection.Execute("dbo.spRequestedPeople_Insert", p, commandType: CommandType.StoredProcedure);
                 model.Id = p.Get<int>("@id");
             }
+        }
+
+
+        public PersonModel GetPersonById(IDbConnection connection, int personId)
+        {
+            return connection.QueryFirstOrDefault<PersonModel>("dbo.spRequestedPeople_GetById",
+                    new { Id = personId }, commandType: CommandType.StoredProcedure);
         }
 
         public List<PersonModel> GetRequestedPeople_All()
@@ -62,6 +69,26 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
                     _sqlDataOperations.MoveRequestedPersonToCompleted(connection, person);
                 }
             }
+        }
+
+        public void DeletePersonFromRequested(int personId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeletePersonFromCompleted(int personId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public decimal GetTotalGrossIncomeFromCompleted()
+        {
+            throw new NotImplementedException();
+        }
+
+        public decimal GetTotalMetricAmountFromCompleted()
+        {
+            throw new NotImplementedException();
         }
     }
 }

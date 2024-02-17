@@ -17,7 +17,7 @@ namespace SellWoodTracker.MVVM.DataLoading
     public class MainViewModelDataLoading : BaseViewModel
     {
         
-        private readonly SqlDataOperations _connection;
+        private readonly SqlDynamicParametersBuilder _connection;
         private ObservableCollection<PersonModel>? _requestedPeople;
         public ObservableCollection<PersonModel> RequestedPeople
         {
@@ -64,7 +64,7 @@ namespace SellWoodTracker.MVVM.DataLoading
             }
         }
 
-        public MainViewModelDataLoading(SqlDataOperations sqlDataConnections)
+        public MainViewModelDataLoading(SqlDynamicParametersBuilder sqlDataConnections)
         {
             _sqlDataConnections = sqlDataConnections;
         }
