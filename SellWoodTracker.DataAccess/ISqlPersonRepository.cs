@@ -12,7 +12,7 @@ namespace SellWoodTracker.DataAccess
     public interface ISqlPersonRepository
     {
         void CreatePerson(PersonModel model);
-        public PersonModel GetPersonById(IDbConnection connection, int personId);
+        public PersonModel GetPersonById(int personId);
         List<PersonModel> GetRequestedPeople_All();
         List<PersonModel> GetCompletedPeople_All();
         void MoveRequestedPersonToCompleted(int personId);

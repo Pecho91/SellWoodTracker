@@ -8,26 +8,27 @@ using SellWoodTracker.Common.Model;
 using System.Data;
 using System.Runtime.CompilerServices;
 using Dapper;
+using SellWoodTracker.DataAccess.SqlDataRepository;
+using System.Data.Common;
 
 namespace SellWoodTracker.DataAccess.SqlDataAccess
 {
     public class SqlPersonRepository : ISqlPersonRepository
     {
-        private readonly IGlobalConfig _globalConfig;
-        private readonly string _dataBase;
+        
+        private readonly SqlConnectionFactory _sqlConnectionFactory;
         private readonly SqlDynamicParametersBuilder _sqlDynamicParametersBuilder;
 
-        public SqlPersonRepository(IGlobalConfig globalConfig, SqlDynamicParametersBuilder sqlDynamicParametersBuilder)
+        public SqlPersonRepository(IGlobalConfig globalConfig,SqlConnectionFactory connectionFactory, SqlDynamicParametersBuilder sqlDynamicParametersBuilder)
         {
-            
-            _globalConfig = globalConfig ?? throw new ArgumentNullException(nameof(globalConfig));
-            _dataBase = _globalConfig.CnnString("SellWoodTracker");
+               
+            _sqlConnectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(_sqlConnectionFactory));
             _sqlDynamicParametersBuilder = sqlDynamicParametersBuilder ?? throw new ArgumentNullException(nameof(sqlDynamicParametersBuilder);
         }
 
         public void CreatePerson(PersonModel model)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_dataBase)) 
+            using (IDbConnection connection = _sqlConnectionFactory?.CreateSqlConnection())
             {
                 var p = _sqlDynamicParametersBuilder.BuildParametersForPerson(model);
                 connection.Execute("dbo.spRequestedPeople_Insert", p, commandType: CommandType.StoredProcedure);
@@ -36,15 +37,19 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
         }
 
 
-        public PersonModel GetPersonById(IDbConnection connection, int personId)
+        public PersonModel? GetPersonById(int personId)
         {
-            return connection.QueryFirstOrDefault<PersonModel>("dbo.spRequestedPeople_GetById",
-                    new { Id = personId }, commandType: CommandType.StoredProcedure);
+            using (IDbConnection connection = _sqlConnectionFactory.CreateSqlConnection())
+            {
+                return connection?.QueryFirstOrDefault<PersonModel>("dbo.spRequestedPeople_GetById",
+                            new { Id = personId }, commandType: CommandType.StoredProcedure);
+            }
         }
-
+        //TODO
+      
         public List<PersonModel> GetRequestedPeople_All()
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_dataBase))
+            using (IDbConnection connection = _sqlConnectionFactory.CreateSqlConnection())
             {
                 return connection.Query<PersonModel>("dbo.spRequestedPeople_GetAll").ToList();
             }
@@ -52,7 +57,7 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
 
         public List<PersonModel> GetCompletedPeople_All()
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_dataBase))
+            using (IDbConnection connection = _sqlConnectionFactory.CreateSqlConnection())
             {
                 return connection.Query<PersonModel>("dbo.spCompletedPeople_GetAll").ToList();
             }
@@ -60,13 +65,13 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
 
         public void MoveRequestedPersonToCompleted(int personId)
         {
-            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(_dataBase))
+            using (IDbConnection connection = _sqlConnectionFactory.CreateSqlConnection())
             {
-                var person = _sqlDataOperations.GetPersonById(connection, personId);
+                var person = GetPersonById(personId);
 
                 if (person != null)
                 {
-                    _sqlDataOperations.MoveRequestedPersonToCompleted(connection, person);
+                    _sqlPersonService.MoveRequestedPersonToCompleted(connection, person);
                 }
             }
         }
