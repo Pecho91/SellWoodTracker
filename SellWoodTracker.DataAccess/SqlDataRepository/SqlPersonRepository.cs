@@ -18,7 +18,7 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
         private readonly SqlConnectionFactory _sqlConnectionFactory;
         private readonly SqlDynamicParametersBuilder _sqlDynamicParametersBuilder;
 
-        public SqlPersonRepository(IGlobalConfig globalConfig, SqlConnectionFactory connectionFactory, SqlDynamicParametersBuilder sqlDynamicParametersBuilder)
+        public SqlPersonRepository(SqlConnectionFactory connectionFactory, SqlDynamicParametersBuilder sqlDynamicParametersBuilder)
         {
             _sqlConnectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(_sqlConnectionFactory));
             _sqlDynamicParametersBuilder = sqlDynamicParametersBuilder ?? throw new ArgumentNullException(nameof(sqlDynamicParametersBuilder);
