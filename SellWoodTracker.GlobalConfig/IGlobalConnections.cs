@@ -8,6 +8,6 @@ namespace SellWoodTracker.GlobalConfig
 {
     public interface IGlobalConnections
     {
-        public void InitializeConnections();
-    }
+        // TODO move connection string from SqlConnectionFactory. or left it in SqlConnectionFactory, delete from global config.
+    }  
 }

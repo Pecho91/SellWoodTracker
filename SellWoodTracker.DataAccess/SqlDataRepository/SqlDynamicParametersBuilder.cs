@@ -7,13 +7,9 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
 {
     public class SqlDynamicParametersBuilder 
     {
-
-        private readonly IGlobalConfig _globalConfig;
-        private readonly string _dataBase;
-
         public SqlDynamicParametersBuilder()
         {         
-            _dataBase = _globalConfig.CnnString("SellWoodTracker");
+            
         }
      
         public DynamicParameters GetPersonDynamicParameters(PersonModel model)
