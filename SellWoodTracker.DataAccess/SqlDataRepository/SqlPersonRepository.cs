@@ -43,7 +43,6 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
                             new { Id = personId }, commandType: CommandType.StoredProcedure);
             }
         }
-        //TODO
       
         public List<PersonModel> GetRequestedPeople_All()
         {

@@ -10,36 +10,18 @@ namespace SellWoodTracker.GlobalConfig
 {
     public  class GlobalConfiguration : IGlobalConfig
     {
+        private readonly InitializeGlobalConnection _initializeGlobalConnection;
         private  DatabaseType _chosenDatabase = DatabaseType.ExcelFile;
-        public  DatabaseType ChosenDatabase
+        public DatabaseType ChosenDatabase
         {
             get { return _chosenDatabase; }
         }
-       
-        public  IDataConnection? Connection { get; private set; }
 
         public GlobalConfiguration()
         {
-            InitializeConnections();
+            _initializeGlobalConnection = new InitializeGlobalConnection();
+            _initializeGlobalConnection.InitializeConnections();
         }
-
-        public void InitializeConnections ()
-        {           
-            switch (_chosenDatabase)
-            {
-                case DatabaseType.Sql:
-                    Connection = new SqlConnector(this);
-                    break;
-
-                case DatabaseType.ExcelFile:
-                    Connection = new ExcelConnector(this);
-                    break;
-
-                default:
-                    throw new ArgumentException("Invalid database type provided.");
-            }
-        }
-    
 
         public string CnnString(string name)
         {

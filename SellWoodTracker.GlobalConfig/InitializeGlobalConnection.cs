@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace SellWoodTracker.GlobalConfig
 {
-    public class InitializeGlobalConnection
+    public class InitializeGlobalConnection : IGlobalConnections
     {
+        private readonly SqlConnectionFactory sqlConnectionFactory;
         private DatabaseType _chosenDatabase = DatabaseType.ExcelFile;
         public DatabaseType ChosenDatabase
         {
@@ -31,3 +32,4 @@ namespace SellWoodTracker.GlobalConfig
         }
     }
 }
+//TODO

@@ -11,7 +11,7 @@ namespace SellWoodTracker.GlobalConfig
     {
         DatabaseType ChosenDatabase { get; }
        
-        string CnnString(string name);
+        string? CnnString(string name);
         string? AppKeyLookup(string key);
     }
 }

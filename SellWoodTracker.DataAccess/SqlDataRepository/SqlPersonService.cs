@@ -20,5 +20,31 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
         {
             _repository.CreatePerson(model);
         }
+
+        public void MoveRequestedPersonToCompletedService(int id)
+        {
+            _repository.MoveRequestedPersonToCompleted(id);
+        }
+
+        public void DeletePersonFromRequestedService(int id)
+        {
+            _repository.DeletePersonFromRequested(id);
+        }
+
+        public void DeletePersonFromCompletedService(int id)
+        {
+            _repository.DeletePersonFromCompleted(id);
+        }
+
+        public decimal GetTotalGrossIncomeFromCompletedService()
+        {
+           return _repository.GetTotalGrossIncomeFromCompleted();
+        }
+
+        public decimal GetTotalMetricAmountFromCompletedService()
+        {
+            return _repository.GetTotalMetricAmountFromCompleted();
+        }
+
     }
 }
