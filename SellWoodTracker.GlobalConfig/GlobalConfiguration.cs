@@ -11,12 +11,7 @@ namespace SellWoodTracker.GlobalConfig
     public  class GlobalConfiguration : IGlobalConfig
     {
         private readonly InitializeGlobalConnection _initializeGlobalConnection;
-        private  DatabaseType _chosenDatabase = DatabaseType.ExcelFile;
-        public DatabaseType ChosenDatabase
-        {
-            get { return _chosenDatabase; }
-        }
-
+        
         public GlobalConfiguration()
         {
             _initializeGlobalConnection = new InitializeGlobalConnection();

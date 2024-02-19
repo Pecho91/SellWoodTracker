@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace SellWoodTracker.GlobalConfig
 {
-    public class InitializeGlobalConnection : IGlobalConnections
+    public class InitializeGlobalConnection : IGlobalConnector
     {
-        private readonly SqlConnector sqlConnector;
-        pr
-        private DatabaseType _chosenDatabase = DatabaseType.ExcelFile;
+        
+        
+        private DatabaseType _chosenDatabase = DatabaseType.Sql;
         public DatabaseType ChosenDatabase
         {
             get { return _chosenDatabase; }

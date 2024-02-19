@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 namespace SellWoodTracker.GlobalConfig
 {
     public interface IGlobalConfig
-    {
-        DatabaseType ChosenDatabase { get; }
-       
+    {      
         string? CnnString(string name);
         string? AppKeyLookup(string key);
     }

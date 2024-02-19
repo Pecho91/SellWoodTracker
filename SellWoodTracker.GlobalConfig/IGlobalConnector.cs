@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace SellWoodTracker.GlobalConfig
 {
-    public interface IGlobalConnections
+    public interface IGlobalConnector
+
     {
-        // TODO move connection string from SqlConnectionFactory. or left it in SqlConnectionFactory, delete from global config.
+        DatabaseType ChosenDatabase { get; }
+        void InitializeConnections();
     }  
 }
