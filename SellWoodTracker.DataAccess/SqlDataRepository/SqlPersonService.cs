@@ -9,9 +9,9 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
 {
     public class SqlPersonService
     {
-        private readonly SqlPersonRepository _repository;
+        private readonly ISqlPersonRepository _repository;
 
-        public SqlPersonService(SqlPersonRepository repository)
+        public SqlPersonService(ISqlPersonRepository repository)
         {
             _repository = repository;
         }

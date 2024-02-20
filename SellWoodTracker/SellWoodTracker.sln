@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SellWoodTracker.DataAccess"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SellWoodTracker.GlobalConfig", "..\SellWoodTracker.GlobalConfig\SellWoodTracker.GlobalConfig.csproj", "{39575119-66E5-4947-851F-769122A21E68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SellWoodTracker.Common", "..\SellWoodTracker.Common\SellWoodTracker.Common.csproj", "{D1D551EF-A282-451D-A7FE-1EA783CD274A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SellWoodTracker.Common", "..\SellWoodTracker.Common\SellWoodTracker.Common.csproj", "{D1D551EF-A282-451D-A7FE-1EA783CD274A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SellWoodTracker.Services", "..\SellWoodTracker.Services\SellWoodTracker.Services.csproj", "{35F5BDE6-62CA-4854-99F5-65A6C7B015D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{D1D551EF-A282-451D-A7FE-1EA783CD274A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1D551EF-A282-451D-A7FE-1EA783CD274A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1D551EF-A282-451D-A7FE-1EA783CD274A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35F5BDE6-62CA-4854-99F5-65A6C7B015D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35F5BDE6-62CA-4854-99F5-65A6C7B015D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35F5BDE6-62CA-4854-99F5-65A6C7B015D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35F5BDE6-62CA-4854-99F5-65A6C7B015D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

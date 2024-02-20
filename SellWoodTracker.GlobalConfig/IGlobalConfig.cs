@@ -9,7 +9,7 @@ namespace SellWoodTracker.GlobalConfig
 {
     public interface IGlobalConfig
     {      
-        string? CnnString(string name);
-        string? AppKeyLookup(string key);
+        string CnnString(string name);
+        string AppKeyLookup(string key);
     }
 }

@@ -31,6 +31,8 @@ namespace SellWoodTracker.GlobalConfig
                     throw new ArgumentException("Invalid database type provided.");
             }
         }
+
+
     }
 }
 //TODO

@@ -14,8 +14,7 @@ namespace SellWoodTracker.GlobalConfig
         
         public GlobalConfiguration()
         {
-            _initializeGlobalConnection = new InitializeGlobalConnection();
-            _initializeGlobalConnection.InitializeConnections();
+            
         }
 
         public string CnnString(string name)
@@ -26,7 +25,7 @@ namespace SellWoodTracker.GlobalConfig
             return connectionString != null ? connectionString.ConnectionString : string.Empty;
         }
 
-        public string? AppKeyLookup(string key)
+        public string AppKeyLookup(string key)
         {
             return ConfigurationManager.AppSettings[key];
         }
