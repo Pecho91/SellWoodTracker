@@ -12,7 +12,6 @@ public interface ISqlConnector
 
 {
     DatabaseType ChosenDatabase { get; }
-    ISqlPersonRepository SqlPersonRepository { get; }
-    void InitializeConnections();
+    ISqlPersonService SqlPersonService { get; }
+    //void InitializeConnections();
 }  
-// TODO move this to services?

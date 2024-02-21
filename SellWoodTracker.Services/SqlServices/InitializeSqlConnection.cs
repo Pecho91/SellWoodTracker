@@ -15,42 +15,24 @@ public class InitializeSqlConnection : ISqlConnector
 
 
     private readonly DatabaseType _chosenDatabase = DatabaseType.Sql;
-    public DatabaseType ChosenDatabase
+    public DatabaseType ChosenDatabase => _chosenDatabase;
+
+    private readonly SqlPersonService _sqlPersonService;
+    public ISqlPersonService SqlPersonService => _sqlPersonService;
+
+
+    public InitializeSqlConnection(ISqlPersonRepository repository)
     {
-        get { return _chosenDatabase; }
-    }
-
-    private readonly ISqlPersonRepository _sqlPersonRepository;
-    public ISqlPersonRepository SqlPersonRepository
-    {
-        get { return _sqlPersonRepository; }
-    }
-   
-  
-    public InitializeSqlConnection()
-    {
-
-    }
-
-
-
-    public void InitializeConnections()
-    {
-        switch (_chosenDatabase)
+        if (_chosenDatabase == DatabaseType.Sql)
         {
-            case DatabaseType.Sql:
-                _sqlPersonRepository = new SqlPersonService((ISqlPersonRepository)this);
-                break;
-
-            //case DatabaseType.ExcelFile:
-            //    _sqlPersonRepositoryConnection = new ExcelPersonService(this);
-            //    break;
-
-            default:
-                throw new ArgumentException("Invalid database type provided.");
+            _sqlPersonService = new SqlPersonService(repository);
+        }
+        else
+        {
+            throw new ArgumentException("Invalid database type provided.");
         }
     }
 
-
+    
 }
-//TODO move this to services? separate this to 2 classes (sql, excel).
+//TODO ?????? a lot dependencies????
