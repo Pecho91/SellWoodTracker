@@ -23,7 +23,5 @@ namespace SellWoodTracker.DataAccess.SqlDataRepository
         {
             return new System.Data.SqlClient.SqlConnection(_dataBase);
         }
-
-
     }
 }

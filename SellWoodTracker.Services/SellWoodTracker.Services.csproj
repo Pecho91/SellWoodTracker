@@ -1,13 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SellWoodTracker.Common\SellWoodTracker.Common.csproj" />
     <ProjectReference Include="..\SellWoodTracker.DataAccess\SellWoodTracker.DataAccess.csproj" />
+    <ProjectReference Include="..\SellWoodTracker.GlobalConfig\SellWoodTracker.GlobalConfig.csproj" />
   </ItemGroup>
 
 </Project>

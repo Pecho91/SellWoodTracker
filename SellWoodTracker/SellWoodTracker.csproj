@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SellWoodTracker.Common\SellWoodTracker.Common.csproj" />
-    <ProjectReference Include="..\SellWoodTracker.GlobalConfig\SellWoodTracker.GlobalConfig.csproj" />
+    <ProjectReference Include="..\SellWoodTracker.Services\SellWoodTracker.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -39,7 +39,7 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
         {
             using (IDbConnection connection = _sqlConnectionFactory.CreateSqlConnection())
             {
-                return connection?.QueryFirstOrDefault<PersonModel>("dbo.spRequestedPeople_GetById",
+                return connection.QueryFirstOrDefault<PersonModel>("dbo.spRequestedPeople_GetById",
                             new { Id = personId }, commandType: CommandType.StoredProcedure);
             }
         }

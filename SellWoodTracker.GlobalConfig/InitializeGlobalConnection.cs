@@ -11,6 +11,8 @@ namespace SellWoodTracker.GlobalConfig
         
         
         private DatabaseType _chosenDatabase = DatabaseType.Sql;
+
+        ISqlPersonRepository _sqlPersonRepositoryConnection;
         public DatabaseType ChosenDatabase
         {
             get { return _chosenDatabase; }
@@ -20,12 +22,12 @@ namespace SellWoodTracker.GlobalConfig
             switch (_chosenDatabase)
             {
                 case DatabaseType.Sql:
-                    Connection = new SqlConnector(this);
+                    _sqlPersonRepositoryConnection = new SqlPersonService(this);
                     break;
 
-                case DatabaseType.ExcelFile:
-                    Connection = new ExcelConnector(this);
-                    break;
+                //case DatabaseType.ExcelFile:
+                //    _sqlPersonRepositoryConnection = new ExcelPersonService(this);
+                //    break;
 
                 default:
                     throw new ArgumentException("Invalid database type provided.");
@@ -35,4 +37,4 @@ namespace SellWoodTracker.GlobalConfig
 
     }
 }
-//TODO
+//TODO move this to services? separate this to 2 classes (sql, excel).
