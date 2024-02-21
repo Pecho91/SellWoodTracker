@@ -35,7 +35,7 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
         }
 
 
-        public PersonModel? GetPersonById(int personId)
+        public PersonModel GetPersonById(int personId)
         {
             using (IDbConnection connection = _sqlConnectionFactory.CreateSqlConnection())
             {

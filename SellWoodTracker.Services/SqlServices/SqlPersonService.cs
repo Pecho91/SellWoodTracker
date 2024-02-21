@@ -22,6 +22,23 @@ namespace SellWoodTracker.Services.SqlServices
             _repository.CreatePerson(model);
         }
 
+        // TODO ???
+        public PersonModel GetPersonById(int personId)
+        {
+            throw NotImplementedException();
+        }
+
+        private Exception NotImplementedException()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<PersonModel> GetRequestedPeople_All(PersonModel model)
+        {
+            _repository.GetRequestedPeople_All(model);
+        }
+        public List<PersonModel> GetCompletedPeople_All();
+
         public void MoveRequestedPersonToCompletedService(int id)
         {
             _repository.MoveRequestedPersonToCompleted(id);
