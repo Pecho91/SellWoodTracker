@@ -31,8 +31,6 @@ public class InitializeSqlConnection : ISqlConnector
         {
             throw new ArgumentException("Invalid database type provided.");
         }
-    }
-
-    
+    }   
 }
 //TODO ?????? a lot dependencies????

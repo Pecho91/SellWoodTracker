@@ -1,8 +1,7 @@
 
 
 using Moq;
-using SellWoodTracker.DataAccess;
-using SellWoodTracker.MVVM.Model;
+
 
 namespace SellWoodTracker.Tests
 {

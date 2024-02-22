@@ -13,5 +13,5 @@ public interface ISqlConnector
 {
     DatabaseType ChosenDatabase { get; }
     ISqlPersonService SqlPersonService { get; }
-    //void InitializeConnections();
+    
 }  

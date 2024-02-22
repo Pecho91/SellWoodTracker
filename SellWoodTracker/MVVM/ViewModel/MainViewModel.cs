@@ -1,8 +1,6 @@
 ﻿using SellWoodTracker.DataAccess;
 using SellWoodTracker.MVVM.Commands;
 using SellWoodTracker.MVVM.DataLoading;
-using SellWoodTracker.MVVM.Core;
-using SellWoodTracker.MVVM.DataLoading;
 using SellWoodTracker.MVVM.View;
 using System;
 using System.Collections.Generic;
@@ -21,18 +19,18 @@ namespace SellWoodTracker.MVVM.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
-        private readonly MainViewModelDataLoading _mainViewModelDataLoading;
+        private readonly MainViewModelSqlDataLoading _mainViewModelSqlDataLoading;
         private readonly MainViewModelCommands _mainViewModelCommands;
 
-        public ObservableCollection<PersonModel> RequestedPeople => _mainViewModelDataLoading.RequestedPeople;
-        public ObservableCollection<PersonModel> CompletedPeople => _mainViewModelDataLoading.CompletedPeople;
+        public ObservableCollection<PersonModel> RequestedPeople => _mainViewModelSqlDataLoading.RequestedPeople;
+        public ObservableCollection<PersonModel> CompletedPeople => _mainViewModelSqlDataLoading.CompletedPeople;
 
-        public ICommand SomeCommand => _mainViewModelCommands.SomeCommand;
+        //public ICommand SomeCommand => _mainViewModelCommands.SomeCommand;
 
-        public MainViewModel()
+        public MainViewModel(MainViewModelSqlDataLoading mainViewModelSqlDataLoading)
         {
-            _mainViewModelDataLoading = new MainViewModelDataLoading();
-            _mainViewModelCommands = new MainViewModelCommands();
+            _mainViewModelSqlDataLoading = mainViewModelSqlDataLoading;
+            _mainViewModelSqlDataLoading.LoadDataFromSql();
         }
         
 

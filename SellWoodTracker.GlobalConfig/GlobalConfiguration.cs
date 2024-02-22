@@ -9,9 +9,7 @@ using SellWoodTracker;
 namespace SellWoodTracker.GlobalConfig
 {
     public  class GlobalConfiguration : IGlobalConfig
-    {
-        private readonly InitializeGlobalConnection _initializeGlobalConnection;
-        
+    {   
         public GlobalConfiguration()
         {
             

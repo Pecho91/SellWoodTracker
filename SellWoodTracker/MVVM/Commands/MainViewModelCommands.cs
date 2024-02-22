@@ -16,12 +16,14 @@ using System.Windows;
 using System.Data.SqlClient;
 using SellWoodTracker.MVVM.DataLoading;
 using SellWoodTracker.Common.Model;
+using SellWoodTracker.Services.SqlServices;
 
 namespace SellWoodTracker.MVVM.Commands
 {
     public class MainViewModelCommands : BaseViewModel
     {
-        private readonly MainViewModelDataLoading _mainViewModelDataLoading;
+        private readonly MainViewModelSqlDataLoading _mainViewModelSqlDataLoading;
+        private readonly ISqlPersonService _iSqlPersonService;
         public ICommand MovePersonToCompletedCommand { get; }
         public ICommand DeletePersonFromRequestedCommand { get; }
         public ICommand DeletePersonFromCompletedCommand { get; }
@@ -52,7 +54,7 @@ namespace SellWoodTracker.MVVM.Commands
 
         public MainViewModelCommands()
         {
-            _mainViewModelDataLoading = new MainViewModelDataLoading();
+            _mainViewModelSqlDataLoading = new MainViewModelSqlDataLoading();
 
             MovePersonToCompletedCommand = new RelayCommand(MovePersonToCompletedDataGrid);
             DeletePersonFromRequestedCommand = new RelayCommand(DeletePersonFromRequestedDataGrid);
@@ -69,7 +71,7 @@ namespace SellWoodTracker.MVVM.Commands
                 if (confirmed)
                 {
 
-                    _mainViewModelDataLoading.MoveRequestedPersonToCompleted(SelectedCompletedPerson.Id);
+                    _iSqlPersonService.MoveRequestedPersonToCompleted(SelectedCompletedPerson.Id);
 
                     //if (_sqlConnection != null)
                     //{

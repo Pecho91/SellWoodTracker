@@ -19,7 +19,7 @@ using System.Windows.Input;
 
 namespace SellWoodTracker.MVVM.ViewModel
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel1 : INotifyPropertyChanged
     {
 
         private readonly MainViewModelCommands _mainViewModelCommands;

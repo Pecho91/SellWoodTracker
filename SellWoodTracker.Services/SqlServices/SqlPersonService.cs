@@ -2,6 +2,7 @@
 using SellWoodTracker.DataAccess.SqlDataRepository;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,27 +23,42 @@ namespace SellWoodTracker.Services.SqlServices
             _repository.CreatePerson(model);
         }
 
-        public void MoveRequestedPersonToCompletedService(int id)
+        public PersonModel GetPersonById(int personId)
         {
-            _repository.MoveRequestedPersonToCompleted(id);
+            return _repository.GetPersonById(personId);
         }
 
-        public void DeletePersonFromRequestedService(int id)
+        public List<PersonModel> GetRequestedPeople_All()
         {
-            _repository.DeletePersonFromRequested(id);
+            return _repository.GetRequestedPeople_All();
         }
 
-        public void DeletePersonFromCompletedService(int id)
+        public List<PersonModel> GetCompletedPeople_All()
         {
-            _repository.DeletePersonFromCompleted(id);
+            return _repository.GetCompletedPeople_All();
         }
 
-        public decimal GetTotalGrossIncomeFromCompletedService()
+        public void MoveRequestedPersonToCompleted(int personId)
+        {
+            _repository.MoveRequestedPersonToCompleted(personId);
+        }
+
+        public void DeletePersonFromRequested(int personId)
+        {
+            _repository.DeletePersonFromRequested(personId);
+        }
+
+        public void DeletePersonFromCompleted(int personId)
+        {
+            _repository.DeletePersonFromCompleted(personId);
+        }
+
+        public decimal GetTotalGrossIncomeFromCompleted()
         {
             return _repository.GetTotalGrossIncomeFromCompleted();
         }
 
-        public decimal GetTotalMetricAmountFromCompletedService()
+        public decimal GetTotalMetricAmountFromCompleted()
         {
             return _repository.GetTotalMetricAmountFromCompleted();
         }
