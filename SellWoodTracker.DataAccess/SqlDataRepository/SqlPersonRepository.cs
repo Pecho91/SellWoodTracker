@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using Dapper;
 using SellWoodTracker.DataAccess.SqlDataRepository;
 using System.Data.Common;
+using SellWoodTracker.DataAccess.SqlDynamicParameters;
 
 namespace SellWoodTracker.DataAccess.SqlDataAccess
 {
@@ -21,7 +22,7 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
         public SqlPersonRepository(SqlConnectionFactory connectionFactory, SqlDynamicParametersBuilder sqlDynamicParametersBuilder)
         {
             _sqlConnectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(_sqlConnectionFactory));
-            _sqlDynamicParametersBuilder = sqlDynamicParametersBuilder ?? throw new ArgumentNullException(nameof(sqlDynamicParametersBuilder);
+            _sqlDynamicParametersBuilder = sqlDynamicParametersBuilder ?? throw new ArgumentNullException(nameof(sqlDynamicParametersBuilder));
         }
 
         public void CreatePerson(PersonModel model)
@@ -35,12 +36,12 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
         }
 
 
-        public PersonModel GetPersonById(int personId)
+        public PersonModel? GetPersonById(int personId)
         {
             using (IDbConnection connection = _sqlConnectionFactory.CreateSqlConnection())
-            {
-                return connection.QueryFirstOrDefault<PersonModel>("dbo.spRequestedPeople_GetById",
-                            new { Id = personId }, commandType: CommandType.StoredProcedure);
+            {                
+                    return connection.QueryFirstOrDefault<PersonModel>("dbo.spRequestedPeople_GetById",
+                                                   new { Id = personId }, commandType: CommandType.StoredProcedure);              
             }
         }
       

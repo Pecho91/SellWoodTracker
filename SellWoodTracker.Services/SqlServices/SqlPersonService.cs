@@ -23,7 +23,7 @@ namespace SellWoodTracker.Services.SqlServices
             _repository.CreatePerson(model);
         }
 
-        public PersonModel GetPersonById(int personId)
+        public PersonModel? GetPersonById(int personId)
         {
             return _repository.GetPersonById(personId);
         }

@@ -1,373 +1,373 @@
-﻿using SellWoodTracker.Common.Model;
-using SellWoodTracker.DataAccess;
-using SellWoodTracker.MVVM.Commands;
-using SellWoodTracker.MVVM.Core;
-using SellWoodTracker.MVVM.DataLoading;
-using SellWoodTracker.MVVM.View;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
+﻿//using SellWoodTracker.Common.Model;
+//using SellWoodTracker.DataAccess;
+//using SellWoodTracker.MVVM.Commands;
+//using SellWoodTracker.MVVM.Core;
+//using SellWoodTracker.MVVM.DataLoading;
+//using SellWoodTracker.MVVM.View;
+//using System;
+//using System.Collections.Generic;
+//using System.Collections.ObjectModel;
+//using System.ComponentModel;
+//using System.ComponentModel.DataAnnotations;
+//using System.Data.SqlClient;
+//using System.Diagnostics;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+//using System.Windows;
+//using System.Windows.Input;
 
-namespace SellWoodTracker.MVVM.ViewModel
-{
-    public class MainViewModel1 : INotifyPropertyChanged
-    {
+//namespace SellWoodTracker.MVVM.ViewModel
+//{
+//    public class MainViewModel1 : INotifyPropertyChanged
+//    {
 
-        private readonly MainViewModelCommands _mainViewModelCommands;
+//        private readonly MainViewModelCommands _mainViewModelCommands;
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+//        public event PropertyChangedEventHandler? PropertyChanged;
 
-        private ObservableCollection<PersonModel>? _requestedPeople;
-        public ObservableCollection<PersonModel> RequestedPeople
-        {
-            get { return _requestedPeople; }
+//        private ObservableCollection<PersonModel>? _requestedPeople;
+//        public ObservableCollection<PersonModel> RequestedPeople
+//        {
+//            get { return _requestedPeople; }
 
-            set
-            {
-                _requestedPeople = value;
-                OnPropertyChanged(nameof(RequestedPeople));
-            }
-        }
+//            set
+//            {
+//                _requestedPeople = value;
+//                OnPropertyChanged(nameof(RequestedPeople));
+//            }
+//        }
 
-        private ObservableCollection<PersonModel>? _completedPeople;
-        public ObservableCollection<PersonModel> CompletedPeople
-        {
-            get { return _completedPeople; }
+//        private ObservableCollection<PersonModel>? _completedPeople;
+//        public ObservableCollection<PersonModel> CompletedPeople
+//        {
+//            get { return _completedPeople; }
 
-            set
-            {
-                _completedPeople = value;
-                OnPropertyChanged(nameof(CompletedPeople));
-            }
-        }
-
-
-        private PersonModel? _selectedRequestedPerson;
-        public PersonModel SelectedRequestedPerson
-        {
-            get { return _selectedRequestedPerson; }
-            set
-            {
-                _selectedRequestedPerson = value;
-                OnPropertyChanged(nameof(SelectedRequestedPerson));
-            }
-        }
-
-        private PersonModel? _selectedCompletedPerson;
-        public PersonModel SelectedCompletedPerson
-        {
-            get { return _selectedCompletedPerson; }
-            set
-            {
-                _selectedCompletedPerson = value;
-                OnPropertyChanged(nameof(SelectedCompletedPerson));
-            }
-        }
-
-        //public ICommand MovePersonToCompletedCommand { get; set; }
-        //public ICommand DeletePersonFromRequestedCommand { get; set; }
-        //public ICommand DeletePersonFromCompletedCommand { get; set; }
-
-        private decimal _totalCompletedGrossIncome;
-        public decimal TotalCompletedGrossIncome
-        {
-            get { return _totalCompletedGrossIncome; }
-            set
-            {
-                _totalCompletedGrossIncome = Math.Round(value, 2);
-                OnPropertyChanged(nameof(TotalCompletedGrossIncome));
-            }
-        }
-
-        private decimal _totalCompletedMetricAmount;
-        public decimal TotalCompletedMetricAmount
-        {
-            get { return _totalCompletedMetricAmount; }
-            set
-            {
-                _totalCompletedMetricAmount = Math.Round(value, 2);
-                OnPropertyChanged(nameof(TotalCompletedMetricAmount));
-            }
-        }
-
-        public MainViewModel()
-        {
-            _
-
-            LoadDataFromSql();
-            LoadDataFromExcel();
-
-            UpdateTotalGrossIncome();
-            UpdateTotalMetricAmount();
-
-            MovePersonToCompletedCommand = new RelayCommand(MovePersonToCompletedDataGrid);
-            DeletePersonFromRequestedCommand = new RelayCommand(DeletePersonFromRequestedDataGrid);
-            DeletePersonFromCompletedCommand = new RelayCommand(DeletePersonFromCompletedDataGrid);
-            OpenAddPersonWindowCommand = new RelayCommand(OpenAddPersonWindow);
-
-            Mediator.RefreshDataGrids += RefreshPeopleInDataGrids;
-            Mediator.RefreshTotalEarn += RefreshTotalEarn;
-
-        }
-
-        private void OpenAddPersonWindow(object parameter)
-        {
-            AddPersonWindow addPersonWindow = new AddPersonWindow();
-            addPersonWindow.Show();
-            Debug.WriteLine("add clicked");
-        }
-
-        private void LoadDataFromSql()
-        {
-            if (_sqlConnection != null)
-            {
-                try
-                {
-                    List<PersonModel> requestedSqlPeople = _sqlConnection.GetRequestedPeople_All();
-                    List<PersonModel> completedSqlPeople = _sqlConnection.GetCompletedPeople_All();
-
-                    RequestedPeople = new ObservableCollection<PersonModel>(requestedSqlPeople);
-                    CompletedPeople = new ObservableCollection<PersonModel>(completedSqlPeople);
-
-                    OnPropertyChanged(nameof(RequestedPeople));
-                    OnPropertyChanged(nameof(CompletedPeople));
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"Error loading data from Sql: {ex.Message}");
-                }
-            }
-            else
-            {
-                Debug.WriteLine("SQL connection is not initialized.(null)");
-                return;
-            }
-        }
-
-        private void LoadDataFromExcel()
-        {
-
-            if (_excelConnection != null)
-            {
-                try
-                {
-                    List<PersonModel> requestedExcelPeople = _excelConnection.GetRequestedPeople_All();
-                    List<PersonModel> completedExcelPeople = _excelConnection.GetCompletedPeople_All();
-
-                    RequestedPeople = new ObservableCollection<PersonModel>(requestedExcelPeople);
-                    CompletedPeople = new ObservableCollection<PersonModel>(completedExcelPeople);
-
-                    OnPropertyChanged(nameof(RequestedPeople));
-                    OnPropertyChanged(nameof(CompletedPeople));
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"Error loading data from Excel: {ex.Message}");
-                }
-            }
-            else
-            {
-                Debug.WriteLine("Excel connection is not initialized.(null)");
-                return;
-            }
-        }
+//            set
+//            {
+//                _completedPeople = value;
+//                OnPropertyChanged(nameof(CompletedPeople));
+//            }
+//        }
 
 
-        private void RefreshPeopleInDataGrids(object? sender, EventArgs e)
-        {
-            if (_sqlConnection != null)
-            {
-                LoadDataFromSql();
-            }
-            if (_excelConnection != null)
-            {
-                LoadDataFromExcel();
-            }
-        }
+//        private PersonModel? _selectedRequestedPerson;
+//        public PersonModel SelectedRequestedPerson
+//        {
+//            get { return _selectedRequestedPerson; }
+//            set
+//            {
+//                _selectedRequestedPerson = value;
+//                OnPropertyChanged(nameof(SelectedRequestedPerson));
+//            }
+//        }
 
-        private void RefreshTotalEarn(object? sender, EventArgs e)
-        {
-            if (_sqlConnection != null)
-            {
-                UpdateTotalGrossIncome();
-                UpdateTotalMetricAmount();
-            }
+//        private PersonModel? _selectedCompletedPerson;
+//        public PersonModel SelectedCompletedPerson
+//        {
+//            get { return _selectedCompletedPerson; }
+//            set
+//            {
+//                _selectedCompletedPerson = value;
+//                OnPropertyChanged(nameof(SelectedCompletedPerson));
+//            }
+//        }
 
-            if (_excelConnection != null)
-            {
-                UpdateTotalGrossIncome();
-                UpdateTotalMetricAmount();
-            }
+//        //public ICommand MovePersonToCompletedCommand { get; set; }
+//        //public ICommand DeletePersonFromRequestedCommand { get; set; }
+//        //public ICommand DeletePersonFromCompletedCommand { get; set; }
 
-        }
+//        private decimal _totalCompletedGrossIncome;
+//        public decimal TotalCompletedGrossIncome
+//        {
+//            get { return _totalCompletedGrossIncome; }
+//            set
+//            {
+//                _totalCompletedGrossIncome = Math.Round(value, 2);
+//                OnPropertyChanged(nameof(TotalCompletedGrossIncome));
+//            }
+//        }
 
-        private void MovePersonToCompletedDataGrid(object parameter)
-        {
-            if (SelectedRequestedPerson != null)
-            {
-                bool confirmed = ShowCompleteConfirmationDialog();
+//        private decimal _totalCompletedMetricAmount;
+//        public decimal TotalCompletedMetricAmount
+//        {
+//            get { return _totalCompletedMetricAmount; }
+//            set
+//            {
+//                _totalCompletedMetricAmount = Math.Round(value, 2);
+//                OnPropertyChanged(nameof(TotalCompletedMetricAmount));
+//            }
+//        }
 
-                if (confirmed)
-                {
-                    if (_sqlConnection != null)
-                    {
-                        _sqlConnection.MoveRequestedPersonToCompleted(SelectedRequestedPerson.Id);
-                    }
+//        public MainViewModel()
+//        {
+//            _
 
-                    if (_excelConnection != null)
-                    {
-                        _excelConnection.MoveRequestedPersonToCompleted(SelectedRequestedPerson.Id);
-                    }
+//            LoadDataFromSql();
+//            LoadDataFromExcel();
 
-                    Mediator.NotifyRefreshDataGrids();
+//            UpdateTotalGrossIncome();
+//            UpdateTotalMetricAmount();
 
-                    Debug.WriteLine("move requested clicked");
-                }
-            }
-        }
+//            MovePersonToCompletedCommand = new RelayCommand(MovePersonToCompletedDataGrid);
+//            DeletePersonFromRequestedCommand = new RelayCommand(DeletePersonFromRequestedDataGrid);
+//            DeletePersonFromCompletedCommand = new RelayCommand(DeletePersonFromCompletedDataGrid);
+//            OpenAddPersonWindowCommand = new RelayCommand(OpenAddPersonWindow);
 
-        private void DeletePersonFromRequestedDataGrid(object parameter)
-        {
-            if (SelectedRequestedPerson != null)
-            {
-                bool confirmed = ShowDeleteConfirmationDialog();
+//            Mediator.RefreshDataGrids += RefreshPeopleInDataGrids;
+//            Mediator.RefreshTotalEarn += RefreshTotalEarn;
 
-                if (confirmed)
-                {
-                    if (_sqlConnection != null)
-                    {
-                        _sqlConnection.DeletePersonFromRequested(SelectedRequestedPerson.Id);
-                    }
+//        }
 
-                    if (_excelConnection != null)
-                    {
-                        _excelConnection.DeletePersonFromRequested(SelectedRequestedPerson.Id);
-                    }
+//        private void OpenAddPersonWindow(object parameter)
+//        {
+//            AddPersonWindow addPersonWindow = new AddPersonWindow();
+//            addPersonWindow.Show();
+//            Debug.WriteLine("add clicked");
+//        }
 
-                    Mediator.NotifyRefreshDataGrids();
+//        private void LoadDataFromSql()
+//        {
+//            if (_sqlConnection != null)
+//            {
+//                try
+//                {
+//                    List<PersonModel> requestedSqlPeople = _sqlConnection.GetRequestedPeople_All();
+//                    List<PersonModel> completedSqlPeople = _sqlConnection.GetCompletedPeople_All();
 
-                    Debug.WriteLine("delete requested clicked");
-                }
-            }
-        }
+//                    RequestedPeople = new ObservableCollection<PersonModel>(requestedSqlPeople);
+//                    CompletedPeople = new ObservableCollection<PersonModel>(completedSqlPeople);
 
-        private void DeletePersonFromCompletedDataGrid(object parameter)
-        {
-            if (SelectedCompletedPerson != null)
-            {
-                bool confirmed = ShowDeleteConfirmationDialog();
+//                    OnPropertyChanged(nameof(RequestedPeople));
+//                    OnPropertyChanged(nameof(CompletedPeople));
+//                }
+//                catch (Exception ex)
+//                {
+//                    Debug.WriteLine($"Error loading data from Sql: {ex.Message}");
+//                }
+//            }
+//            else
+//            {
+//                Debug.WriteLine("SQL connection is not initialized.(null)");
+//                return;
+//            }
+//        }
 
-                if (confirmed)
-                {
-                    if (_sqlConnection != null)
-                    {
-                        _sqlConnection.DeletePersonFromCompleted(SelectedCompletedPerson.Id);
-                    }
+//        private void LoadDataFromExcel()
+//        {
 
-                    if (_excelConnection != null)
-                    {
-                        _excelConnection.DeletePersonFromCompleted(SelectedCompletedPerson.Id);
-                    }
+//            if (_excelConnection != null)
+//            {
+//                try
+//                {
+//                    List<PersonModel> requestedExcelPeople = _excelConnection.GetRequestedPeople_All();
+//                    List<PersonModel> completedExcelPeople = _excelConnection.GetCompletedPeople_All();
 
-                    Mediator.NotifyRefreshDataGrids();
+//                    RequestedPeople = new ObservableCollection<PersonModel>(requestedExcelPeople);
+//                    CompletedPeople = new ObservableCollection<PersonModel>(completedExcelPeople);
 
-                    Debug.WriteLine("delete completed clicked");
-                }
-            }
-        }
+//                    OnPropertyChanged(nameof(RequestedPeople));
+//                    OnPropertyChanged(nameof(CompletedPeople));
+//                }
+//                catch (Exception ex)
+//                {
+//                    Debug.WriteLine($"Error loading data from Excel: {ex.Message}");
+//                }
+//            }
+//            else
+//            {
+//                Debug.WriteLine("Excel connection is not initialized.(null)");
+//                return;
+//            }
+//        }
 
-        private bool ShowDeleteConfirmationDialog()
-        {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            return result == MessageBoxResult.Yes;
-        }
 
-        private bool ShowCompleteConfirmationDialog()
-        {
-            MessageBoxResult result = MessageBox.Show("Is it completed?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            return result == MessageBoxResult.Yes;
-        }
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+//        private void RefreshPeopleInDataGrids(object? sender, EventArgs e)
+//        {
+//            if (_sqlConnection != null)
+//            {
+//                LoadDataFromSql();
+//            }
+//            if (_excelConnection != null)
+//            {
+//                LoadDataFromExcel();
+//            }
+//        }
 
-        private decimal TotalGrossIncomeFromCompleted()
-        {
-            if (_sqlConnection != null)
-            {
-                try
-                {
-                    return _sqlConnection.GetTotalGrossIncomeFromCompleted();
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"Error calculating total MetricPrice from Sql: {ex.Message}");
-                }
-            }
+//        private void RefreshTotalEarn(object? sender, EventArgs e)
+//        {
+//            if (_sqlConnection != null)
+//            {
+//                UpdateTotalGrossIncome();
+//                UpdateTotalMetricAmount();
+//            }
 
-            if (_excelConnection != null)
-            {
-                try
-                {
-                    return _excelConnection.GetTotalGrossIncomeFromCompleted();
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"Error calculating total MetricPrice from Excel: {ex.Message}");
-                }
-            }
+//            if (_excelConnection != null)
+//            {
+//                UpdateTotalGrossIncome();
+//                UpdateTotalMetricAmount();
+//            }
 
-            return 0;
-        }
+//        }
 
-        private decimal TotalMetricAmountFromCompleted()
-        {
-            if (_sqlConnection != null)
-            {
-                try
-                {
-                    return _sqlConnection.GetTotalMetricAmountFromCompleted();
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"Error calculating total MetricAmount from Sql: {ex.Message}");
-                }
-            }
+//        private void MovePersonToCompletedDataGrid(object parameter)
+//        {
+//            if (SelectedRequestedPerson != null)
+//            {
+//                bool confirmed = ShowCompleteConfirmationDialog();
 
-            if (_excelConnection != null)
-            {
-                try
-                {
-                    return _excelConnection.GetTotalMetricAmountFromCompleted();
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"Error calculating total MetricAmount from Excel: {ex.Message}");
-                }
-            }
+//                if (confirmed)
+//                {
+//                    if (_sqlConnection != null)
+//                    {
+//                        _sqlConnection.MoveRequestedPersonToCompleted(SelectedRequestedPerson.Id);
+//                    }
 
-            return 0;
-        }
-        private void UpdateTotalGrossIncome()
-        {
-            TotalCompletedGrossIncome = TotalGrossIncomeFromCompleted();
+//                    if (_excelConnection != null)
+//                    {
+//                        _excelConnection.MoveRequestedPersonToCompleted(SelectedRequestedPerson.Id);
+//                    }
 
-        }
+//                    Mediator.NotifyRefreshDataGrids();
 
-        private void UpdateTotalMetricAmount()
-        {
-            TotalCompletedMetricAmount = TotalMetricAmountFromCompleted();
+//                    Debug.WriteLine("move requested clicked");
+//                }
+//            }
+//        }
 
-        }
-    }
-}
+//        private void DeletePersonFromRequestedDataGrid(object parameter)
+//        {
+//            if (SelectedRequestedPerson != null)
+//            {
+//                bool confirmed = ShowDeleteConfirmationDialog();
+
+//                if (confirmed)
+//                {
+//                    if (_sqlConnection != null)
+//                    {
+//                        _sqlConnection.DeletePersonFromRequested(SelectedRequestedPerson.Id);
+//                    }
+
+//                    if (_excelConnection != null)
+//                    {
+//                        _excelConnection.DeletePersonFromRequested(SelectedRequestedPerson.Id);
+//                    }
+
+//                    Mediator.NotifyRefreshDataGrids();
+
+//                    Debug.WriteLine("delete requested clicked");
+//                }
+//            }
+//        }
+
+//        private void DeletePersonFromCompletedDataGrid(object parameter)
+//        {
+//            if (SelectedCompletedPerson != null)
+//            {
+//                bool confirmed = ShowDeleteConfirmationDialog();
+
+//                if (confirmed)
+//                {
+//                    if (_sqlConnection != null)
+//                    {
+//                        _sqlConnection.DeletePersonFromCompleted(SelectedCompletedPerson.Id);
+//                    }
+
+//                    if (_excelConnection != null)
+//                    {
+//                        _excelConnection.DeletePersonFromCompleted(SelectedCompletedPerson.Id);
+//                    }
+
+//                    Mediator.NotifyRefreshDataGrids();
+
+//                    Debug.WriteLine("delete completed clicked");
+//                }
+//            }
+//        }
+
+//        private bool ShowDeleteConfirmationDialog()
+//        {
+//            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+//            return result == MessageBoxResult.Yes;
+//        }
+
+//        private bool ShowCompleteConfirmationDialog()
+//        {
+//            MessageBoxResult result = MessageBox.Show("Is it completed?", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+//            return result == MessageBoxResult.Yes;
+//        }
+//        protected void OnPropertyChanged(string propertyName)
+//        {
+//            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+//        }
+
+//        private decimal TotalGrossIncomeFromCompleted()
+//        {
+//            if (_sqlConnection != null)
+//            {
+//                try
+//                {
+//                    return _sqlConnection.GetTotalGrossIncomeFromCompleted();
+//                }
+//                catch (Exception ex)
+//                {
+//                    Debug.WriteLine($"Error calculating total MetricPrice from Sql: {ex.Message}");
+//                }
+//            }
+
+//            if (_excelConnection != null)
+//            {
+//                try
+//                {
+//                    return _excelConnection.GetTotalGrossIncomeFromCompleted();
+//                }
+//                catch (Exception ex)
+//                {
+//                    Debug.WriteLine($"Error calculating total MetricPrice from Excel: {ex.Message}");
+//                }
+//            }
+
+//            return 0;
+//        }
+
+//        private decimal TotalMetricAmountFromCompleted()
+//        {
+//            if (_sqlConnection != null)
+//            {
+//                try
+//                {
+//                    return _sqlConnection.GetTotalMetricAmountFromCompleted();
+//                }
+//                catch (Exception ex)
+//                {
+//                    Debug.WriteLine($"Error calculating total MetricAmount from Sql: {ex.Message}");
+//                }
+//            }
+
+//            if (_excelConnection != null)
+//            {
+//                try
+//                {
+//                    return _excelConnection.GetTotalMetricAmountFromCompleted();
+//                }
+//                catch (Exception ex)
+//                {
+//                    Debug.WriteLine($"Error calculating total MetricAmount from Excel: {ex.Message}");
+//                }
+//            }
+
+//            return 0;
+//        }
+//        private void UpdateTotalGrossIncome()
+//        {
+//            TotalCompletedGrossIncome = TotalGrossIncomeFromCompleted();
+
+//        }
+
+//        private void UpdateTotalMetricAmount()
+//        {
+//            TotalCompletedMetricAmount = TotalMetricAmountFromCompleted();
+
+//        }
+//    }
+//}

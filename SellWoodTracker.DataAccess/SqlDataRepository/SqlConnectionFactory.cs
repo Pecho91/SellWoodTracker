@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SellWoodTracker.DataAccess.SqlDataRepository
 {
-    public class SqlConnectionFactory 
+    public class SqlConnectionFactory : ISqlConnectionFactory
     {
         private readonly IGlobalConfig _globalConfig;
         private readonly string _dataBase;
@@ -16,7 +16,7 @@ namespace SellWoodTracker.DataAccess.SqlDataRepository
         public SqlConnectionFactory(IGlobalConfig globalConfig)
         {
             _globalConfig = globalConfig ?? throw new ArgumentNullException(nameof(globalConfig));
-            _dataBase = _globalConfig.CnnString("SellWoodTracker");
+            _dataBase = _globalConfig.CnnString("SellWoodTracker");         
         }
 
         public IDbConnection CreateSqlConnection()
@@ -24,4 +24,13 @@ namespace SellWoodTracker.DataAccess.SqlDataRepository
             return new System.Data.SqlClient.SqlConnection(_dataBase);
         }
     }
+
+    //public class MockSqlConnectionFactory : ISqlConnectionFactory
+    //{
+    //    public IDbConnection CreateSqlConnection()
+    //    {
+    //        // Return a mock IDbConnection instance
+    //        return new Mock<IDbConnection>().Object;
+    //    }
+    //}
 }

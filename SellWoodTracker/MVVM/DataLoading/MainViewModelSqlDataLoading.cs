@@ -12,13 +12,14 @@ using SellWoodTracker.Common;
 using SellWoodTracker.DataAccess.SqlDataAccess;
 using SellWoodTracker.Common.Model;
 using SellWoodTracker.Services.SqlServices;
+using SellWoodTracker.DataAccess.SqlDataRepository;
 
 namespace SellWoodTracker.MVVM.DataLoading
 {
     public class MainViewModelSqlDataLoading : BaseViewModel
     {
         
-       // private readonly InitializeSqlConnection _initializeSqlConnection;
+        private readonly InitializeSqlConnection _initializeSqlConnection;
         private readonly SqlPersonService _sqlPersonService;
 
         private ObservableCollection<PersonModel> _requestedPeople;
@@ -67,9 +68,10 @@ namespace SellWoodTracker.MVVM.DataLoading
         //    }
         //}
 
-        public MainViewModelSqlDataLoading()
+        public MainViewModelSqlDataLoading(ISqlPersonRepository repository)
         {
-            
+            _initializeSqlConnection = new InitializeSqlConnection(repository); 
+            _sqlPersonService = _initializeSqlConnection;
         }
 
         public void LoadDataFromSql()

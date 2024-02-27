@@ -33,4 +33,3 @@ public class InitializeSqlConnection : ISqlConnector
         }
     }   
 }
-//TODO ?????? a lot dependencies????

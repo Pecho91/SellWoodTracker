@@ -24,4 +24,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SellWoodTracker.DataAccess\SellWoodTracker.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
