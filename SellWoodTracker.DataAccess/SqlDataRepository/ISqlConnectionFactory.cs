@@ -9,6 +9,6 @@ namespace SellWoodTracker.DataAccess.SqlDataRepository
 {
     public interface ISqlConnectionFactory
     {
-        IDbConnection CreateSqlConnection();
+        public IDbConnection CreateSqlConnection();
     }
 }

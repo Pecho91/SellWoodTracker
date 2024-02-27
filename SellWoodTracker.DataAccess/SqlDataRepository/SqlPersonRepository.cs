@@ -16,12 +16,25 @@ namespace SellWoodTracker.DataAccess.SqlDataAccess
 {
     public class SqlPersonRepository : ISqlPersonRepository
     {
-        private readonly SqlConnectionFactory _sqlConnectionFactory;
-        private readonly SqlDynamicParametersBuilder _sqlDynamicParametersBuilder;
+        private readonly ISqlConnectionFactory _sqlConnectionFactory;
+        private readonly ISqlDynamicParametersBuilder _sqlDynamicParametersBuilder;
 
-        public SqlPersonRepository(SqlConnectionFactory connectionFactory, SqlDynamicParametersBuilder sqlDynamicParametersBuilder)
+        public ISqlConnectionFactory SqlConnectionFactory => _sqlConnectionFactory;
+        public ISqlDynamicParametersBuilder SqlDynamicParametersBuilder => _sqlDynamicParametersBuilder;
+
+        //public SqlPersonRepository(ISqlConnectionFactory sqlConnectionFactory)
+        //{
+        //    _sqlConnectionFactory = sqlConnectionFactory ?? throw new ArgumentNullException(nameof(sqlConnectionFactory));       
+        //}
+
+        //public SqlPersonRepository(ISqlDynamicParametersBuilder sqlDynamicParametersBuilder)
+        //{          
+        //    _sqlDynamicParametersBuilder = sqlDynamicParametersBuilder ?? throw new ArgumentNullException(nameof(sqlDynamicParametersBuilder));
+        //}
+
+        public SqlPersonRepository(ISqlConnectionFactory sqlConnectionFactory, ISqlDynamicParametersBuilder sqlDynamicParametersBuilder)
         {
-            _sqlConnectionFactory = connectionFactory ?? throw new ArgumentNullException(nameof(_sqlConnectionFactory));
+            _sqlConnectionFactory = sqlConnectionFactory ?? throw new ArgumentNullException(nameof(sqlConnectionFactory));
             _sqlDynamicParametersBuilder = sqlDynamicParametersBuilder ?? throw new ArgumentNullException(nameof(sqlDynamicParametersBuilder));
         }
 
