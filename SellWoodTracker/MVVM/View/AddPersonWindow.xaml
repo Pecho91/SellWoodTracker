@@ -18,9 +18,9 @@
         </Style>
     </Window.Resources>
 
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <viewmodel:AddPersonViewModel/>
-    </Window.DataContext>
+    </Window.DataContext>-->
 
     <Grid>
 

@@ -37,9 +37,9 @@
         
     </Window.Resources>
 
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <viewmodel:MainViewModel/>
-    </Window.DataContext>
+    </Window.DataContext>-->
 
     <Grid Background="AliceBlue">
 

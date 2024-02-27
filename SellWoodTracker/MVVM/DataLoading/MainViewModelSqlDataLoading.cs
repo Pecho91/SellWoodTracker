@@ -68,10 +68,11 @@ namespace SellWoodTracker.MVVM.DataLoading
         //    }
         //}
 
-        public MainViewModelSqlDataLoading(ISqlPersonRepository repository)
+        public MainViewModelSqlDataLoading()
         {
-            _initializeSqlConnection = new InitializeSqlConnection(repository); 
-            _sqlPersonService = _initializeSqlConnection;
+            //_initializeSqlConnection = new InitializeSqlConnection(repository); 
+            //_sqlPersonService = _initializeSqlConnection;
+            LoadDataFromSql();
         }
 
         public void LoadDataFromSql()

@@ -28,7 +28,7 @@ namespace SellWoodTracker.MVVM.View
 
         private void AddPersonWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            DataContext = new AddPersonViewModel();
+           // DataContext = new AddPersonViewModel();
         }
     }
 }

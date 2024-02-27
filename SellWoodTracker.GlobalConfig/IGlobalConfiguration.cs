@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SellWoodTracker.GlobalConfig
 {
-    public interface IGlobalConfig
+    public interface IGlobalConfiguration
     {      
         string CnnString(string name);
         string AppKeyLookup(string key);

@@ -10,7 +10,7 @@ namespace SellWoodTracker.MVVM.Commands
 {
     public class AddPersonModelCommands
     {
-        private readonly MainViewModelDataLoading _dataLoading;
+        private readonly MainViewModelSqlDataLoading _dataLoading;
 
         public ICommand MovePersonToCompletedCommand { get; }
         public ICommand DeletePersonFromRequested { get; }

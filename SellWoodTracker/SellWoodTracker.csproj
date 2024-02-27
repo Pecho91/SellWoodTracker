@@ -18,8 +18,4 @@
     <ProjectReference Include="..\SellWoodTracker.Services\SellWoodTracker.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="MVVM\Model\" />
-  </ItemGroup>
-
 </Project>

@@ -10,10 +10,10 @@ namespace SellWoodTracker.DataAccess.SqlDataRepository
 {
     public class SqlConnectionFactory : ISqlConnectionFactory
     {
-        private readonly IGlobalConfig _globalConfig;
+        private readonly IGlobalConfiguration _globalConfig;
         private readonly string _dataBase;
 
-        public SqlConnectionFactory(IGlobalConfig globalConfig)
+        public SqlConnectionFactory(IGlobalConfiguration globalConfig)
         {
             _globalConfig = globalConfig ?? throw new ArgumentNullException(nameof(globalConfig));
             _dataBase = _globalConfig.CnnString("SellWoodTracker");         
@@ -24,13 +24,4 @@ namespace SellWoodTracker.DataAccess.SqlDataRepository
             return new System.Data.SqlClient.SqlConnection(_dataBase);
         }
     }
-
-    //public class MockSqlConnectionFactory : ISqlConnectionFactory
-    //{
-    //    public IDbConnection CreateSqlConnection()
-    //    {
-    //        // Return a mock IDbConnection instance
-    //        return new Mock<IDbConnection>().Object;
-    //    }
-    //}
 }
