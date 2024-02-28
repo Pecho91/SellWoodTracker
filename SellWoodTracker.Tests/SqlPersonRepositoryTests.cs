@@ -27,6 +27,7 @@ namespace SellWoodTracker.Tests
         {           
             var connectionFactoryMock = new Mock<ISqlConnectionFactory>();
             var dynamicParametersBuilderMock = new Mock<ISqlDynamicParametersBuilder>();
+
             var repository = new SqlPersonRepository(connectionFactoryMock.Object, dynamicParametersBuilderMock.Object);
 
             Assert.NotNull(repository);
@@ -36,7 +37,7 @@ namespace SellWoodTracker.Tests
         [Fact]
         public void CreatePerson_WhenCalled_ShouldExecuteCorrectly()
         {
-            //TODO (ISqlPersonRepository) ??
+            //TODO (ISqlPersonRepository) ?? (specific testing)
             var connectionFactoryMock = new Mock<ISqlConnectionFactory>();
             var dynamicParametersBuilderMock = new Mock<ISqlDynamicParametersBuilder>();       
 
