@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SellWoodTracker.DataAccess\SellWoodTracker.DataAccess.csproj" />
+    <ProjectReference Include="..\SellWoodTracker.Services\SellWoodTracker.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

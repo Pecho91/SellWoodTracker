@@ -16,7 +16,7 @@ namespace SellWoodTracker.Tests
         public void CreateSqlConnection_ShouldReturnSqlConnection()
         {
             var globalConfigMock = new Mock<IGlobalConfiguration>();
-            //var connectionString = ConfigurationManager.ConnectionStrings["SellWoodTracker"].ConnectionString;
+            
             var connectionString = "Server=DESKTOP-4ORQH0K;Database=SellWoodTracker;Trusted_Connection=True;";
 
             globalConfigMock.Setup(x => x.CnnString("SellWoodTracker")).Returns(connectionString);
@@ -27,8 +27,7 @@ namespace SellWoodTracker.Tests
 
             Assert.NotNull(connection);
             Assert.IsType<System.Data.SqlClient.SqlConnection>(connection);
-
-           // Assert.Equals(connectionString, connection.ConnectionString);
+            Assert.Equal(connectionString, connection.ConnectionString);
         }
     }
 }

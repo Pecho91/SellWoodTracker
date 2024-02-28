@@ -17,9 +17,9 @@ namespace SellWoodTracker.DataAccess.SqlDynamicParameters
             var p = new DynamicParameters();
             p.Add("@FirstName", model.FirstName);
             p.Add("@LastName", model.LastName);
-            p.Add("@CellphoneNumber", model.CellphoneNumber);
             p.Add("@EmailAddress", model.EmailAddress);
-
+            p.Add("@CellphoneNumber", model.CellphoneNumber);
+            
             if (model.DateTime.HasValue)
             {
                 p.Add("@DateTime", model.DateTime.Value, DbType.DateTime);
@@ -30,6 +30,7 @@ namespace SellWoodTracker.DataAccess.SqlDynamicParameters
                 p.Add("@DateTime", DBNull.Value, DbType.DateTime);
 
             }
+
             p.Add("@MetricAmount", model.MetricAmount);
             p.Add("@MetricPrice", model.MetricPrice);
             p.Add("@GrossIncome", model.GrossIncome = model.MetricAmount * model.MetricPrice);
