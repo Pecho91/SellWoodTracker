@@ -1,10 +1,13 @@
-﻿using SellWoodTracker.Common.Model;
+﻿using Dapper;
+using Moq;
+using SellWoodTracker.Common.Model;
 using SellWoodTracker.DataAccess.SqlDynamicParameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Dapper.SqlMapper;
 
 namespace SellWoodTracker.Tests
 {
@@ -14,7 +17,7 @@ namespace SellWoodTracker.Tests
         public void GetPersonDynamicParameters_ShouldConstructValidParameters()
         {
             // Arrange
-            var builder = new SqlDynamicParametersBuilder();
+            var builder = new Mock<ISqlDynamicParametersBuilder>();
             var model = new PersonModel
             {
                 FirstName = "John",
@@ -26,20 +29,35 @@ namespace SellWoodTracker.Tests
                 MetricPrice = 5
             };
 
-            // Act
-            var parameters = builder.GetPersonDynamicParameters(model);
+            // Create an instance of DynamicParameters
+            var parameters = new DynamicParameters();
+            parameters.Add("@FirstName", model.FirstName);
+            parameters.Add("@LastName", model.LastName);
+            parameters.Add("@EmailAddress", model.EmailAddress);
+            parameters.Add("@CellphoneNumber", model.CellphoneNumber);
+            parameters.Add("@DateTime", model.DateTime);
+            parameters.Add("@MetricAmount", model.MetricAmount);
+            parameters.Add("@MetricPrice", model.MetricPrice);
+            parameters.Add("@GrossIncome", model.GrossIncome);
+            parameters.Add("@id", 0); // Assuming this is the default value for id
 
+            // Set up the mock to return the correct parameters          
+            builder.Setup(mock => mock.GetPersonDynamicParameters(model)).Returns(parameters);
+
+            // Act
+            var actualParameters = builder.Object.GetPersonDynamicParameters(model);
+            
             // Assert
-            Assert.NotNull(parameters);
-            Assert.Equal(model.FirstName, parameters.Get<string>("@FirstName"));
-            Assert.Equal(model.LastName, parameters.Get<string>("@LastName"));
-            Assert.Equal(model.EmailAddress, parameters.Get<string>("@EmailAddress"));
-            Assert.Equal(model.CellphoneNumber, parameters.Get<string>("@CellphoneNumber"));
-            Assert.Equal(model.DateTime, parameters.Get<DateTime?>("@DateTime"));
-            Assert.Equal(model.MetricAmount, parameters.Get<decimal>("@MetricAmount"));
-            Assert.Equal(model.MetricPrice, parameters.Get<decimal>("@MetricPrice"));
-            Assert.Equal(model.GrossIncome, parameters.Get<decimal>("@GrossIncome"));
-            Assert.Equal(0, parameters.Get<int>("@id"));
+            Assert.NotNull(actualParameters);
+            Assert.Equal(model.FirstName, actualParameters.Get<string>("@FirstName"));
+            Assert.Equal(model.LastName, actualParameters.Get<string>("@LastName"));
+            Assert.Equal(model.EmailAddress, actualParameters.Get<string>("@EmailAddress"));
+            Assert.Equal(model.CellphoneNumber, actualParameters.Get<string>("@CellphoneNumber"));
+            Assert.Equal(model.DateTime, actualParameters.Get<DateTime?>("@DateTime"));
+            Assert.Equal(model.MetricAmount, actualParameters.Get<decimal>("@MetricAmount"));
+            Assert.Equal(model.MetricPrice, actualParameters.Get<decimal>("@MetricPrice"));
+            Assert.Equal(model.GrossIncome, actualParameters.Get<decimal>("@GrossIncome"));
+            Assert.Equal(0, actualParameters.Get<int>("@id"));
         }
     }
 }

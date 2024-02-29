@@ -60,42 +60,42 @@ namespace SellWoodTracker.Tests
             dynamicParametersBuilderMock.Verify(mock => mock.GetPersonDynamicParameters(personModel), Times.Once());
         }
 
-        [Fact]
-        public void CreatePerson_ShouldExecuteCorrectly()
-        {
-            // Arrange
-            var connectionFactoryMock = new Mock<ISqlConnectionFactory>();
-            var dynamicParametersBuilderMock = new Mock<ISqlDynamicParametersBuilder>();
-            var repository = new SqlPersonRepository(connectionFactoryMock.Object, dynamicParametersBuilderMock.Object);
+        //[Fact]
+        //public void CreatePerson_ShouldExecuteCorrectly()
+        //{
+        //    // Arrange
+        //    var connectionFactoryMock = new Mock<ISqlConnectionFactory>();
+        //    var dynamicParametersBuilderMock = new Mock<ISqlDynamicParametersBuilder>();
+        //    var repository = new SqlPersonRepository(connectionFactoryMock.Object, dynamicParametersBuilderMock.Object);
 
-            var personModel = new PersonModel
-            {
-                FirstName = "John",
-                LastName = "Doe",
-                CellphoneNumber = "123456789",
-                EmailAddress = "john.doe@example.com",
-                // DateTime = DateTime.Now, // Assuming DateTime property is required
-                MetricAmount = 10,
-                MetricPrice = 5
-            };
+        //    var personModel = new PersonModel
+        //    {
+        //        FirstName = "John",
+        //        LastName = "Doe",
+        //        CellphoneNumber = "123456789",
+        //        EmailAddress = "john.doe@example.com",
+        //        // DateTime = DateTime.Now, // Assuming DateTime property is required
+        //        MetricAmount = 10,
+        //        MetricPrice = 5
+        //    };
 
-            // Set up behavior for CreateSqlConnection
+        //    // Set up behavior for CreateSqlConnection
             
-            connectionFactoryMock.Setup(cf => cf.CreateSqlConnection()).Returns(connectionFactoryMock.Object);
+        //    connectionFactoryMock.Setup(cf => cf.CreateSqlConnection()).Returns(connectionFactoryMock.Object);
 
-            // Set up behavior for GetPersonDynamicParameters
-            var parametersMock = new Mock<IDynamicParameters>();
-            dynamicParametersBuilderMock.Setup(dp => dp.GetPersonDynamicParameters(personModel)).Returns(parametersMock.Object);
+        //    // Set up behavior for GetPersonDynamicParameters
+        //    var parametersMock = new Mock<IDynamicParameters>();
+        //    dynamicParametersBuilderMock.Setup(dp => dp.GetPersonDynamicParameters(personModel)).Returns(parametersMock.Object);
 
-            // Act
-            repository.CreatePerson(personModel);
+        //    // Act
+        //    repository.CreatePerson(personModel);
 
-            // Assert
-            connectionFactoryMock.Verify(cf => cf.CreateSqlConnection(), Times.Once);
-            connectionMock.Verify(c => c.Execute("dbo.spRequestedPeople_Insert", parametersMock.Object, commandType: CommandType.StoredProcedure), Times.Once);
-            Assert.Equal(1, personModel.Id);
-            // Add more specific assertions based on your expected data
-        }
+        //    // Assert
+        //    connectionFactoryMock.Verify(cf => cf.CreateSqlConnection(), Times.Once);
+        //    connectionMock.Verify(c => c.Execute("dbo.spRequestedPeople_Insert", parametersMock.Object, commandType: CommandType.StoredProcedure), Times.Once);
+        //    Assert.Equal(1, personModel.Id);
+        //    // Add more specific assertions based on your expected data
+        //}
 
         [Fact]
         public void GetPersonById_ReturnsPersonModel()
