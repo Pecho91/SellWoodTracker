@@ -1,18 +1,8 @@
 ﻿using SellWoodTracker.MVVM.ViewModel;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using SellWoodTracker.Common;
-using SellWoodTracker.DataAccess.SqlDataAccess;
 using SellWoodTracker.Common.Model;
 using SellWoodTracker.Services.SqlServices;
-using SellWoodTracker.DataAccess.SqlDataRepository;
 
 namespace SellWoodTracker.MVVM.DataLoading
 {

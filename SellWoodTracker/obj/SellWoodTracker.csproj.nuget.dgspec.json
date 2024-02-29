@@ -236,14 +236,8 @@
           "net7.0-windows7.0": {
             "targetAlias": "net7.0-windows",
             "projectReferences": {
-              "C:\\Users\\andri\\source\\repos\\SellWoodTracker\\SellWoodTracker.Common\\SellWoodTracker.Common.csproj": {
-                "projectPath": "C:\\Users\\andri\\source\\repos\\SellWoodTracker\\SellWoodTracker.Common\\SellWoodTracker.Common.csproj"
-              },
               "C:\\Users\\andri\\source\\repos\\SellWoodTracker\\SellWoodTracker.DataAccess\\SellWoodTracker.DataAccess.csproj": {
                 "projectPath": "C:\\Users\\andri\\source\\repos\\SellWoodTracker\\SellWoodTracker.DataAccess\\SellWoodTracker.DataAccess.csproj"
-              },
-              "C:\\Users\\andri\\source\\repos\\SellWoodTracker\\SellWoodTracker.GlobalConfig\\SellWoodTracker.GlobalConfig.csproj": {
-                "projectPath": "C:\\Users\\andri\\source\\repos\\SellWoodTracker\\SellWoodTracker.GlobalConfig\\SellWoodTracker.GlobalConfig.csproj"
               }
             }
           }

@@ -1681,9 +1681,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
-          "SellWoodTracker.Common": "1.0.0",
-          "SellWoodTracker.DataAccess": "1.0.0",
-          "SellWoodTracker.GlobalConfig": "1.0.0"
+          "SellWoodTracker.DataAccess": "1.0.0"
         },
         "compile": {
           "bin/placeholder/SellWoodTracker.Services.dll": {}
