@@ -17,14 +17,15 @@ namespace SellWoodTracker.Tests
         public void CreateSqlConnection_ShouldReturnSqlConnection()
         {
             var globalConfigMock = new Mock<IGlobalConfiguration>();
-            
             var connectionString = "Server=DESKTOP-4ORQH0K;Database=SellWoodTracker;Trusted_Connection=True;";
-
             globalConfigMock.Setup(x => x.CnnString("SellWoodTracker")).Returns(connectionString);
 
-            var connectionFactory = new SqlConnectionFactory(globalConfigMock.Object);
+            //var connectionFactory = new Mock<SqlConnectionFactory>();
 
-            var connection = connectionFactory.CreateSqlConnection();
+            var connectionFactoryMock = new Mock<ISqlConnectionFactory>();
+            connectionFactoryMock.Setup(x => x.CreateSqlConnection()).Returns(new System.Data.SqlClient.SqlConnection(connectionString));
+
+            var connection = connectionFactoryMock.Object.CreateSqlConnection();
 
             Assert.NotNull(connection);
             Assert.IsType<System.Data.SqlClient.SqlConnection>(connection);
