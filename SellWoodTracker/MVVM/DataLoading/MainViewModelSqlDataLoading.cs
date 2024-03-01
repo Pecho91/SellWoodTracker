@@ -9,7 +9,7 @@ namespace SellWoodTracker.MVVM.DataLoading
     public class MainViewModelSqlDataLoading : BaseViewModel
     {
         
-        private readonly InitializeSqlConnection _initializeSqlConnection;
+        //private readonly InitializeSqlConnection _initializeSqlConnection;
         private readonly SqlPersonService _sqlPersonService;
 
         private ObservableCollection<PersonModel> _requestedPeople;

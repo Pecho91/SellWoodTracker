@@ -20,8 +20,6 @@ namespace SellWoodTracker.DataAccess.SqlDataRepository
         void DeletePersonFromCompleted(int personId);
         decimal GetTotalGrossIncomeFromCompleted();
         decimal GetTotalMetricAmountFromCompleted();
-
-
     }
 }
 
