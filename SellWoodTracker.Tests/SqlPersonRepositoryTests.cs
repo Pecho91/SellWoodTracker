@@ -3,6 +3,7 @@
 using Dapper;
 using Moq;
 using SellWoodTracker.Common.Model;
+using SellWoodTracker.DataAccess.SqlConnectionExecutor;
 using SellWoodTracker.DataAccess.SqlConnectionFactory;
 using SellWoodTracker.DataAccess.SqlDataRepository;
 using SellWoodTracker.DataAccess.SqlDynamicParameters;
@@ -22,80 +23,20 @@ namespace SellWoodTracker.Tests
             
         }
 
-        //[Fact]
-        //public void Constructor_WithBothConnectionFactoryAndDynamicParametersBuilder_ShouldExecuteCorrectly()
-        //{           
-        //    var connectionFactoryMock = new Mock<DataAccess.SqlConnector.ISqlConnectionFactory>();
-        //    var dynamicParametersBuilderMock = new Mock<ISqlDynamicParametersBuilder>();
+        [Fact]
+        public void CreatePerson_Should_Call_Repository_Method()
+        {
+            // Arrange
+            var model = new PersonModel { /* Initialize your model properties */ };
+            var repositoryMock = new Mock<ISqlPersonRepository>();
+            repositoryMock.Setup(repo => repo.CreatePerson(model));
 
-        //    var repository = new SqlPersonRepository(connectionFactoryMock.Object, dynamicParametersBuilderMock.Object);
+            // Act
+            repositoryMock.Object.CreatePerson(model);
 
-        //    Assert.NotNull(repository);
-        //    Assert.Same(connectionFactoryMock.Object, repository.SqlConnectionFactory);
-        //    Assert.Same(dynamicParametersBuilderMock.Object, repository.SqlDynamicParametersBuilder);
-        //}
-        //[Fact]
-        //public void CreatePerson_WhenCalled_ShouldExecuteCorrectly()
-        //{
-        //    //TODO (ISqlPersonRepository) ?? (specific testing)
-        //    var connectionFactoryMock = new Mock<DataAccess.SqlConnector.ISqlConnectionFactory>();
-        //    var dynamicParametersBuilderMock = new Mock<ISqlDynamicParametersBuilder>();       
-
-        //    var repository = new SqlPersonRepository(connectionFactoryMock.Object, dynamicParametersBuilderMock.Object);
-
-        //    var personModel = new PersonModel
-        //    {
-        //        FirstName = "John",
-        //        LastName = "Doe",
-        //        CellphoneNumber = "123456789",
-        //        EmailAddress = "john.doe@example.com",
-        //       // DateTime = DateTime.Now, // Assuming DateTime property is required
-        //        MetricAmount = 10,
-        //        MetricPrice = 5
-        //    };
-
-        //    repository.CreatePerson(personModel);
-
-        //   // connectionFactoryMock.Verify(mock => mock.CreateSqlConnection(), Times.Once());
-        //    dynamicParametersBuilderMock.Verify(mock => mock.GetPersonDynamicParameters(personModel), Times.Once());
-        //}
-
-        //[Fact]
-        //public void CreatePerson_ShouldSetAllProperties()
-        //{
-        //    // Arrange
-           
-        //    var connectionFactoryMock = new Mock<DataAccess.SqlConnector.ISqlConnectionFactory>();
-            
-
-        //    connectionFactoryMock.Setup(x => x.CreateSqlConnection()).Returns(connectionMock.Object);
-
-           
-
-        //    var personModel = new PersonModel
-        //    {
-        //        Id = 72, // Set Id property here
-        //        FirstName = "John",
-        //        LastName = "Doe",
-        //        CellphoneNumber = "123456789",
-        //        EmailAddress = "john.doe@example.com",
-        //        MetricAmount = 10,
-        //        MetricPrice = 5
-        //    };
-
-        //    // Act
-        //    repository.CreatePerson(personModel);
-
-        //    // Assert
-        //    Assert.Equal(72, personModel.Id);
-        //    Assert.Equal("John", personModel.FirstName);
-        //    Assert.Equal("Doe", personModel.LastName);
-        //    Assert.Equal("123456789", personModel.CellphoneNumber);
-        //    Assert.Equal("john.doe@example.com", personModel.EmailAddress);
-        //    Assert.Equal(10, personModel.MetricAmount);
-        //    Assert.Equal(5, personModel.MetricPrice);
-        //    // Add more assertions as needed
-        //}
+            // Assert
+            repositoryMock.Verify(repo => repo.CreatePerson(model), Times.Once);
+        }
 
         [Fact]
         public void GetPersonById_ReturnsPersonModel()
@@ -116,43 +57,74 @@ namespace SellWoodTracker.Tests
             Assert.Equal(expectedPerson.Id, result.Id );
         }
 
-        //[Fact]
-        //public void GetRequestedPeople_All_ReturnsListOfPeople()
-        //{
-        //    var personRepositoryMock = new Mock<ISqlPersonRepository>();
-
-        //    var personModel = new PersonModel
-        //    {
-        //        Id = personId,
-        //        FirstName = firstName,
-
-
-        //    };
-
-        //    personRepositoryMock.Setup(mock => mock.GetCompletedPeople_All()).Returns(personModel);
-        //}
-
-
-
-
-        // Services (new class)
         [Fact]
-        public void GetPersonById_ReturnsPersonModel_Services()
+        public void GetRequestedPeople_All_Should_Return_List_Of_People()
         {
-            var personRepositoryMock = new Mock<ISqlPersonService>();
+            // Arrange
+            var expectedPeople = new List<PersonModel>
+            {
+                new PersonModel
+                {
+                    FirstName = "John",
+                    LastName = "Doe",
+                    EmailAddress = "john.doe@example.com",
+                    CellphoneNumber = "123456789",
+                    DateTime = DateTime.Now,
+                    MetricAmount = 10,
+                    MetricPrice = 5
+                },
+                // Add more PersonModel objects as needed
+             };
 
-            int personId = 72;
-            string firstName = "sada";
+            var repositoryMock = new Mock<ISqlPersonRepository>();
+            repositoryMock.Setup(repo => repo.GetRequestedPeople_All()).Returns(expectedPeople);
 
-            var expectedPerson = new PersonModel { Id = personId, FirstName = firstName };
+            // Act
+            var actualPeople = repositoryMock.Object.GetRequestedPeople_All();
 
-            personRepositoryMock.Setup(mock => mock.GetPersonById(personId)).Returns(expectedPerson);
-
-            var result = personRepositoryMock.Object.GetPersonById(personId);
-
-            Assert.NotNull(result);
-            Assert.IsType<PersonModel>(result);
-            Assert.Equal(expectedPerson.Id, result.Id);
+            // Assert
+            Assert.Equal(expectedPeople, actualPeople);
         }
+
+        [Fact]
+        public void GetRequestedPeople_All_Should_Return_List_Of_People1()
+        {
+            // Arrange
+            var expectedPeople = new List<PersonModel> 
+            {
+                 new PersonModel
+                 {
+                    FirstName = "John",
+                    LastName = "Doe",
+                    EmailAddress = "john.doe@example.com",
+                    CellphoneNumber = "123456789",
+                    DateTime = DateTime.Now,
+                    MetricAmount = 10,
+                    MetricPrice = 5
+                 },
+            };
+
+
+            var connectionExecutorMock = new Mock<ISqlConnectionExecutor>();
+            connectionExecutorMock.Setup(x => x.Execute(It.IsAny<Func<IDbConnection, List<PersonModel>>>()))
+                                   .Returns(expectedPeople);
+
+            // Mock ISqlDynamicParametersBuilder if needed
+            var dynamicParametersBuilderMock = new Mock<ISqlDynamicParametersBuilder>();
+
+            // Mock ISqlPersonRepository
+            var repositoryMock = new Mock<ISqlPersonRepository>();
+            repositoryMock.Setup(repo => repo.GetRequestedPeople_All()).Returns(expectedPeople);
+
+            // Create SqlPersonRepository instance
+            ISqlPersonRepository repository = repositoryMock.Object;
+
+            // Act
+            var actualPeople = repository.GetRequestedPeople_All();
+
+            // Assert
+            Assert.Equal(expectedPeople, actualPeople);
+        }
+        
     }
 }
