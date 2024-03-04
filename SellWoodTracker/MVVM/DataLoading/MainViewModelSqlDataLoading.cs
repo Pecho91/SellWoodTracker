@@ -10,7 +10,7 @@ namespace SellWoodTracker.MVVM.DataLoading
     {
         
         //private readonly InitializeSqlConnection _initializeSqlConnection;
-        private readonly SqlPersonService _sqlPersonService;
+       // private readonly SqlPersonService _sqlPersonService;
 
         private ObservableCollection<PersonModel> _requestedPeople;
         public ObservableCollection<PersonModel> RequestedPeople
@@ -62,26 +62,26 @@ namespace SellWoodTracker.MVVM.DataLoading
         {
             //_initializeSqlConnection = new InitializeSqlConnection(repository); 
             //_sqlPersonService = _initializeSqlConnection;
-            LoadDataFromSql();
+           // LoadDataFromSql();
         }
 
         public void LoadDataFromSql()
         {
-            try
-            {
-                List<PersonModel> requestedSqlPeople = _sqlPersonService.GetRequestedPeople_All();
-                List<PersonModel> completedSqlPeople = _sqlPersonService.GetCompletedPeople_All();
+            //try
+            //{
+            //    List<PersonModel> requestedSqlPeople = _sqlPersonService.GetRequestedPeople_All();
+            //    List<PersonModel> completedSqlPeople = _sqlPersonService.GetCompletedPeople_All();
 
-                RequestedPeople = new ObservableCollection<PersonModel>(requestedSqlPeople);
-                CompletedPeople = new ObservableCollection<PersonModel>(completedSqlPeople);
+            //    RequestedPeople = new ObservableCollection<PersonModel>(requestedSqlPeople);
+            //    CompletedPeople = new ObservableCollection<PersonModel>(completedSqlPeople);
 
-                OnPropertyChanged(nameof(RequestedPeople));
-                OnPropertyChanged(nameof(CompletedPeople));
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Error loading data from Sql: {ex.Message}");
-            }
+            //    OnPropertyChanged(nameof(RequestedPeople));
+            //    OnPropertyChanged(nameof(CompletedPeople));
+            //}
+            //catch (Exception ex)
+            //{
+            //    Debug.WriteLine($"Error loading data from Sql: {ex.Message}");
+            //}
         }
     }       
 }
