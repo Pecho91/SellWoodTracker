@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using SellWoodTracker.Common.Model;
-using SellWoodTracker.DataAccess.SqlConnectionExecutor;
+using SellWoodTracker.DataAccess.SqlConnectionExecutors;
 using SellWoodTracker.DataAccess.SqlDataInterfaces;
 using SellWoodTracker.DataAccess.SqlDynamicParameters;
 using System;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SellWoodTracker.DataAccess.SqlDataRepository
+namespace SellWoodTracker.DataAccess.SqlDataRepositories
 {
     public class SqlPersonCreator : ISqlPersonCreator
     {

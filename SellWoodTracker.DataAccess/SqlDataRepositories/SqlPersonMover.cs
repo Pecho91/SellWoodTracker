@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using SellWoodTracker.DataAccess.SqlConnectionExecutor;
+using SellWoodTracker.DataAccess.SqlConnectionExecutors;
 using SellWoodTracker.DataAccess.SqlDataInterfaces;
 using SellWoodTracker.DataAccess.SqlDynamicParameters;
 using System;
@@ -17,13 +17,13 @@ namespace SellWoodTracker.DataAccess.SqlDataRepositories
         private readonly ISqlDynamicParametersBuilder _sqlDynamicParametersBuilder;
         private readonly ISqlPersonRetriever _sqlPersonRetriever;
 
-        public SqlPersonMover(ISqlConnectionExecutor sqlConnectionExecutor, ISqlDynamicParametersBuilder dynamicParametersBuilder, ISqlPersonRetriever sqlPersonRetriever) 
-        { 
+        public SqlPersonMover(ISqlConnectionExecutor sqlConnectionExecutor, ISqlDynamicParametersBuilder dynamicParametersBuilder, ISqlPersonRetriever sqlPersonRetriever)
+        {
             _sqlConnectionExecutor = sqlConnectionExecutor ?? throw new ArgumentNullException(nameof(sqlConnectionExecutor));
             _sqlPersonRetriever = sqlPersonRetriever ?? throw new ArgumentNullException(nameof(sqlPersonRetriever));
             _sqlDynamicParametersBuilder = dynamicParametersBuilder ?? throw new ArgumentNullException(nameof(dynamicParametersBuilder));
         }
-
+       
         public void MoveRequestedPersonToCompleted(int personId)
         {
             _sqlConnectionExecutor.Execute(connection =>

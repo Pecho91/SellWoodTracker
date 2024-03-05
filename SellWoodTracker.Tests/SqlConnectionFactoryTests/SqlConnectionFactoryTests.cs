@@ -1,13 +1,6 @@
 ﻿using Moq;
-using SellWoodTracker.DataAccess.SqlConnectionFactory;
-using SellWoodTracker.DataAccess.SqlDataRepository;
+using SellWoodTracker.DataAccess.SqlConnectionFactorys;
 using SellWoodTracker.GlobalConfig;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SellWoodTracker.Tests.SqlConnectionFactoryTests
 {

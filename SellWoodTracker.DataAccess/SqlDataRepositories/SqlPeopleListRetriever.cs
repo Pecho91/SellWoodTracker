@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using SellWoodTracker.Common.Model;
-using SellWoodTracker.DataAccess.SqlConnectionExecutor;
+using SellWoodTracker.DataAccess.SqlConnectionExecutors;
 using SellWoodTracker.DataAccess.SqlDataInterfaces;
 using System;
 using System.Collections.Generic;
@@ -14,9 +14,14 @@ namespace SellWoodTracker.DataAccess.SqlDataRepositories
     {
         private readonly ISqlConnectionExecutor _sqlConnectionExecutor;
 
-        public SqlPeopleListRetriever(ISqlConnectionExecutor sqlConnectionExecutor)
+        //public SqlPeopleListRetriever(ISqlConnectionExecutor sqlConnectionExecutor)
+        //{
+        //    _sqlConnectionExecutor = sqlConnectionExecutor ?? throw new ArgumentNullException(nameof(sqlConnectionExecutor));  
+        //}
+
+        public SqlPeopleListRetriever() 
         {
-            _sqlConnectionExecutor = sqlConnectionExecutor ?? throw new ArgumentNullException(nameof(sqlConnectionExecutor));  
+            _sqlConnectionExecutor = new SqlConnectionExecutor();
         }
 
         public List<PersonModel> GetRequestedPeople_All()

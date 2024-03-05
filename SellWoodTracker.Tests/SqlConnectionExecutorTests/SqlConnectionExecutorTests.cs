@@ -1,10 +1,11 @@
 ﻿using Moq;
-using SellWoodTracker.DataAccess.SqlConnectionExecutor;
-using SellWoodTracker.DataAccess.SqlConnectionFactory;
+using SellWoodTracker.DataAccess.SqlConnectionExecutors;
+using SellWoodTracker.DataAccess.SqlConnectionFactorys;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace SellWoodTracker.Tests.SqlConnectionExecutorTests
         [Fact]
         public void Execute_Action_CallsActionWithConnection()
         {
+            // TODO -mocking or not???
             // Arrange
             var connectionMock = new Mock<IDbConnection>();
             connectionMock.Setup(c => c.Open());
@@ -22,8 +24,11 @@ namespace SellWoodTracker.Tests.SqlConnectionExecutorTests
             var connectionFactoryMock = new Mock<ISqlConnectionFactory>();
             connectionFactoryMock.Setup(f => f.CreateSqlConnection()).Returns(connectionMock.Object);
 
-            ISqlConnectionExecutor executor = new SqlConnectionExecutor(connectionFactoryMock.Object);
-            //var executor = new SqlConnectionExecutor(connectionFactoryMock.Object);
+            ISqlConnectionExecutor executor = new SqlConnectionExecutor();
+
+            // Use reflection to set the private field _sqlConnectionFactory to the mocked instance
+            var field = typeof(SqlConnectionExecutor).GetField("_sqlConnectionFactory", BindingFlags.NonPublic | BindingFlags.Instance);
+            field.SetValue(executor, connectionFactoryMock.Object);
 
             bool actionCalled = false;
             Action<IDbConnection> action = conn =>
@@ -50,8 +55,10 @@ namespace SellWoodTracker.Tests.SqlConnectionExecutorTests
             var connectionFactoryMock = new Mock<ISqlConnectionFactory>();
             connectionFactoryMock.Setup(f => f.CreateSqlConnection()).Returns(connectionMock.Object);
 
-            ISqlConnectionExecutor executor = new SqlConnectionExecutor(connectionFactoryMock.Object);
-            //var executor = new SqlConnectionExecutor(connectionFactoryMock.Object);
+            ISqlConnectionExecutor executor = new SqlConnectionExecutor();
+
+            var field = typeof(SqlConnectionExecutor).GetField("_sqlConnectionFactory", BindingFlags.NonPublic | BindingFlags.Instance);
+            field.SetValue(executor, connectionFactoryMock.Object);
 
             const int expectedResult = 42;
             Func<IDbConnection, int> executeFunction = conn =>
