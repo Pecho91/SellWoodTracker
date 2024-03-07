@@ -1,8 +1,12 @@
 ﻿using Moq;
 using SellWoodTracker.Common.Model;
+using SellWoodTracker.DataAccess.SqlConnectionExecutors;
 using SellWoodTracker.DataAccess.SqlDataInterfaces;
+using SellWoodTracker.DataAccess.SqlDataRepositories;
+using SellWoodTracker.DataAccess.SqlDynamicParameters;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +30,7 @@ namespace SellWoodTracker.Tests.SqlDataRepositoriesTests
                 MetricPrice = 5
             };
             var repositoryMock = new Mock<ISqlPersonCreator>();
-            repositoryMock.Setup(repo => repo.CreatePerson(model));
+            repositoryMock.Setup(repo => repo.CreatePerson(model)).Verifiable();
 
             // Act
             repositoryMock.Object.CreatePerson(model);
@@ -34,5 +38,5 @@ namespace SellWoodTracker.Tests.SqlDataRepositoriesTests
             // Assert
             repositoryMock.Verify(repo => repo.CreatePerson(model), Times.Once);
         }
-    }
+    } 
 }

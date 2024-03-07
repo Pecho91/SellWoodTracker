@@ -14,14 +14,9 @@ namespace SellWoodTracker.DataAccess.SqlDataRepositories
     {
         private readonly ISqlConnectionExecutor _sqlConnectionExecutor;
 
-        //public SqlPeopleListRetriever(ISqlConnectionExecutor sqlConnectionExecutor)
-        //{
-        //    _sqlConnectionExecutor = sqlConnectionExecutor ?? throw new ArgumentNullException(nameof(sqlConnectionExecutor));  
-        //}
-
-        public SqlPeopleListRetriever() 
+        public SqlPeopleListRetriever(ISqlConnectionExecutor sqlConnectionExecutor) 
         {
-            _sqlConnectionExecutor = new SqlConnectionExecutor();
+            _sqlConnectionExecutor = sqlConnectionExecutor ?? throw new ArgumentNullException(nameof(sqlConnectionExecutor));
         }
 
         public List<PersonModel> GetRequestedPeople_All()

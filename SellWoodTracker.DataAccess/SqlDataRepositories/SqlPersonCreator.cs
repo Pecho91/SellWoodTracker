@@ -20,13 +20,11 @@ namespace SellWoodTracker.DataAccess.SqlDataRepositories
         //public ISqlConnectionExecutor SqlConnectionExecutor => _sqlConnectionExecutor;
         //public ISqlDynamicParametersBuilder SqlDynamicParametersBuilder => _sqlDynamicParametersBuilder;
 
-
         public SqlPersonCreator(ISqlConnectionExecutor sqlConnectionExecutor, ISqlDynamicParametersBuilder sqlDynamicParametersBuilder)
         {
             _sqlConnectionExecutor = sqlConnectionExecutor ?? throw new ArgumentNullException(nameof(sqlConnectionExecutor));
             _sqlDynamicParametersBuilder = sqlDynamicParametersBuilder ?? throw new ArgumentNullException(nameof(sqlDynamicParametersBuilder));
         }
-
 
         public void CreatePerson(PersonModel model)
         {

@@ -8,11 +8,11 @@ using SellWoodTracker;
 
 namespace SellWoodTracker.GlobalConfig
 {
-    public  class GlobalConfiguration : IGlobalConfiguration
+    public class GlobalConfiguration : IGlobalConfiguration
     {   
-        public GlobalConfiguration()
+        public GlobalConfiguration() 
         {
-            
+
         }
 
         public string CnnString(string name)

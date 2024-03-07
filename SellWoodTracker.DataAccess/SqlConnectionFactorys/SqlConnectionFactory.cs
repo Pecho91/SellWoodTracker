@@ -14,9 +14,10 @@ namespace SellWoodTracker.DataAccess.SqlConnectionFactorys
         private readonly IGlobalConfiguration _globalConfig;
         private readonly string _dataBase;
 
-        public SqlConnectionFactory()
+        public SqlConnectionFactory(IGlobalConfiguration globalConfiguration)
         {
-            _globalConfig = new GlobalConfiguration();
+            //_globalConfig = new GlobalConfiguration();
+            _globalConfig = globalConfiguration ?? throw new ArgumentNullException(nameof(globalConfiguration));
             _dataBase = _globalConfig.CnnString("SellWoodTracker");
         }
 

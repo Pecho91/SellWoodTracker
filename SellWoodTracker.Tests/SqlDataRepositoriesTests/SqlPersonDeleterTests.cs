@@ -6,6 +6,7 @@ using SellWoodTracker.DataAccess.SqlDataRepositories;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Dynamic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace SellWoodTracker.Tests.SqlDataRepositoriesTests
         public void DeletePersonFromRequested_DeletesPersonFromRequestedTable()
         {
             // Arrange
-            var sqlConnectionExecutorMock = new Mock<ISqlConnectionExecutor>();
+           // var sqlConnectionExecutorMock = new Mock<ISqlConnectionExecutor>();
             var personDeleterMock = new Mock<ISqlPersonDeleter>();
             int personId = 72;
 
@@ -34,6 +35,23 @@ namespace SellWoodTracker.Tests.SqlDataRepositoriesTests
             personDeleterMock.Verify(deleter => deleter.DeletePersonFromRequested(personId), Times.Once);
         }
 
-        
+        [Fact]
+        public void DeletePersonFromCompleted_DeletesPersonFromRequestedTable()
+        {
+            // Arrange
+            //var sqlConnectionExecutorMock = new Mock<ISqlConnectionExecutor>();
+            var personDeleterMock = new Mock<ISqlPersonDeleter>();
+            int personId = 72;
+
+            // Setting up the mock
+            personDeleterMock.Setup(deleter => deleter.DeletePersonFromCompleted(personId));
+
+            // Act
+            personDeleterMock.Object.DeletePersonFromCompleted(personId);
+
+            // Assert
+            // Verify that the DeletePersonFromRequested method was called exactly once with the provided personId
+            personDeleterMock.Verify(deleter => deleter.DeletePersonFromCompleted(personId), Times.Once);
+        }
     }
 }

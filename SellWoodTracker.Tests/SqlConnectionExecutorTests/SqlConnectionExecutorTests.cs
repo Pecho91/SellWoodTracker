@@ -24,7 +24,7 @@ namespace SellWoodTracker.Tests.SqlConnectionExecutorTests
             var connectionFactoryMock = new Mock<ISqlConnectionFactory>();
             connectionFactoryMock.Setup(f => f.CreateSqlConnection()).Returns(connectionMock.Object);
 
-            ISqlConnectionExecutor executor = new SqlConnectionExecutor();
+            ISqlConnectionExecutor executor = new SqlConnectionExecutor(connectionFactoryMock.Object);
 
             // Use reflection to set the private field _sqlConnectionFactory to the mocked instance
             var field = typeof(SqlConnectionExecutor).GetField("_sqlConnectionFactory", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -55,7 +55,7 @@ namespace SellWoodTracker.Tests.SqlConnectionExecutorTests
             var connectionFactoryMock = new Mock<ISqlConnectionFactory>();
             connectionFactoryMock.Setup(f => f.CreateSqlConnection()).Returns(connectionMock.Object);
 
-            ISqlConnectionExecutor executor = new SqlConnectionExecutor();
+            ISqlConnectionExecutor executor = new SqlConnectionExecutor(connectionFactoryMock.Object);
 
             var field = typeof(SqlConnectionExecutor).GetField("_sqlConnectionFactory", BindingFlags.NonPublic | BindingFlags.Instance);
             field.SetValue(executor, connectionFactoryMock.Object);

@@ -13,9 +13,9 @@ namespace SellWoodTracker.DataAccess.SqlDataRepositories
     {
         private readonly ISqlConnectionExecutor _sqlConnectionExecutor;
 
-        public SqlTotalGrossIncomeRetriever (ISqlConnectionExecutor sqlConnectionExecutor)
+        public SqlTotalGrossIncomeRetriever(ISqlConnectionExecutor sqlConnectionExecutor)
         {
-            _sqlConnectionExecutor = sqlConnectionExecutor ?? throw new ArgumentNullException (nameof (sqlConnectionExecutor));
+            _sqlConnectionExecutor = sqlConnectionExecutor ?? throw new ArgumentNullException(nameof(sqlConnectionExecutor));
         }
         public decimal GetTotalGrossIncomeFromCompleted()
         {

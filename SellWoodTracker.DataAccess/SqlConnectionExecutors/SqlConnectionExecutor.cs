@@ -12,9 +12,9 @@ namespace SellWoodTracker.DataAccess.SqlConnectionExecutors
     {
         private readonly ISqlConnectionFactory _sqlConnectionFactory;
 
-        public SqlConnectionExecutor()
+        public SqlConnectionExecutor(ISqlConnectionFactory sqlConnectionFactory)
         {
-            _sqlConnectionFactory = new SqlConnectionFactory();
+            _sqlConnectionFactory =  sqlConnectionFactory ?? throw new ArgumentNullException(nameof(sqlConnectionFactory));
         }
       
         public void Execute(Action<IDbConnection> action)
@@ -34,5 +34,5 @@ namespace SellWoodTracker.DataAccess.SqlConnectionExecutors
                 return executeFunction(connection);
             }
         }
-    }   //TODO move dependencies
+    }   
 }
