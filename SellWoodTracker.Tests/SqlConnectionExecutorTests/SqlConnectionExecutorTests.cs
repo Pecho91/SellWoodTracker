@@ -14,9 +14,8 @@ namespace SellWoodTracker.Tests.SqlConnectionExecutorTests
     public class SqlConnectionExecutorTests
     {
         [Fact]
-        public void Execute_Action_CallsActionWithConnection()
-        {
-            // TODO -mocking or not???
+        public void Execute_Action_ShouldOpenConnectionAndInvokeAction()
+        {            
             // Arrange
             var connectionMock = new Mock<IDbConnection>();
             connectionMock.Setup(c => c.Open());
@@ -24,29 +23,25 @@ namespace SellWoodTracker.Tests.SqlConnectionExecutorTests
             var connectionFactoryMock = new Mock<ISqlConnectionFactory>();
             connectionFactoryMock.Setup(f => f.CreateSqlConnection()).Returns(connectionMock.Object);
 
-            ISqlConnectionExecutor executor = new SqlConnectionExecutor(connectionFactoryMock.Object);
+            var executor = new SqlConnectionExecutor(connectionFactoryMock.Object);
 
-            // Use reflection to set the private field _sqlConnectionFactory to the mocked instance
-            var field = typeof(SqlConnectionExecutor).GetField("_sqlConnectionFactory", BindingFlags.NonPublic | BindingFlags.Instance);
-            field.SetValue(executor, connectionFactoryMock.Object);
-
-            bool actionCalled = false;
-            Action<IDbConnection> action = conn =>
+            bool actionInvoked = false;
+            Action<IDbConnection> testAction = conn =>
             {
-                actionCalled = true;
+                actionInvoked = true;
                 Assert.Equal(connectionMock.Object, conn);
             };
 
             // Act
-            executor.Execute(action);
+            executor.Execute(testAction);
 
             // Assert
-            Assert.True(actionCalled);
+            Assert.True(actionInvoked);
             connectionMock.Verify(c => c.Open(), Times.Once);
         }
 
         [Fact]
-        public void Execute_Function_CallsFunctionWithConnection()
+        public void Execute_Function_ShouldOpenConnectionAndInvokeFunction()
         {
             // Arrange
             var connectionMock = new Mock<IDbConnection>();
@@ -55,20 +50,18 @@ namespace SellWoodTracker.Tests.SqlConnectionExecutorTests
             var connectionFactoryMock = new Mock<ISqlConnectionFactory>();
             connectionFactoryMock.Setup(f => f.CreateSqlConnection()).Returns(connectionMock.Object);
 
-            ISqlConnectionExecutor executor = new SqlConnectionExecutor(connectionFactoryMock.Object);
+            var executor = new SqlConnectionExecutor(connectionFactoryMock.Object);
 
-            var field = typeof(SqlConnectionExecutor).GetField("_sqlConnectionFactory", BindingFlags.NonPublic | BindingFlags.Instance);
-            field.SetValue(executor, connectionFactoryMock.Object);
-
+           
             const int expectedResult = 42;
-            Func<IDbConnection, int> executeFunction = conn =>
+            Func<IDbConnection, int> testFunction = conn =>
             {
                 Assert.Equal(connectionMock.Object, conn);
                 return expectedResult;
             };
 
             // Act
-            var result = executor.Execute(executeFunction);
+            var result = executor.Execute(testFunction);
 
             // Assert
             Assert.Equal(expectedResult, result);
