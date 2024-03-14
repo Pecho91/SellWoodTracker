@@ -1,8 +1,12 @@
-﻿using Moq;
+﻿using Dapper;
+using Moq;
 using SellWoodTracker.Common.Model;
+using SellWoodTracker.DataAccess.SqlConnectionExecutors;
 using SellWoodTracker.DataAccess.SqlDataInterfaces;
+using SellWoodTracker.DataAccess.SqlDataRepositories;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,6 +52,60 @@ namespace SellWoodTracker.Tests.SqlDataRepositoriesTests
 
             // Assert
             Assert.Equal(expectedPeople, actualPeople);
-        }  
+        }
+
+        [Fact]
+        public void GetRequestedPeople_All_ShouldRetrieveRequestedPeople()
+        {
+            // TODO
+            // Arrange
+            var expectedPeople = new List<PersonModel>
+            {
+                new PersonModel { Id = 1, FirstName = "Alice" },
+                new PersonModel { Id = 2, FirstName = "Bob" }
+                
+                // Add more expected people as needed
+            };
+
+            var connectionMock = new Mock<IDbConnection>();
+            connectionMock.Setup(c => c.Query<PersonModel>("dbo.spRequestedPeople_GetAll", null, null, true, null, null))
+                          .Returns(expectedPeople);
+
+            var executorMock = new Mock<ISqlConnectionExecutor>();
+            executorMock.Setup(e => e.Execute(It.IsAny<Func<IDbConnection, List<PersonModel>>>()))
+                        .Returns(expectedPeople);
+
+            var retriever = new SqlPeopleListRetriever(executorMock.Object);
+
+            // Act
+            var result = retriever.GetRequestedPeople_All();
+
+            // Assert
+            Assert.Equal(expectedPeople, result);
+        }
+
+        [Fact]
+        public void GetRequestedPeople_All_ShouldRetrieveRequestedPeople1()
+        {
+            // Arrange
+            var expectedPeople = new List<PersonModel>
+            {
+                new PersonModel { Id = 1, FirstName = "Alice" },
+                new PersonModel { Id = 2, FirstName = "Bob" }
+                // Add more expected people as needed
+            };
+
+            var executorMock = new Mock<ISqlConnectionExecutor>();
+            executorMock.Setup(e => e.Execute(It.IsAny<Func<IDbConnection, List<PersonModel>>>()))
+                        .Returns(expectedPeople);
+
+            var retriever = new SqlPeopleListRetriever(executorMock.Object);
+
+            // Act
+            var result = retriever.GetRequestedPeople_All();
+
+            // Assert
+            Assert.Equal(expectedPeople, result);
+        }
     }
 }

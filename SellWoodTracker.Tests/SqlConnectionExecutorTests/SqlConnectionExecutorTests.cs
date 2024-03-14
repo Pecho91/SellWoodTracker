@@ -67,5 +67,18 @@ namespace SellWoodTracker.Tests.SqlConnectionExecutorTests
             Assert.Equal(expectedResult, result);
             connectionMock.Verify(c => c.Open(), Times.Once);
         }
+
+        [Fact]
+        public void Execute_ShouldHandleInvalidConnectionString()
+        {
+            // Arrange
+            var connectionFactoryMock = new Mock<ISqlConnectionFactory>();
+            connectionFactoryMock.Setup(f => f.CreateSqlConnection()).Throws<ArgumentException>();
+
+            var executor = new SqlConnectionExecutor(connectionFactoryMock.Object);
+
+            // Act & Assert
+            Assert.Throws<ArgumentException>(() => executor.Execute(conn => { /* Action not relevant */ }));
+        }
     }
 }
