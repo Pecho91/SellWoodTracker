@@ -28,14 +28,14 @@ namespace SellWoodTracker.Tests.SqlDataRepositoriesTests
                 // Add more expected people as needed
             };
 
-            var executorMock = new Mock<ISqlConnectionExecutor>();
-            executorMock.Setup(e => e.Execute(It.IsAny<Func<IDbConnection, List<PersonModel>>>()))
+            var sqlConnectionExecutorMock = new Mock<ISqlConnectionExecutor>();
+            sqlConnectionExecutorMock.Setup(e => e.Execute(It.IsAny<Func<IDbConnection, List<PersonModel>>>()))
                         .Returns(expectedPeople);
 
-            var retriever = new SqlPeopleListRetriever(executorMock.Object);
+            var sqlPeopleRetriever = new SqlPeopleListRetriever(sqlConnectionExecutorMock.Object);
 
             // Act
-            var result = retriever.GetRequestedPeople_All();
+            var result = sqlPeopleRetriever.GetRequestedPeople_All();
 
             // Assert
             Assert.Equal(expectedPeople, result);

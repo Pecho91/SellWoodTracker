@@ -84,7 +84,6 @@ namespace SellWoodTracker.Common.Model
             DateTime = dateTime;
         }
 
-
         //public string FullName
         //{
         //    get
@@ -92,49 +91,5 @@ namespace SellWoodTracker.Common.Model
         //        return $"{FirstName} {LastName}";
         //    }
         //}
-
-
-        //TODO
-
-//        using System;
-//using System.Collections;
-//using System.Collections.Generic;
-
-//namespace SellWoodTracker.Common.Model
-//    {
-//        public class PersonModel : IEnumerable<PersonModel>
-//        {
-//            public int Id { get; set; }
-//            public string FirstName { get; set; }
-//            public string LastName { get; set; }
-//            public string? EmailAddress { get; set; }
-//            public string? CellphoneNumber { get; set; }
-//            public DateTime? DateTime { get; set; }
-//            public decimal MetricAmount { get; set; }
-//            public decimal MetricPrice { get; set; }
-//            public decimal GrossIncome { get; set; }
-
-//            // Collection to hold multiple PersonModel instances
-//            private readonly List<PersonModel> _persons = new List<PersonModel>();
-
-//            // Add method to add PersonModel instances to the collection
-//            public void Add(PersonModel person)
-//            {
-//                _persons.Add(person);
-//            }
-
-//            // Implement GetEnumerator method from IEnumerable<PersonModel>
-//            public IEnumerator<PersonModel> GetEnumerator()
-//            {
-//                return _persons.GetEnumerator();
-//            }
-
-//            // Implement non-generic GetEnumerator method from IEnumerable
-//            IEnumerator IEnumerable.GetEnumerator()
-//            {
-//                return _persons.GetEnumerator();
-//            }
-//        }
-//    }
-}
+    }
 }
