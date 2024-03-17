@@ -18,7 +18,7 @@ namespace SellWoodTracker.Tests.SqlDataRepositoriesTests
 
         
         [Fact]
-        public void GetRequestedPeople_All_ShouldRetrieveRequestedPeople1()
+        public void GetRequestedPeople_All_ShouldRetrieveRequestedPeople()
         {
             // Arrange
             var expectedPeople = new List<PersonModel>
@@ -42,7 +42,7 @@ namespace SellWoodTracker.Tests.SqlDataRepositoriesTests
         }
        
         [Fact]
-        public void GetCompletedPeople_All_ShouldRetrieveCompletedPeople1()
+        public void GetCompletedPeople_All_ShouldRetrieveCompletedPeople()
         {
             // Arrange
             var expectedPeople = new List<PersonModel>

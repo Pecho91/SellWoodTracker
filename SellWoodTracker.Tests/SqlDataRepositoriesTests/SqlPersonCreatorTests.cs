@@ -78,6 +78,7 @@ namespace SellWoodTracker.Tests.SqlDataRepositoriesTests
             // Arrange
             var model = new PersonModel
             {
+                Id = 1,
                 FirstName = "John",
                 LastName = "Doe",
                 EmailAddress = "john.doe@example.com",
