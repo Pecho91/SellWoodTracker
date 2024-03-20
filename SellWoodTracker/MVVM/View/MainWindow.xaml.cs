@@ -25,7 +25,7 @@ namespace SellWoodTracker
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //DataContext = new MainViewModel();
+            DataContext = new MainViewModel();
         }
     }
 }

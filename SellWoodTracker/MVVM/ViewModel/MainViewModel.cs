@@ -28,7 +28,7 @@ namespace SellWoodTracker.MVVM.ViewModel
 
         //public ICommand SomeCommand => _mainViewModelCommands.SomeCommand;
 
-        public MainViewModel(MainViewModelSqlDataLoading mainViewModelSqlDataLoading)
+        public MainViewModel()
         {
             
             _mainViewModelSqlDataLoading = new MainViewModelSqlDataLoading();
