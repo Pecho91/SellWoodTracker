@@ -95,7 +95,7 @@ namespace SellWoodTracker.Tests.SqlDataRepositoriesTests
             var mockDynamicParameters = new DynamicParameters();
 
             mockDynamicParameters.Add("@id", dbType: DbType.Int32, direction: ParameterDirection.Output);
-            mockDynamicParameters.Add("@firstName", model.FirstName); // Adding other parameters
+            mockDynamicParameters.Add("@firstName", model.FirstName); 
             mockDynamicParameters.Add("@lastName", model.LastName);
             mockDynamicParameters.Add("@email", model.EmailAddress);
             mockDynamicParameters.Add("@cellphoneNumber", model.CellphoneNumber);
@@ -120,8 +120,7 @@ namespace SellWoodTracker.Tests.SqlDataRepositoriesTests
             Assert.Equal("john.doe@example.com", model.EmailAddress);
             Assert.Equal("123456789", model.CellphoneNumber);
             Assert.Equal(10, model.MetricAmount);
-            Assert.Equal(5, model.MetricPrice);
-            // Add assertions for other properties as needed
+            Assert.Equal(5, model.MetricPrice);           
         }
     } 
 }

@@ -20,10 +20,10 @@ namespace SellWoodTracker.Tests.SqlConnectionExecutorTests
             var connectionMock = new Mock<IDbConnection>();
             connectionMock.Setup(c => c.Open());
 
-            var connectionFactoryMock = new Mock<ISqlConnectionFactory>();
-            connectionFactoryMock.Setup(f => f.CreateSqlConnection()).Returns(connectionMock.Object);
+            var sqlConnectionFactoryMock = new Mock<ISqlConnectionFactory>();
+            sqlConnectionFactoryMock.Setup(f => f.CreateSqlConnection()).Returns(connectionMock.Object);
 
-            var executor = new SqlConnectionExecutor(connectionFactoryMock.Object);
+            var executor = new SqlConnectionExecutor(sqlConnectionFactoryMock.Object);
 
             bool actionInvoked = false;
             Action<IDbConnection> testAction = conn =>
@@ -47,17 +47,17 @@ namespace SellWoodTracker.Tests.SqlConnectionExecutorTests
             var connectionMock = new Mock<IDbConnection>();
             connectionMock.Setup(c => c.Open());
 
-            var connectionFactoryMock = new Mock<ISqlConnectionFactory>();
-            connectionFactoryMock.Setup(f => f.CreateSqlConnection()).Returns(connectionMock.Object);
+            var sqlConnectionFactoryMock = new Mock<ISqlConnectionFactory>();
+            sqlConnectionFactoryMock.Setup(f => f.CreateSqlConnection()).Returns(connectionMock.Object);
 
-            var executor = new SqlConnectionExecutor(connectionFactoryMock.Object);
+            var executor = new SqlConnectionExecutor(sqlConnectionFactoryMock.Object);
 
            
             const int expectedResult = 42;
             Func<IDbConnection, int> testFunction = conn =>
             {
                 Assert.Equal(connectionMock.Object, conn);
-                return expectedResult;
+                return expectedResult;      
             };
 
             // Act
@@ -72,10 +72,10 @@ namespace SellWoodTracker.Tests.SqlConnectionExecutorTests
         public void Execute_ShouldHandleInvalidConnectionString()
         {
             // Arrange
-            var connectionFactoryMock = new Mock<ISqlConnectionFactory>();
-            connectionFactoryMock.Setup(f => f.CreateSqlConnection()).Throws<ArgumentException>();
+            var sqlConnectionFactoryMock     = new Mock<ISqlConnectionFactory>();
+            sqlConnectionFactoryMock.Setup(f => f.CreateSqlConnection()).Throws<ArgumentException>();
 
-            var executor = new SqlConnectionExecutor(connectionFactoryMock.Object);
+            var executor = new SqlConnectionExecutor(sqlConnectionFactoryMock.Object);
 
             // Act & Assert
             Assert.Throws<ArgumentException>(() => executor.Execute(conn => { /* Action not relevant */ }));

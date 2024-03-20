@@ -17,16 +17,16 @@ namespace SellWoodTracker.Tests.SqlDataRepositoriesTests
         [Fact]
         public void GetPersonById_ReturnsPersonModel()
         {
-            var personRepositoryMock = new Mock<ISqlPersonRetriever>();
+            var sqlPersonRetrieverMock = new Mock<ISqlPersonRetriever>();
 
             int personId = 72;
             string firstName = "sada";
 
             var expectedPerson = new PersonModel { Id = personId, FirstName = firstName };
 
-            personRepositoryMock.Setup(mock => mock.GetPersonById(personId)).Returns(expectedPerson);
+            sqlPersonRetrieverMock.Setup(mock => mock.GetPersonById(personId)).Returns(expectedPerson);
 
-            var result = personRepositoryMock.Object.GetPersonById(personId);
+            var result = sqlPersonRetrieverMock.Object.GetPersonById(personId);
 
             Assert.NotNull(result);
             Assert.IsType<PersonModel>(result);

@@ -6,12 +6,7 @@ namespace SellWoodTracker.Tests.SqlConnectionFactoryTests
 {
     public class SqlConnectionFactoryTests
     {
-       
-        public SqlConnectionFactoryTests() 
-        {
-            
-        }
-
+   
         [Fact]
         public void CreateSqlConnection_ShouldReturnNotNullConnection()
         {
@@ -77,7 +72,7 @@ namespace SellWoodTracker.Tests.SqlConnectionFactoryTests
         {
             // Arrange
             var globalConfigMock = new Mock<IGlobalConfiguration>();
-            var connectionString = "Server=DESKTOP-4ORQH0K;Database=SellWoodTracker;Trusted_Connection=True;";
+            //var connectionString = "Server=DESKTOP-4ORQH0K;Database=SellWoodTracker;Trusted_Connection=True;";
             globalConfigMock.Setup(x => x.CnnString("SellWoodTracker")).Returns(string.Empty);
 
             var sqlConnectionFactory = new SqlConnectionFactory(globalConfigMock.Object);

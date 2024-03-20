@@ -11,5 +11,6 @@ namespace SellWoodTracker.DataAccess.SqlConnectionExecutors
     {
         void Execute(Action<IDbConnection> action);
         T Execute<T>(Func<IDbConnection, T> executeFunction);
+        
     }
 }

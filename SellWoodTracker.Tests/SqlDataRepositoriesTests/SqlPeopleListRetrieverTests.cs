@@ -32,13 +32,13 @@ namespace SellWoodTracker.Tests.SqlDataRepositoriesTests
             sqlConnectionExecutorMock.Setup(e => e.Execute(It.IsAny<Func<IDbConnection, List<PersonModel>>>()))
                         .Returns(expectedPeople);
 
-            var sqlPeopleRetriever = new SqlPeopleListRetriever(sqlConnectionExecutorMock.Object);
+            var sqlPeopleListRetriever = new SqlPeopleListRetriever(sqlConnectionExecutorMock.Object);
 
             // Act
-            var result = sqlPeopleRetriever.GetRequestedPeople_All();
+            var actualPeople = sqlPeopleListRetriever.GetRequestedPeople_All();
 
             // Assert
-            Assert.Equal(expectedPeople, result);
+            Assert.Equal(expectedPeople, actualPeople);
         }
        
         [Fact]
@@ -52,17 +52,17 @@ namespace SellWoodTracker.Tests.SqlDataRepositoriesTests
                 // Add more expected people as needed
             };
 
-            var executorMock = new Mock<ISqlConnectionExecutor>();
-            executorMock.Setup(e => e.Execute(It.IsAny<Func<IDbConnection, List<PersonModel>>>()))
+            var sqlConnectionExecutorMock = new Mock<ISqlConnectionExecutor>();
+            sqlConnectionExecutorMock.Setup(e => e.Execute(It.IsAny<Func<IDbConnection, List<PersonModel>>>()))
                         .Returns(expectedPeople);
 
-            var retriever = new SqlPeopleListRetriever(executorMock.Object);
+            var sqlPeopleListRetriever = new SqlPeopleListRetriever(sqlConnectionExecutorMock.Object);
 
             // Act
-            var result = retriever.GetCompletedPeople_All();
+            var actualPeople = sqlPeopleListRetriever.GetCompletedPeople_All();
 
             // Assert
-            Assert.Equal(expectedPeople, result);
+            Assert.Equal(expectedPeople, actualPeople);
         }
     }
 }

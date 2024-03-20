@@ -29,9 +29,4 @@
     <ProjectReference Include="..\SellWoodTracker.Services\SellWoodTracker.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Mocks\" />
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
 </Project>

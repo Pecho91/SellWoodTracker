@@ -18,6 +18,7 @@ namespace SellWoodTracker.Tests.SqlDynamicParametersTests
         {
             // Arrange
             var builder = new Mock<ISqlDynamicParametersBuilder>();
+
             var model = new PersonModel
             {
                 FirstName = "John",
