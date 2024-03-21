@@ -1,6 +1,5 @@
 ﻿using SellWoodTracker.DataAccess;
 using SellWoodTracker.MVVM.Commands;
-using SellWoodTracker.MVVM.DataLoading;
 using SellWoodTracker.MVVM.Commands;
 using SellWoodTracker.MVVM.View;
 using System;
@@ -15,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using SellWoodTracker.Common.Model;
+using SellWoodTracker.MVVM.DataServices;
 
 namespace SellWoodTracker.MVVM.ViewModel
 {

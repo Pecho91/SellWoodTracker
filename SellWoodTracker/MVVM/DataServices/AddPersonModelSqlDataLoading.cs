@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SellWoodTracker.MVVM.DataLoading
+namespace SellWoodTracker.MVVM.DataServices
 {
     public class AddPersonModelSqlDataLoading
     {

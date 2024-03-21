@@ -4,13 +4,13 @@ using System.Diagnostics;
 using SellWoodTracker.Common.Model;
 using SellWoodTracker.Services.SqlServices;
 
-namespace SellWoodTracker.MVVM.DataLoading
+namespace SellWoodTracker.MVVM.DataServices
 {
     public class MainViewModelSqlDataLoading : BaseViewModel
     {
-        
+
         //private readonly InitializeSqlConnection _initializeSqlConnection;
-       // private readonly SqlPersonService _sqlPersonService;
+        // private readonly SqlPersonService _sqlPersonService;
 
         private ObservableCollection<PersonModel> _requestedPeople;
         public ObservableCollection<PersonModel> RequestedPeople
@@ -34,7 +34,7 @@ namespace SellWoodTracker.MVVM.DataLoading
             }
         }
 
-       
+
 
         //private decimal _totalCompletedGrossIncome;
         //public decimal TotalCompletedGrossIncome
@@ -62,7 +62,7 @@ namespace SellWoodTracker.MVVM.DataLoading
         {
             //_initializeSqlConnection = new InitializeSqlConnection(repository); 
             //_sqlPersonService = _initializeSqlConnection;
-           // LoadDataFromSql();
+            // LoadDataFromSql();
         }
 
         public void LoadDataFromSql()
@@ -83,5 +83,5 @@ namespace SellWoodTracker.MVVM.DataLoading
             //    Debug.WriteLine($"Error loading data from Sql: {ex.Message}");
             //}
         }
-    }       
+    }
 }
