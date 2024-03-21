@@ -20,23 +20,19 @@ namespace SellWoodTracker.MVVM.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
-        public AddPersonModelCommands
-        private readonly MainViewModelSqlDataLoading _mainViewModelSqlDataLoading;
+        
         
 
-        public ObservableCollection<PersonModel> RequestedPeople => _mainViewModelSqlDataLoading.RequestedPeople;
-        public ObservableCollection<PersonModel> CompletedPeople => _mainViewModelSqlDataLoading.CompletedPeople;
+        //public ObservableCollection<PersonModel> RequestedPeople => _mainViewModelSqlDataLoading.RequestedPeople;
+        //public ObservableCollection<PersonModel> CompletedPeople => _mainViewModelSqlDataLoading.CompletedPeople;
 
         //public ICommand SomeCommand => _mainViewModelCommands.SomeCommand;
 
         public MainViewModel()
         {
             
-            _mainViewModelSqlDataLoading = new MainViewModelSqlDataLoading();
-            //_mainViewModelSqlDataLoading.LoadDataFromSql();
+            
         }
-        
-
-        
+             
     }
 }

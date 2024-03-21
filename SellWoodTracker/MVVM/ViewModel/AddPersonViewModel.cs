@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace SellWoodTracker.MVVM.ViewModel
 {
-    public class AddPersonViewModel : INotifyPropertyChanged
+    public class AddPersonViewModel : BaseViewModel
     {
         //private readonly GlobalConfiguration _globalConfiguration;
         //public event PropertyChangedEventHandler? PropertyChanged;

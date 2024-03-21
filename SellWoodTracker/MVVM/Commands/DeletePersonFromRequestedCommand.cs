@@ -12,23 +12,26 @@ namespace SellWoodTracker.MVVM.Commands
     {
         public event EventHandler? CanExecuteChanged;
 
-        private readonly ISqlPersonDeleter _sqlPersonDeleter;
+        private readonly ISqlRequestedPersonDeleter _sqlRequestedPersonDeleter;
         private readonly int _personId;
 
-        public DeletePersonFromRequestedCommand(ISqlPersonDeleter sqlPersonDeleter, int personId)
+        public DeletePersonFromRequestedCommand(ISqlRequestedPersonDeleter sqlPersonDeleter, int personId)
         {
-            _sqlPersonDeleter = sqlPersonDeleter ?? throw new ArgumentNullException(nameof(sqlPersonDeleter));
+            _sqlRequestedPersonDeleter = sqlPersonDeleter ?? throw new ArgumentNullException(nameof(sqlPersonDeleter));
             _personId = personId;
         }
             
         public bool CanExecute(object? parameter)
         {
+            
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+
             return true;
         }
 
         public void Execute(object? parameter)
         {
-            _sqlPersonDeleter.DeletePersonFromRequested(_personId);
+            _sqlRequestedPersonDeleter.DeletePersonFromRequested(_personId);
         }
     }
-}   // TODO other classes like that.
+}   
